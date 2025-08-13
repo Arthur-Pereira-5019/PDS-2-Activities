@@ -2,25 +2,31 @@ import java.util.ArrayList;
 
 public class BancoDeDados {
 
-	private static ArrayList<Produtos> produtos;
+	private static BancoDeDados bd;
 	private Popups popups = new Popups();
+	private ArrayList<Produto> produtos;
+	private Long maxId;
 	
-	
-	public static ArrayList<Produtos> getProdutos() {
-		if(produtos == null) {
-			produtos =  new ArrayList<Produtos>();
+	public static BancoDeDados getBanco() {
+		if(bd == null) {
+			bd =  new BancoDeDados();
 		}
-		return produtos;
+		return bd;
 	}
 	
-	public void add(Produtos p) {
-		getProdutos().add(p);
+	public Long getAndUpdateId() {
+		maxId++;
+		return maxId;
+	}
+	
+	public void add(Produto p) {
+		produtos.add(p);
 		popups.showSucess("Produto adicionado com sucesso!");
 	}
 	
 	public void removeById(Long id) {
 		try {
-			getProdutos().remove(findById(id));
+			produtos.remove(findById(id));
 			popups.showSucess("Produto removido com sucesso!");
 
 		} catch(Exception e) {
@@ -30,7 +36,7 @@ public class BancoDeDados {
 		}
 	}
 	
-	public Produtos find(Long id) {
+	public Produto find(Long id) {
 		try {
 			return findById(id);
 		} catch(Exception e) {
@@ -39,11 +45,11 @@ public class BancoDeDados {
 		return null;
 	}
 	
-	public Produtos findById(Long id) {
+	public Produto findById(Long id) {
 		int i = 0;
-		for(Produtos p: getProdutos()) {
+		for(Produto p: produtos) {
 			if(p.id == id) {
-				return getProdutos().get(i);
+				return produtos.get(i);
 			}
 			i++;
 		}
@@ -51,10 +57,14 @@ public class BancoDeDados {
 		return null;
 	}
 	
-	public void update(Produtos p, Long id) {
+	public ArrayList<Produto> findAll() {
+		return produtos;
+	}
+	
+	public void update(Produto p, Long id) {
 		try {
 			Integer pos = findPos(id);
-			getProdutos().set(pos, p);
+			produtos.set(pos, p);
 			popups.showSucess("Produto atualizado com sucesso!");
 		} catch(Exception e) {
 			e.printStackTrace();
@@ -65,7 +75,7 @@ public class BancoDeDados {
 	
 	public Integer findPos(Long id) {
 		int i = 0;
-		for(Produtos p: getProdutos()) {
+		for(Produto p: produtos) {
 			if(p.id == id) {
 				return i;
 			}
