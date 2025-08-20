@@ -4,7 +4,7 @@ public class BancoDeDados {
 
 	private static BancoDeDados bd;
 	private Popups popups = new Popups();
-	private ArrayList<Produto> produtos;
+	private ArrayList<Produto> produtos = new ArrayList<>();
 	private Long maxId;
 	
 	public static BancoDeDados getBanco() {
@@ -37,12 +37,11 @@ public class BancoDeDados {
 	}
 	
 	public Produto find(Long id) {
-		try {
-			return findById(id);
-		} catch(Exception e) {
-			e.printStackTrace();
+		Produto retorno = findById(id);
+		if(retorno == null) {
+			popups.showError("Produto não encontrado!");
 		}
-		return null;
+		return retorno;
 	}
 	
 	public Produto findById(Long id) {
@@ -64,6 +63,7 @@ public class BancoDeDados {
 	public void update(Produto p, Long id) {
 		try {
 			Integer pos = findPos(id);
+			p.setId(id);
 			produtos.set(pos, p);
 			popups.showSucess("Produto atualizado com sucesso!");
 		} catch(Exception e) {
@@ -83,5 +83,9 @@ public class BancoDeDados {
 		}
 		System.err.print("Produto não encontrado!");
 		return null;
+	}
+	
+	public Integer contar() {
+		return produtos.size();
 	}
 }

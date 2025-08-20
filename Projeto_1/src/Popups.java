@@ -8,7 +8,7 @@ public class Popups {
 	}
 	
 	public void showSucess(String m) {
-		JOptionPane.showMessageDialog(null, m, "Sucesso!", JOptionPane.WARNING_MESSAGE);
+		JOptionPane.showMessageDialog(null, m, "Sucesso!", JOptionPane.OK_OPTION);
 	}
 	
 }

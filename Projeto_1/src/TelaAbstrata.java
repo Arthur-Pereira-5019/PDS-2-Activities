@@ -5,7 +5,7 @@ public abstract class TelaAbstrata extends JFrame {
 	public final int WIDTH;
 	public final int HEIGHT;
 	
-	TelaAbstrata(int WIDTH, int HEIGHT) {
+	public TelaAbstrata(int WIDTH, int HEIGHT) {
 		this.WIDTH = WIDTH;
 		this.HEIGHT = HEIGHT;
 	}
