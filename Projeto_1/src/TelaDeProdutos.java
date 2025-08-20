@@ -9,7 +9,7 @@ import java.awt.Color;
 public class TelaDeProdutos extends TelaAbstrata {
 	Popups popups = new Popups();
 	public TelaDeProdutos() {
-		super(400,300);
+		super(400,360);
 		getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Produtos");
@@ -84,10 +84,16 @@ public class TelaDeProdutos extends TelaAbstrata {
 		botaoCriar.setBounds(10, 224, 89, 23);
 		getContentPane().add(botaoCriar);
 		
-		JButton btnNewButton_4 = new JButton("Encontrar Todos");
-		btnNewButton_4.setForeground(new Color(64, 0, 128));
-		btnNewButton_4.setBounds(92, 273, 117, 23);
-		getContentPane().add(btnNewButton_4);
+		JButton botaoET = new JButton("Encontrar Todos");
+		botaoET.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ListaDeRetornos ldr = new ListaDeRetornos();
+				ldr.abrirTela();
+			}
+		});
+		botaoET.setForeground(new Color(64, 0, 128));
+		botaoET.setBounds(105, 272, 117, 23);
+		getContentPane().add(botaoET);
 	}
 
 	BancoDeDados bd = BancoDeDados.getBanco();
