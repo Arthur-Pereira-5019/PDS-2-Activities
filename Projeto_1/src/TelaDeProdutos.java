@@ -7,8 +7,9 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 import java.awt.Color;
 
-public class TelaDeProdutos extends JFrame {
+public class TelaDeProdutos extends TelaAbstrata {
 	public TelaDeProdutos() {
+		super(400,300);
 		getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Produtos");
@@ -88,5 +89,18 @@ public class TelaDeProdutos extends JFrame {
 
 	public void buscarProdutos() {
 		bd.findAll();
+	}
+	
+	public void abrirTela(int Width, int Height) {
+		this.setSize(400,400);
+		this.setVisible(true);
+	}
+	
+	public void esconderTela() {
+		this.setVisible(false);
+	}
+	
+	public void fecharTela() {
+		
 	}
 }
