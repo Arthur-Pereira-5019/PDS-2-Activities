@@ -14,6 +14,10 @@ public class BancoDeDados {
 		return bd;
 	}
 	
+	private BancoDeDados() {
+		
+	}
+	
 	public Long getAndUpdateId() {
 		maxId++;
 		return maxId;

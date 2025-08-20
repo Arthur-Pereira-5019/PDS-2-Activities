@@ -30,6 +30,7 @@ public class TelaDeProdutos extends TelaAbstrata {
 		JButton botaoRemover = new JButton("Remover");
 		botaoRemover.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
+				deletarProduto();
 			}
 		});
 		botaoRemover.setForeground(new Color(128, 0, 0));
