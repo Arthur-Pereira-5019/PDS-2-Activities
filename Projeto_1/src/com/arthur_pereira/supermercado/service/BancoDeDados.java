@@ -1,15 +1,31 @@
+package com.arthur_pereira.supermercado.service;
+import java.sql.Connection;
+import java.sql.Driver;
+import java.sql.DriverManager;
+import java.sql.SQLException;
 import java.util.ArrayList;
+
+import com.arthur_pereira.supermercado.model.Produto;
 
 public class BancoDeDados {
 
-	private static BancoDeDados bd;
+	private static Connection bd;
 	private Popups popups = new Popups();
 	private ArrayList<Produto> produtos = new ArrayList<>();
 	private Long maxId;
+	private static final String URL = "jdbc:mysql://localhost:3306/supermercado";
+	private static final String USER = "root";
+	private static final String PASSWORD = "aluno";
 	
-	public static BancoDeDados getBanco() {
+	
+	//Singleton
+	public static Connection getConnection() {
 		if(bd == null) {
-			bd =  new BancoDeDados();
+			try {
+				bd =  DriverManager.getConnection(URL, USER, PASSWORD);
+			} catch (SQLException e) {
+				e.printStackTrace();
+			}
 		}
 		return bd;
 	}
@@ -17,6 +33,8 @@ public class BancoDeDados {
 	private BancoDeDados() {
 		
 	}
+	
+	
 	
 	public Long getAndUpdateId() {
 		maxId++;
@@ -51,7 +69,7 @@ public class BancoDeDados {
 	public Produto findById(Long id) {
 		int i = 0;
 		for(Produto p: produtos) {
-			if(p.id == id) {
+			if(p.getId() == id) {
 				return produtos.get(i);
 			}
 			i++;
@@ -80,7 +98,7 @@ public class BancoDeDados {
 	public Integer findPos(Long id) {
 		int i = 0;
 		for(Produto p: produtos) {
-			if(p.id == id) {
+			if(p.getId() == id) {
 				return i;
 			}
 			i++;

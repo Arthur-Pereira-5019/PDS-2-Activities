@@ -1,3 +1,4 @@
+package com.arthur_pereira.supermercado.service;
 import javax.swing.JOptionPane;
 
 public class Popups {

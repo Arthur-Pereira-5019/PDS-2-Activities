@@ -1,7 +1,9 @@
+package com.arthur_pereira.supermercado.telas;
 import javax.swing.JFrame;
 import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JToggleButton;
+
 import java.awt.Font;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;

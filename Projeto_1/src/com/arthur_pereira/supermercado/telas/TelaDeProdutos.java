@@ -1,15 +1,21 @@
+package com.arthur_pereira.supermercado.telas;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
+
+import com.arthur_pereira.supermercado.model.Produto;
+import com.arthur_pereira.supermercado.service.BancoDeDados;
+import com.arthur_pereira.supermercado.service.Popups;
+
 import java.awt.Color;
 
 public class TelaDeProdutos extends TelaAbstrata {
 	Popups popups = new Popups();
 	public TelaDeProdutos() {
-		super(400,360);
+		super(360,360);
 		getContentPane().setLayout(null);
 		
 		JLabel lblNewLabel = new JLabel("Produtos");
@@ -87,7 +93,7 @@ public class TelaDeProdutos extends TelaAbstrata {
 		JButton botaoET = new JButton("Encontrar Todos");
 		botaoET.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				ListaDeRetornos ldr = new ListaDeRetornos();
+				TelaListaDeProdutos ldr = new TelaListaDeProdutos();
 				ldr.abrirTela();
 			}
 		});

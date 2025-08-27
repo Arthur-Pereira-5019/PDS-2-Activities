@@ -1,3 +1,5 @@
+package com.arthur_pereira.supermercado.model;
+import com.arthur_pereira.supermercado.service.BancoDeDados;
 
 public class Produto {
 

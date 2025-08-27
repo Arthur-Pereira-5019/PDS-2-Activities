@@ -1,3 +1,5 @@
+package com.arthur_pereira.supermercado;
+import com.arthur_pereira.supermercado.telas.LoginScreen;
 
 public class Main {
 
