@@ -1,5 +1,5 @@
 package com.arthur_pereira.supermercado;
-import com.arthur_pereira.supermercado.telas.LoginScreen;
+import com.arthur_pereira.supermercado.view.LoginScreen;
 
 public class Main {
 

@@ -1,4 +1,4 @@
-package com.arthur_pereira.supermercado.telas;
+package com.arthur_pereira.supermercado.view;
 import javax.swing.JFrame;
 
 public abstract class TelaAbstrata extends JFrame {

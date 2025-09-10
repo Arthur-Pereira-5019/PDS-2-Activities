@@ -7,12 +7,21 @@ public class Produto {
 	String nome;
 	Float preço;
 	Long id;
+	int quantidade;
 	
 	public Produto(String nome, Float preço, Long id) {
 		super();
 		this.nome = nome;
 		this.preço = preço;
-		this.id = BancoDeDados.getBanco().getAndUpdateId();
+		this.id = id;
+	}
+	
+	public Produto(String nome, Float preço, Long id, int quantidade) {
+		super();
+		this.nome = nome;
+		this.preço = preço;
+		this.id = id;
+		this.quantidade = quantidade;
 	}
 	
 	public Produto() {

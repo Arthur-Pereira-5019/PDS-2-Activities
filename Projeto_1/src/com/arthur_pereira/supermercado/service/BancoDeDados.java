@@ -2,6 +2,7 @@ package com.arthur_pereira.supermercado.service;
 import java.sql.Connection;
 import java.sql.Driver;
 import java.sql.DriverManager;
+import java.sql.PreparedStatement;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -9,105 +10,58 @@ import com.arthur_pereira.supermercado.model.Produto;
 
 public class BancoDeDados {
 
-	private static Connection bd;
-	private Popups popups = new Popups();
-	private ArrayList<Produto> produtos = new ArrayList<>();
-	private Long maxId;
+	private static Connection c;
+
 	private static final String URL = "jdbc:mysql://localhost:3306/supermercado";
 	private static final String USER = "root";
-	private static final String PASSWORD = "aluno";
-	
+	private static final String PASSWORD = "admin";
+	public static final String DBMODE = "recreate";
+
+	private static boolean created = false;
 	
 	//Singleton
 	public static Connection getConnection() {
-		if(bd == null) {
+		if(c == null) {
 			try {
-				bd =  DriverManager.getConnection(URL, USER, PASSWORD);
+				c =  DriverManager.getConnection(URL, USER, PASSWORD);
+				if(created == false && !DBMODE.equals("keep")) {
+					if(DBMODE.equals("create")) {
+						createDatabase();
+					} else {
+						createTables();
+					}
+					created = true;
+				}
 			} catch (SQLException e) {
 				e.printStackTrace();
 			}
 		}
-		return bd;
+		return c;
 	}
 	
 	private BancoDeDados() {
 		
 	}
 	
-	
-	
-	public Long getAndUpdateId() {
-		maxId++;
-		return maxId;
-	}
-	
-	public void add(Produto p) {
-		produtos.add(p);
-		popups.showSucess("Produto adicionado com sucesso!");
-	}
-	
-	public void removeById(Long id) {
+	private static void createDatabase() {
+		PreparedStatement createDatabase = null;
 		try {
-			produtos.remove(findById(id));
-			popups.showSucess("Produto removido com sucesso!");
-
-		} catch(Exception e) {
+			createDatabase = c.prepareStatement("create database supermercado");
+			c.setCatalog("supermercado");
+			createDatabase.execute();
+		} catch (SQLException e) {
 			e.printStackTrace();
-			popups.showError("Erro ao remover o produto");
-
 		}
+		createTables();
 	}
 	
-	public Produto find(Long id) {
-		Produto retorno = findById(id);
-		if(retorno == null) {
-			popups.showError("Produto não encontrado!");
-		}
-		return retorno;
-	}
-	
-	public Produto findById(Long id) {
-		int i = 0;
-		for(Produto p: produtos) {
-			if(p.getId() == id) {
-				return produtos.get(i);
-			}
-			i++;
-		}
-		System.err.print("Produto não encontrado!");
-		return null;
-	}
-	
-	public ArrayList<Produto> findAll() {
-		return produtos;
-	}
-	
-	public void update(Produto p, Long id) {
+	private static void createTables() {
 		try {
-			Integer pos = findPos(id);
-			p.setId(id);
-			produtos.set(pos, p);
-			popups.showSucess("Produto atualizado com sucesso!");
-		} catch(Exception e) {
+			PreparedStatement createProduto = c.prepareStatement("create table produtos(nome varchar(120), preco float (8), id BIGINT PRIMARY KEY, quantidade int)");
+			createProduto.execute();
+		} catch (SQLException e) {
 			e.printStackTrace();
-			popups.showError("Erro ao atualizar o produto");
 		}
-		
 	}
-	
-	public Integer findPos(Long id) {
-		int i = 0;
-		for(Produto p: produtos) {
-			if(p.getId() == id) {
-				return i;
-			}
-			i++;
-		}
-		System.err.print("Produto não encontrado!");
-		return null;
-	}
-	
-	public Integer contar() {
-		return produtos.size();
-	}
+
 }

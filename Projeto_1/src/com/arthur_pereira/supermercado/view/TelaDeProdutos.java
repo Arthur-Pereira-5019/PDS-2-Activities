@@ -1,4 +1,4 @@
-package com.arthur_pereira.supermercado.telas;
+package com.arthur_pereira.supermercado.view;
 import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
@@ -7,6 +7,7 @@ import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 
 import com.arthur_pereira.supermercado.model.Produto;
+import com.arthur_pereira.supermercado.repository.ProdutoRepository;
 import com.arthur_pereira.supermercado.service.BancoDeDados;
 import com.arthur_pereira.supermercado.service.Popups;
 
@@ -102,18 +103,18 @@ public class TelaDeProdutos extends TelaAbstrata {
 		getContentPane().add(botaoET);
 	}
 
-	BancoDeDados bd = BancoDeDados.getBanco();
+	ProdutoRepository pr = ProdutoRepository.getProdutoRepository();
 	private JTextField campoId;
 	private JTextField campoNome;
 	private JTextField campoPreco;
 
 	public void buscarProdutos() {
-		bd.findAll();
+		pr.findAll();
 	}
 	
 	public void encontrarProduto() {
 		try {
-			Produto p = bd.find(Long.valueOf(campoId.getText()));
+			Produto p = pr.find(Long.valueOf(campoId.getText()));
 			campoNome.setText(p.getNome());
 			campoPreco.setText(p.getPreço().toString());
 		} catch(Exception e) {
@@ -126,10 +127,10 @@ public class TelaDeProdutos extends TelaAbstrata {
 		//TODO: Verificar se há produto de nome igual
 		try {
 			Produto p = new Produto();
-			p.setId(bd.contar().longValue());
+			p.setId(pr.contar().longValue());
 			p.setNome(campoNome.getText());
 			p.setPreço(Float.valueOf(campoPreco.getText()));
-			bd.add(p);
+			pr.add(p);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
@@ -140,14 +141,14 @@ public class TelaDeProdutos extends TelaAbstrata {
 			Produto p = new Produto();
 			p.setNome(campoNome.getText());
 			p.setPreço(Float.valueOf(campoPreco.getText()));
-			bd.update(p, Long.valueOf(campoId.getText()));
+			pr.update(p, Long.valueOf(campoId.getText()));
 		} catch (Exception e) {
 			e.printStackTrace();
 		}
 	}
 	
 	public void deletarProduto() {
-		bd.removeById(Long.valueOf(campoId.getText()));
+		pr.removeById(Long.valueOf(campoId.getText()));
 	}
 	
 	public void abrirTela(int Width, int Height) {

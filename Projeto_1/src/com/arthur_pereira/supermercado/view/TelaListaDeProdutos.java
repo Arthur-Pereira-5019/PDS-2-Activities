@@ -1,4 +1,4 @@
-package com.arthur_pereira.supermercado.telas;
+package com.arthur_pereira.supermercado.view;
 import java.awt.GridLayout;
 import java.util.ArrayList;
 
@@ -6,6 +6,7 @@ import javax.swing.JTable;
 import javax.swing.table.TableModel;
 
 import com.arthur_pereira.supermercado.model.Produto;
+import com.arthur_pereira.supermercado.repository.ProdutoRepository;
 import com.arthur_pereira.supermercado.service.BancoDeDados;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
@@ -14,7 +15,7 @@ public class TelaListaDeProdutos extends TelaAbstrata {
 	private JTable table;
 	
 	String[] colunas = {"Id","Nome", "Preço"};
-	BancoDeDados bd = BancoDeDados.getBanco();
+	ProdutoRepository pr = ProdutoRepository.getProdutoRepository();
 	String[][] dados;
 	
 	public TelaListaDeProdutos() {
@@ -37,9 +38,9 @@ public class TelaListaDeProdutos extends TelaAbstrata {
 	}
 	
 	public void popularTabela() {
-		dados = new String[bd.contar()][3];
+		dados = new String[pr.contar()][3];
 		ArrayList<String> d = new ArrayList<>();
-		ArrayList<Produto> produtos = bd.findAll();
+		ArrayList<Produto> produtos = pr.findAll();
 		for(Produto p: produtos) {
 			d.add(String.valueOf(p.getId()));
 			d.add(p.getNome());
@@ -51,7 +52,7 @@ public class TelaListaDeProdutos extends TelaAbstrata {
 		System.out.println(d.get(2));
 		
 		int a = 0;
-		for(int i = 0; i < bd.contar()-1;i++) {
+		for(int i = 0; i < pr.contar()-1;i++) {
 			for(int j = 0; j < 3;j++) {
 				dados[i][j] = d.get(a);
 				a++;
