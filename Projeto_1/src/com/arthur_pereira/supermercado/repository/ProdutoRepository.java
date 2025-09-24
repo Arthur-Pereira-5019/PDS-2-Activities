@@ -1,7 +1,12 @@
 package com.arthur_pereira.supermercado.repository;
 
 import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.ArrayList;
+import java.util.List;
 
 import com.arthur_pereira.supermercado.model.Produto;
 import com.arthur_pereira.supermercado.service.BancoDeDados;
@@ -9,97 +14,115 @@ import com.arthur_pereira.supermercado.service.Popups;
 
 public class ProdutoRepository {
 
-	private Popups popups = new Popups();
 	private Long maxId;
-	private ArrayList<Produto> produtos = new ArrayList<>();
-	private Connection bd;
-	private static ProdutoRepository pr;
-	
-	public static ProdutoRepository getProdutoRepository() {
-		if(pr == null) {
-			pr = new ProdutoRepository();
-		}
-		return pr;
-	}
+	private Connection bd;	
 	
 	public ProdutoRepository() {
 		bd = BancoDeDados.getConnection();
 	}
 	
-	
-	public Long getAndUpdateId() {
-		maxId++;
-		return maxId;
-	}
-	
-	public void add(Produto p) {
-		produtos.add(p);
-		popups.showSucess("Produto adicionado com sucesso!");
+	public String add(Produto p) {
+		String sql = "insert into produtos values (?, ?, 0, ?)";
+		try {
+			PreparedStatement ps = bd.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
+			ps.setString(1, p.getNome());
+			ps.setFloat(2, p.getPreço());
+			ps.setFloat(3, p.getQuantidade());
+			ps.execute();
+			
+		    try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
+		        if (generatedKeys.next()) {
+		            return String.valueOf(generatedKeys.getLong(1));
+		        }
+		    }
+		} catch (SQLException e) {
+			Popups.showError("Erro ao criar produto!");
+			e.printStackTrace();
+		}
+		Popups.showSucess("Produto adicionado com sucesso!");
+		return "";
 	}
 	
 	public void removeById(Long id) {
+		String sql = "delete from produtos where id=?";
 		try {
-			produtos.remove(findById(id));
-			popups.showSucess("Produto removido com sucesso!");
+			PreparedStatement ps = bd.prepareStatement(sql);
+			ps.setString(0, id.toString());
+			ps.execute();
+			Popups.showSucess("Produto removido com sucesso!");
 
 		} catch(Exception e) {
 			e.printStackTrace();
-			popups.showError("Erro ao remover o produto");
-
+			Popups.showError("Erro ao remover o produto");
 		}
 	}
 	
 	public Produto find(Long id) {
-		Produto retorno = findById(id);
-		if(retorno == null) {
-			popups.showError("Produto não encontrado!");
+		Produto retorno = null;
+		String sql = "select * from produtos where id=?";
+		try {
+			PreparedStatement ps = bd.prepareStatement(sql);
+			ps.setLong(1, id);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			String nome = rs.getString(1);
+			Float preco = rs.getFloat(2);
+			Long foundId = rs.getLong(3);
+			int quantidade = rs.getInt(4);
+			retorno = new Produto(nome, preco, foundId, quantidade);
+			Popups.showSucess("Produto encontrado com sucesso!");
+		} catch (SQLException e) {
+			Popups.showError("Produto não encontrado!");
 		}
 		return retorno;
 	}
 	
-	public Produto findById(Long id) {
-		int i = 0;
-		for(Produto p: produtos) {
-			if(p.getId() == id) {
-				return produtos.get(i);
-			}
-			i++;
-		}
-		System.err.print("Produto não encontrado!");
-		return null;
-	}
 	
 	public ArrayList<Produto> findAll() {
-		return produtos;
-	}
-	
-	public void update(Produto p, Long id) {
+		ArrayList<Produto> retorno = new ArrayList<>();
 		try {
-			Integer pos = findPos(id);
-			p.setId(id);
-			produtos.set(pos, p);
-			popups.showSucess("Produto atualizado com sucesso!");
-		} catch(Exception e) {
-			e.printStackTrace();
-			popups.showError("Erro ao atualizar o produto");
+			PreparedStatement ps = bd.prepareStatement("select * from produtos");
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				String nome = rs.getString(1);
+				Float preco = rs.getFloat(2);
+				Long foundId = rs.getLong(3);
+				int quantidade = rs.getInt(4);
+				retorno.add(new Produto(nome, preco, foundId, quantidade));
+			}
+		} catch (SQLException e) {
+			Popups.showError("Erro ao procurar produtos!");
 		}
-		
+		return retorno;
 	}
 	
-	public Integer findPos(Long id) {
-		int i = 0;
-		for(Produto p: produtos) {
-			if(p.getId() == id) {
-				return i;
-			}
-			i++;
+	public void update(Produto p) {
+		String sql = "update produtos set nome = ?, preco = ?, quantidade = ? where id = ?";
+		try {
+			PreparedStatement ps = bd.prepareStatement(sql);
+			ps.setString(1, p.getNome());
+			ps.setFloat(2, p.getPreço());
+			ps.setFloat(3, p.getQuantidade());
+			ps.setFloat(4, p.getId());
+			ps.execute();
+		} catch (SQLException e) {
+			Popups.showError("Erro ao atualizar produto!");
 		}
-		System.err.print("Produto não encontrado!");
-		return null;
+		Popups.showSucess("Produto atualizado com sucesso!");
 	}
 	
 	public Integer contar() {
-		return produtos.size();
+		int i = 0;
+		try {
+			PreparedStatement ps = bd.prepareStatement("select * from produtos");
+			ResultSet rs = ps.executeQuery();
+			while(rs.next()) {
+				i++;
+			}
+		} catch (SQLException e) {
+			Popups.showError("Erro ao contar produtos!");
+		}
+		return i;
 	}
 
 }

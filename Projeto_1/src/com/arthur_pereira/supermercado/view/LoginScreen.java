@@ -39,23 +39,30 @@ public class LoginScreen extends TelaAbstrata {
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		lblNewLabel_2.setBounds(161, 11, 62, 32);
 		getContentPane().add(lblNewLabel_2);
-
-		JCheckBox admnistradorCheckbox = new JCheckBox("Admnistrador");
-		admnistradorCheckbox.setBounds(147, 184, 97, 23);
-		getContentPane().add(admnistradorCheckbox);
 		
 		JButton btnNewButton = new JButton("Entrar");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(admnistradorCheckbox.isSelected()) {
+				/*if(admnistradorCheckbox.isSelected()) {
 					TelaDeProdutos tp = new TelaDeProdutos();
 					tp.abrirTela();
 					fecharTela();
-				}
+				}*/
 			}
 		});
-		btnNewButton.setBounds(157, 214, 89, 23);
+		btnNewButton.setBounds(148, 194, 89, 23);
 		getContentPane().add(btnNewButton);
+		
+		JButton btnNewButton_1 = new JButton("Cadastrar-se");
+		btnNewButton_1.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaDeCadastro tc = new TelaDeCadastro();
+				tc.abrirTela();
+				fecharTela();
+			}
+		});
+		btnNewButton_1.setBounds(318, 11, 106, 23);
+		getContentPane().add(btnNewButton_1);
 		
 	}
 }

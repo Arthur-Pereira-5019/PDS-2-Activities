@@ -15,7 +15,7 @@ public class TelaListaDeProdutos extends TelaAbstrata {
 	private JTable table;
 	
 	String[] colunas = {"Id","Nome", "Preço"};
-	ProdutoRepository pr = ProdutoRepository.getProdutoRepository();
+	ProdutoRepository pr = new ProdutoRepository();
 	String[][] dados;
 	
 	public TelaListaDeProdutos() {

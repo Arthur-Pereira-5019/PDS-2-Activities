@@ -15,7 +15,7 @@ public class BancoDeDados {
 	private static final String URL = "jdbc:mysql://localhost:3306/supermercado";
 	private static final String USER = "root";
 	private static final String PASSWORD = "admin";
-	public static final String DBMODE = "recreate";
+	public static final String DBMODE = "keep";
 
 	private static boolean created = false;
 	
@@ -27,7 +27,7 @@ public class BancoDeDados {
 				if(created == false && !DBMODE.equals("keep")) {
 					if(DBMODE.equals("create")) {
 						createDatabase();
-					} else {
+					} else if(DBMODE.equals("recreate")){
 						createTables();
 					}
 					created = true;
@@ -57,8 +57,16 @@ public class BancoDeDados {
 	
 	private static void createTables() {
 		try {
-			PreparedStatement createProduto = c.prepareStatement("create table produtos(nome varchar(120), preco float (8), id BIGINT PRIMARY KEY, quantidade int)");
+			PreparedStatement dropSchema = c.prepareStatement("drop database supermercado");
+			PreparedStatement createDatabase = c.prepareStatement("create database supermercado");
+			PreparedStatement useDatabase = c.prepareStatement("use supermercado");
+			PreparedStatement createProduto = c.prepareStatement("create table produtos(nome varchar(120), preco float (8), id BIGINT PRIMARY KEY AUTO_INCREMENT, quantidade int)");
+			PreparedStatement createUsuario = c.prepareStatement("create table usuarios(nome varchar(120), cpf char(11), id BIGINT PRIMARY KEY, administrador int)");
+			dropSchema.execute();
+			createDatabase.execute();
+			useDatabase.execute();
 			createProduto.execute();
+			createUsuario.execute();
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
