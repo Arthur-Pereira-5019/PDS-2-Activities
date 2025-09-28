@@ -11,5 +11,9 @@ public class CommonData {
 		}
 		return logado;
 	}
+	
+	public void setLogado(Usuario u) {
+		logado = u;
+	}
 
 }

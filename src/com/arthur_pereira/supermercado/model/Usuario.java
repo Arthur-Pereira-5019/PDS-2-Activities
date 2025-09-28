@@ -7,6 +7,14 @@ public class Usuario {
 	private boolean administrador;
 	
 	
+	public Usuario(Long id, String nome, String cpf, boolean administrador) {
+		super();
+		this.id = id;
+		this.nome = nome;
+		this.cpf = cpf;
+		this.administrador = administrador;
+	}
+	
 	public Long getId() {
 		return id;
 	}
