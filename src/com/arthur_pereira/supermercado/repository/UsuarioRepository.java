@@ -28,6 +28,25 @@ private Connection bd;
 		return i == 1 ? true : false;
 	}
 	
+	public Usuario findByCpf(String cpf) {
+		Usuario retorno = null;
+		String sql = "select * from usuarios where cpf=?";
+		try {
+			PreparedStatement ps = bd.prepareStatement(sql);
+			ps.setString(1, cpf);
+			ResultSet rs = ps.executeQuery();
+			rs.next();
+			String nome = rs.getString(1);
+			Long id = rs.getLong(3);
+			boolean administrador = reverseCastBoolean(rs.getInt(4));
+			retorno = new Usuario(id, nome, cpf, administrador);
+			Popups.showSucess("Usuário encontrado com sucesso!");
+		} catch (SQLException e) {
+			Popups.showError("Usuário não encontrado!");
+		}
+		return retorno;
+	}
+	
 	public String add(Usuario u) {
 		String sql = "insert into usuarios values (?,?,0,?)";
 		try {

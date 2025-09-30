@@ -6,6 +6,7 @@ import javax.swing.JToggleButton;
 
 import com.arthur_pereira.supermercado.model.Usuario;
 import com.arthur_pereira.supermercado.repository.UsuarioRepository;
+import com.arthur_pereira.supermercado.service.UsuarioServices;
 
 import java.awt.Font;
 import javax.swing.JButton;
@@ -17,6 +18,7 @@ public class TelaDeCadastro extends TelaAbstrata {
 	private JTextField campoNome;
 	private JTextField campoCPF;
 	private UsuarioRepository ur = new UsuarioRepository();
+	private UsuarioServices us = new UsuarioServices();
 	
 	public TelaDeCadastro() {
 		super(400,300);
@@ -64,8 +66,7 @@ public class TelaDeCadastro extends TelaAbstrata {
 					fecharTela();
 					u.setAdministrador(true);
 				}
-				ur.add(u);
-				cd.setLogado(u);
+				us.criarUsuario(u);
 				ta.abrirTela();
 			}
 		});
