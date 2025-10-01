@@ -6,6 +6,7 @@ import javax.swing.JToggleButton;
 
 import com.arthur_pereira.supermercado.model.Usuario;
 import com.arthur_pereira.supermercado.repository.UsuarioRepository;
+import com.arthur_pereira.supermercado.service.Popups;
 import com.arthur_pereira.supermercado.service.UsuarioServices;
 
 import java.awt.Font;
@@ -42,9 +43,9 @@ public class TelaDeCadastro extends TelaAbstrata {
 		lblNewLabel_1.setBounds(124, 119, 46, 14);
 		getContentPane().add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("Login");
+		JLabel lblNewLabel_2 = new JLabel("Cadastro");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		lblNewLabel_2.setBounds(161, 11, 62, 32);
+		lblNewLabel_2.setBounds(150, 11, 150, 32);
 		getContentPane().add(lblNewLabel_2);
 
 		JCheckBox admnistradorCheckbox = new JCheckBox("Admnistrador");
@@ -54,12 +55,24 @@ public class TelaDeCadastro extends TelaAbstrata {
 		JButton btnNewButton = new JButton("Cadastrar-se");
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaAbstrata ta = new TelaDeCompras(0,0);
+				TelaAbstrata ta = new TelaDeCompras();
 				Usuario u = new Usuario();
+				
+				String nome = campoNome.getText();
+				String cpf = campoCPF.getText();
+				if(campoNome == null || campoCPF.getText() == null) {
+					Popups.showError("Por favor preencha todos os campos corretamente!");
+					return;
+				}
+				if(cpf.length() > 13) {
+					Popups.showError("Por favor informe um CPF correto e sem pontuação!");
+					return;
+				}
 				
 				u.setCpf(campoCPF.getText());
 				u.setNome(campoNome.getText());
 				u.setAdministrador(false);
+				
 				if(admnistradorCheckbox.isSelected()) {
 					ta = new TelaDeProdutos();
 					ta.abrirTela();

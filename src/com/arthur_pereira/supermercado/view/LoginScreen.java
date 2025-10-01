@@ -71,7 +71,7 @@ public class LoginScreen extends TelaAbstrata {
 				fecharTela();
 			}
 		});
-		btnNewButton_1.setBounds(255, 11, 106, 23);
+		btnNewButton_1.setBounds(255, 11, 129, 23);
 		getContentPane().add(btnNewButton_1);
 		
 	}

@@ -28,7 +28,7 @@ public class TelaListaDeProdutos extends TelaAbstrata {
 		getContentPane().add(table);
 		
 		JLabel lblNewLabel = new JLabel("Produtos");
-		lblNewLabel.setBounds(183, 11, 46, 14);
+		lblNewLabel.setBounds(183, 11, 60, 14);
 		getContentPane().add(lblNewLabel);
 		
 		JScrollPane scrollPane = new JScrollPane(table);
@@ -41,23 +41,22 @@ public class TelaListaDeProdutos extends TelaAbstrata {
 		dados = new String[pr.contar()][3];
 		ArrayList<String> d = new ArrayList<>();
 		ArrayList<Produto> produtos = pr.findAll();
-		for(Produto p: produtos) {
-			d.add(String.valueOf(p.getId()));
-			d.add(p.getNome());
-			d.add(String.valueOf(p.getPreço()));
-		}
-		
-		System.out.println(d.get(0));
-		System.out.println(d.get(1));
-		System.out.println(d.get(2));
-		
-		int a = 0;
-		for(int i = 0; i < pr.contar()-1;i++) {
-			for(int j = 0; j < 3;j++) {
-				dados[i][j] = d.get(a);
-				a++;
+		if(!produtos.isEmpty()) {
+			for(Produto p: produtos) {
+				d.add(String.valueOf(p.getId()));
+				d.add(p.getNome());
+				d.add(String.valueOf(p.getPreço()));
+			}
+			
+			int a = 0;
+			for(int i = 0; i < pr.contar()-1;i++) {
+				for(int j = 0; j < 3;j++) {
+					dados[i][j] = d.get(a);
+					a++;
+				}
 			}
 		}
+		
 		
 	}
 }

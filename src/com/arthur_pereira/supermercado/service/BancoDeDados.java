@@ -61,7 +61,7 @@ public class BancoDeDados {
 			PreparedStatement createDatabase = c.prepareStatement("create database supermercado");
 			PreparedStatement useDatabase = c.prepareStatement("use supermercado");
 			PreparedStatement createProduto = c.prepareStatement("create table produtos(nome varchar(120), preco float (8), id BIGINT PRIMARY KEY AUTO_INCREMENT, quantidade int)");
-			PreparedStatement createUsuario = c.prepareStatement("create table usuarios(nome varchar(120), cpf char(11), id BIGINT PRIMARY KEY, administrador int)");
+			PreparedStatement createUsuario = c.prepareStatement("create table usuarios(nome varchar(120), cpf char(11), id BIGINT PRIMARY KEY AUTO_INCREMENT, administrador int)");
 			dropSchema.execute();
 			createDatabase.execute();
 			useDatabase.execute();

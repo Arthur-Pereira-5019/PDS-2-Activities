@@ -29,17 +29,17 @@ public class ProdutoRepository {
 			ps.setFloat(2, p.getPreço());
 			ps.setFloat(3, p.getQuantidade());
 			ps.execute();
-			
+			Popups.showSucess("Produto adicionado com sucesso!");
 		    try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
 		        if (generatedKeys.next()) {
 		            return String.valueOf(generatedKeys.getLong(1));
 		        }
 		    }
+		    
 		} catch (SQLException e) {
 			Popups.showError("Erro ao criar produto!");
 			e.printStackTrace();
 		}
-		Popups.showSucess("Produto adicionado com sucesso!");
 		return "";
 	}
 	
@@ -105,10 +105,10 @@ public class ProdutoRepository {
 			ps.setFloat(3, p.getQuantidade());
 			ps.setFloat(4, p.getId());
 			ps.execute();
+			Popups.showSucess("Produto atualizado com sucesso!");
 		} catch (SQLException e) {
 			Popups.showError("Erro ao atualizar produto!");
 		}
-		Popups.showSucess("Produto atualizado com sucesso!");
 	}
 	
 	public Integer contar() {

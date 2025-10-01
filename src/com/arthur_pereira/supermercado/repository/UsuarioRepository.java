@@ -40,9 +40,8 @@ private Connection bd;
 			Long id = rs.getLong(3);
 			boolean administrador = reverseCastBoolean(rs.getInt(4));
 			retorno = new Usuario(id, nome, cpf, administrador);
-			Popups.showSucess("Usuário encontrado com sucesso!");
 		} catch (SQLException e) {
-			Popups.showError("Usuário não encontrado!");
+			System.err.println("Erro ao encontrar usuário!");
 		}
 		return retorno;
 	}
@@ -55,11 +54,10 @@ private Connection bd;
 			ps.setString(2, u.getCpf());
 			ps.setFloat(3, castBoolean(u.isAdministrador()));
 			ps.execute();
+			Popups.showSucess("Usuário salvo com sucesso!");
 		} catch (SQLException e) {
 			Popups.showError("Erro ao salvar usuário!");
-			e.printStackTrace();
 		}
-		Popups.showSucess("Usuário salvo com sucesso!");
 		return "";
 	}
 	

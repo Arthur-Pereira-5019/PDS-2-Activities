@@ -1,9 +1,12 @@
 package com.arthur_pereira.supermercado.service;
 
-import com.arthur_pereira.supermercado.model.Usuario;
+import java.util.ArrayList;
+
+import com.arthur_pereira.supermercado.model.*;
 
 public class CommonData {
-	static Usuario logado;
+	private static Usuario logado;
+	private static ArrayList<Compras> carrinho;
 	
 	public static Usuario getLogado() {
 		if(logado == null) {
@@ -15,5 +18,13 @@ public class CommonData {
 	public static void setLogado(Usuario u) {
 		logado = u;
 	}
+	
+	public static ArrayList<Compras> getCarrinho() {
+		if(carrinho == null) {
+			carrinho = new ArrayList<Compras>();
+		}
+		return carrinho;
+	}
+
 
 }
