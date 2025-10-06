@@ -9,10 +9,14 @@ import com.arthur_pereira.supermercado.service.CommonData;
 import com.arthur_pereira.supermercado.service.UsuarioServices;
 
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
+import javax.swing.ImageIcon;
 
 public class LoginScreen extends TelaAbstrata {
 	private JTextField campo_nome;
@@ -22,32 +26,45 @@ public class LoginScreen extends TelaAbstrata {
 	
 	public LoginScreen() {
 		super(400,300);
+		setTitle("Mercado Azulão");
+		getContentPane().setBackground(new Color(0, 83, 196));
 		getContentPane().setLayout(null);
 		
 		campo_nome = new JTextField();
+		campo_nome.setBackground(new Color(0, 0, 128));
+		campo_nome.setForeground(new Color(255, 255, 255));
 		campo_nome.setBounds(124, 80, 141, 28);
 		getContentPane().add(campo_nome);
 		campo_nome.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Nome");
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel.setForeground(new Color(255, 255, 255));
 		lblNewLabel.setBounds(124, 56, 46, 14);
 		getContentPane().add(lblNewLabel);
 		
 		campo_cpf = new JTextField();
+		campo_cpf.setBackground(new Color(0, 0, 128));
+		campo_cpf.setForeground(new Color(255, 255, 255));
 		campo_cpf.setBounds(124, 139, 141, 28);
 		getContentPane().add(campo_cpf);
 		campo_cpf.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("CPF");
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
+		lblNewLabel_1.setForeground(new Color(255, 255, 255));
 		lblNewLabel_1.setBounds(124, 119, 46, 14);
 		getContentPane().add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Login");
+		lblNewLabel_2.setForeground(new Color(255, 255, 255));
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		lblNewLabel_2.setBounds(161, 11, 62, 32);
 		getContentPane().add(lblNewLabel_2);
 		
 		JButton btnNewButton = new JButton("Entrar");
+		btnNewButton.setBackground(new Color(0, 0, 128));
+		btnNewButton.setForeground(new Color(255, 255, 255));
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(us.logar(campo_cpf.getText(), campo_nome.getText())) {
@@ -64,6 +81,8 @@ public class LoginScreen extends TelaAbstrata {
 		getContentPane().add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Cadastrar-se");
+		btnNewButton_1.setBackground(new Color(0, 0, 128));
+		btnNewButton_1.setForeground(new Color(255, 255, 255));
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaDeCadastro tc = new TelaDeCadastro();
@@ -73,6 +92,13 @@ public class LoginScreen extends TelaAbstrata {
 		});
 		btnNewButton_1.setBounds(255, 11, 129, 23);
 		getContentPane().add(btnNewButton_1);
+		
+		JLabel logo = new JLabel("New label");
+		ImageIcon icon = new ImageIcon(LoginScreen.class.getResource("/smurf.png"));
+		logo.setBounds(263, 56, 121, 152);
+		Image image = icon.getImage().getScaledInstance(logo.getWidth(), logo.getHeight(), java.awt.Image.SCALE_SMOOTH);
+		logo.setIcon(new ImageIcon(image));
+		getContentPane().add(logo);
 		
 	}
 }

@@ -10,6 +10,8 @@ import com.arthur_pereira.supermercado.repository.ProdutoRepository;
 import com.arthur_pereira.supermercado.service.BancoDeDados;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
+import java.awt.Color;
+import java.awt.Font;
 
 public class TelaListaDeProdutos extends TelaAbstrata {
 	private JTable table;
@@ -20,19 +22,24 @@ public class TelaListaDeProdutos extends TelaAbstrata {
 	
 	public TelaListaDeProdutos() {
 		super(400, 800);
+		getContentPane().setBackground(new Color(255, 255, 255));
 		
 		popularTabela();
 		getContentPane().setLayout(null);
 		table = new JTable(dados,colunas);
+		table.setFillsViewportHeight(true);
+		table.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		table.setEnabled(false);
 		table.setBounds(122, 35, 177, 295);
 		getContentPane().add(table);
 		
 		JLabel lblNewLabel = new JLabel("Produtos");
-		lblNewLabel.setBounds(183, 11, 60, 14);
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		lblNewLabel.setBounds(147, 10, 114, 27);
 		getContentPane().add(lblNewLabel);
 		
 		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setLocation(108, 37);
+		scrollPane.setLocation(107, 58);
 		scrollPane.setSize(200, 304);
 		getContentPane().add(scrollPane);
 	}
