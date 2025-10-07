@@ -22,7 +22,7 @@ public class TelaListaDeProdutos extends TelaAbstrata {
 	
 	public TelaListaDeProdutos() {
 		super(400, 800);
-		getContentPane().setBackground(new Color(255, 255, 255));
+		getContentPane().setBackground(backgroundC);
 		
 		popularTabela();
 		getContentPane().setLayout(null);
@@ -30,17 +30,21 @@ public class TelaListaDeProdutos extends TelaAbstrata {
 		table.setFillsViewportHeight(true);
 		table.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		table.setEnabled(false);
+		table.setBackground(highlightC);
+		table.setForeground(highlightC);
 		table.setBounds(122, 35, 177, 295);
 		getContentPane().add(table);
 		
 		JLabel lblNewLabel = new JLabel("Produtos");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
 		lblNewLabel.setBounds(147, 10, 114, 27);
+		lblNewLabel.setBackground(textC);
 		getContentPane().add(lblNewLabel);
 		
 		JScrollPane scrollPane = new JScrollPane(table);
 		scrollPane.setLocation(107, 58);
 		scrollPane.setSize(200, 304);
+		scrollPane.setBackground(highlightC);
 		getContentPane().add(scrollPane);
 	}
 	

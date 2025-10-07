@@ -25,7 +25,7 @@ public class TelaDeCompras extends TelaAbstrata {
 	
 	
 		public TelaDeCompras() {
-			super(600, 800);
+			super(700, 700);
 			
 			popularTabela();
 			getContentPane().setLayout(null);
@@ -33,7 +33,7 @@ public class TelaDeCompras extends TelaAbstrata {
 
 			table = new JTable(dados,colunas);
 			table.setFillsViewportHeight(true);
-			table.setBounds(60, 37, 500, 295);
+			table.setBounds(60, 37, 600, 295);
 			table.setBackground(highlightC);
 			table.setForeground(textC);
 			getContentPane().add(table);
@@ -48,7 +48,7 @@ public class TelaDeCompras extends TelaAbstrata {
 			
 			JScrollPane scrollPane = new JScrollPane(table);
 			scrollPane.setLocation(60, 37);
-			scrollPane.setSize(500, 295);
+			scrollPane.setSize(600, 295);
 			scrollPane.setBackground(backgroundC);
 			getContentPane().add(scrollPane);
 			JButton buttonCarrinho = new JButton("");

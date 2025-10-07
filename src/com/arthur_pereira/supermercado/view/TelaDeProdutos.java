@@ -179,7 +179,7 @@ public class TelaDeProdutos extends TelaAbstrata {
 			p.setPreco(Float.valueOf(campoPreco.getText()));
 			p.setQuantidade(Integer.valueOf(campoQuantidade.getText()));
 			p.setId(Long.valueOf(campoId.getText()));
-			pr.update(p);
+			pr.update(p, false);
 		} catch (Exception e) {
 			e.printStackTrace();
 		}

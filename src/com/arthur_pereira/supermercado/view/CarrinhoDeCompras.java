@@ -1,5 +1,7 @@
 package com.arthur_pereira.supermercado.view;
 import javax.swing.JLabel;
+import javax.swing.JOptionPane;
+
 import java.awt.Font;
 import java.awt.Image;
 
@@ -31,7 +33,7 @@ public class CarrinhoDeCompras extends TelaAbstrata {
 		float precoFinal;
 		
 			public CarrinhoDeCompras() {
-				super(600, 800);
+				super(700, 620);
 				
 				popularTabela();
 				getContentPane().setLayout(null);
@@ -39,7 +41,7 @@ public class CarrinhoDeCompras extends TelaAbstrata {
 
 				table = new JTable(dados,colunas);
 				table.setFillsViewportHeight(true);
-				table.setBounds(60, 37, 500, 295);
+				table.setBounds(60, 37, 540, 295);
 				table.setBackground(highlightC);
 				table.setForeground(textC);
 				getContentPane().add(table);
@@ -49,13 +51,13 @@ public class CarrinhoDeCompras extends TelaAbstrata {
 				
 				JLabel lblNewLabel = new JLabel("Carrinho de Compras");
 				lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
-				lblNewLabel.setBounds(304, 13, 60, 14);
+				lblNewLabel.setBounds(270, 6, 187, 21);
 				lblNewLabel.setForeground(textC);
 				getContentPane().add(lblNewLabel);
 				
 				JScrollPane scrollPane = new JScrollPane(table);
 				scrollPane.setLocation(60, 37);
-				scrollPane.setSize(500, 295);
+				scrollPane.setSize(540, 295);
 				scrollPane.setBackground(backgroundC);
 				getContentPane().add(scrollPane);
 				JButton buttonCarrinho = new JButton("");
@@ -73,6 +75,29 @@ public class CarrinhoDeCompras extends TelaAbstrata {
 				Image image = icon.getImage().getScaledInstance(buttonCarrinho.getWidth(), buttonCarrinho.getHeight(), java.awt.Image.SCALE_SMOOTH);			
 				buttonCarrinho.setIcon(new ImageIcon(image));
 				getContentPane().add(buttonCarrinho);
+				
+				JButton btnNewButton = new JButton("Finalizar Compras");
+				btnNewButton.addActionListener(new ActionListener() {
+					public void actionPerformed(ActionEvent e) {
+						CommonData.getLastCarrinho().clear();
+						CommonData.getLastCarrinho().addAll(carrinho);
+						carrinho.forEach(c -> {
+							Produto p = c.getProduto(); p.setQuantidade(c.getProduto().getQuantidade()-c.getQuantidade());
+							pr.update(c.getProduto(), true);
+							});
+						carrinho.clear();
+						popupNotinha();
+					}
+				});
+				btnNewButton.setBounds(270, 398, 187, 21);
+				btnNewButton.setForeground(textC);
+				btnNewButton.setBackground(highlightC);
+				getContentPane().add(btnNewButton);
+				
+				JLabel lblNewLabel_1 = new JLabel("Preço Total: "+precoFinal+"R$");
+				lblNewLabel_1.setBounds(135, 402, 131, 13);
+				lblNewLabel_1.setForeground(textC);
+				getContentPane().add(lblNewLabel_1);
 			}
 			
 			// Nome produto -> Informações do produto; Campo número de produtos; Campo adicionar ao carrinho;
@@ -113,4 +138,19 @@ public class CarrinhoDeCompras extends TelaAbstrata {
 				}
 				
 			}
+			
+			public void popupNotinha() {
+		        int result = JOptionPane.showConfirmDialog(
+		            null,
+		            "Vai querer a notinha?",
+		            "Confirmação",
+		            JOptionPane.YES_NO_OPTION
+		        );
+
+		        if (result == JOptionPane.YES_OPTION) {
+		            NotaFiscal nf = new NotaFiscal(precoFinal);
+		            nf.abrirTela();
+		        }
+		    }
+			
 }

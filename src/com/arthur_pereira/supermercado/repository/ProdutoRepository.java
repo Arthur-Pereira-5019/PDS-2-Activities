@@ -96,7 +96,7 @@ public class ProdutoRepository {
 		return retorno;
 	}
 	
-	public void update(Produto p) {
+	public void update(Produto p, boolean finalizacao) {
 		String sql = "update produtos set nome = ?, preco = ?, quantidade = ? where id = ?";
 		try {
 			PreparedStatement ps = bd.prepareStatement(sql);
@@ -105,7 +105,9 @@ public class ProdutoRepository {
 			ps.setFloat(3, p.getQuantidade());
 			ps.setFloat(4, p.getId());
 			ps.execute();
-			Popups.showSucess("Produto atualizado com sucesso!");
+			if(!finalizacao) {
+				Popups.showSucess("Produto atualizado com sucesso!");
+			}
 		} catch (SQLException e) {
 			Popups.showError("Erro ao atualizar produto!");
 		}
