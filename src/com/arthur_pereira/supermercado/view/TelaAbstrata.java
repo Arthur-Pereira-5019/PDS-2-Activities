@@ -1,5 +1,7 @@
 package com.arthur_pereira.supermercado.view;
 import java.awt.Color;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
 
 import javax.swing.JFrame;
 
@@ -19,6 +21,7 @@ public abstract class TelaAbstrata extends JFrame {
 	public TelaAbstrata(int WIDTH, int HEIGHT) {
 		this.WIDTH = WIDTH;
 		this.HEIGHT = HEIGHT;
+
 	}
 	
 	public void abrirTela() {
@@ -33,5 +36,7 @@ public abstract class TelaAbstrata extends JFrame {
 	public void fecharTela() {
 		this.dispose();
 	}
+	
+	
 
 }

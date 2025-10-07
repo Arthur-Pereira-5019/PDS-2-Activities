@@ -13,8 +13,14 @@ import javax.swing.JTextField;
 
 import com.arthur_pereira.supermercado.model.Produto;
 import com.arthur_pereira.supermercado.repository.ProdutoRepository;
+import com.arthur_pereira.supermercado.service.CommonData;
+
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
+import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 
 public class TelaDeCompras extends TelaAbstrata {
 	private JTable table;
@@ -42,7 +48,8 @@ public class TelaDeCompras extends TelaAbstrata {
 			table.getColumn("Adicionar").setCellRenderer(new TableButtonRenderer());			
 			
 			JLabel lblNewLabel = new JLabel("Produtos");
-			lblNewLabel.setBounds(183, 11, 60, 14);
+			lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
+			lblNewLabel.setBounds(323, 0, 101, 27);
 			lblNewLabel.setForeground(textC);
 			getContentPane().add(lblNewLabel);
 			
@@ -66,6 +73,20 @@ public class TelaDeCompras extends TelaAbstrata {
 			Image image = icon.getImage().getScaledInstance(buttonCarrinho.getWidth(), buttonCarrinho.getHeight(), java.awt.Image.SCALE_SMOOTH);			
 			buttonCarrinho.setIcon(new ImageIcon(image));
 			getContentPane().add(buttonCarrinho);
+			
+			JLabel lblNewLabel_1 = new JLabel("Log Out");
+			lblNewLabel_1.addMouseListener(new MouseAdapter() {
+				@Override
+				public void mouseClicked(MouseEvent e) {
+					CommonData.setLogado(null);
+					LoginScreen ls = new LoginScreen();
+					ls.abrirTela();
+					fecharTela();
+				}
+			});
+			lblNewLabel_1.setForeground(new Color(255, 0, 0));
+			lblNewLabel_1.setBounds(581, 12, 72, 13);
+			getContentPane().add(lblNewLabel_1);
 		}
 		
 		// Nome produto -> Informações do produto; Campo número de produtos; Campo adicionar ao carrinho;

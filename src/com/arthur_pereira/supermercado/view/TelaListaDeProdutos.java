@@ -31,7 +31,7 @@ public class TelaListaDeProdutos extends TelaAbstrata {
 		table.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		table.setEnabled(false);
 		table.setBackground(highlightC);
-		table.setForeground(highlightC);
+		table.setForeground(textC);
 		table.setBounds(122, 35, 177, 295);
 		getContentPane().add(table);
 		

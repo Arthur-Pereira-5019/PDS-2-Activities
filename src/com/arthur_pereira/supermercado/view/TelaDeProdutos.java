@@ -3,12 +3,15 @@ import javax.swing.JLabel;
 import java.awt.Font;
 import javax.swing.JButton;
 import java.awt.event.ActionListener;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 
 import com.arthur_pereira.supermercado.model.Produto;
 import com.arthur_pereira.supermercado.repository.ProdutoRepository;
 import com.arthur_pereira.supermercado.service.BancoDeDados;
+import com.arthur_pereira.supermercado.service.CommonData;
 import com.arthur_pereira.supermercado.service.Popups;
 
 import java.awt.Color;
@@ -85,6 +88,20 @@ public class TelaDeProdutos extends TelaAbstrata {
 		lblNewLabel_3.setBackground(highlightC);
 		lblNewLabel_3.setForeground(textC);	
 		getContentPane().add(lblNewLabel_3);
+		
+		JLabel labelLogOut = new JLabel("Log Out");
+		labelLogOut.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				CommonData.setLogado(null);
+				LoginScreen ls = new LoginScreen();
+				ls.abrirTela();
+				fecharTela();
+			}
+		});
+		labelLogOut.setForeground(new Color(255, 0, 0));
+		labelLogOut.setBounds(233, 22, 72, 13);
+		getContentPane().add(labelLogOut);
 		
 		JButton botaoAtualizar = new JButton("Atualizar");
 		botaoAtualizar.setBackground(highlightC);
