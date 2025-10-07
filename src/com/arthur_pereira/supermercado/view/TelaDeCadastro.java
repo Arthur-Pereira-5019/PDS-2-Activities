@@ -24,35 +24,50 @@ public class TelaDeCadastro extends TelaAbstrata {
 	public TelaDeCadastro() {
 		super(400,300);
 		getContentPane().setLayout(null);
+		getContentPane().setBackground(backgroundC);
 		
 		campoNome = new JTextField();
 		campoNome.setBounds(124, 80, 141, 28);
+		campoNome.setBackground(highlightC);
+		campoNome.setForeground(textC);
 		getContentPane().add(campoNome);
 		campoNome.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Nome");
 		lblNewLabel.setBounds(124, 56, 46, 14);
+		lblNewLabel.setForeground(textC);
 		getContentPane().add(lblNewLabel);
 		
 		campoCPF = new JTextField();
 		campoCPF.setBounds(124, 139, 141, 28);
+		campoCPF.setBackground(highlightC);
+		campoCPF.setForeground(textC);
 		getContentPane().add(campoCPF);
 		campoCPF.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("CPF");
 		lblNewLabel_1.setBounds(124, 119, 46, 14);
+		lblNewLabel_1.setForeground(textC);
 		getContentPane().add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Cadastro");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		lblNewLabel_2.setBounds(150, 11, 150, 32);
+		lblNewLabel_2.setForeground(textC);
 		getContentPane().add(lblNewLabel_2);
 
 		JCheckBox admnistradorCheckbox = new JCheckBox("Admnistrador");
 		admnistradorCheckbox.setBounds(147, 184, 118, 23);
+		admnistradorCheckbox.setBackground(backgroundC);
+		admnistradorCheckbox.setForeground(textC);
+
+		
 		getContentPane().add(admnistradorCheckbox);
 		
+		
 		JButton btnNewButton = new JButton("Cadastrar-se");
+		btnNewButton.setBackground(highlightC);
+		btnNewButton.setForeground(textC);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaAbstrata ta = new TelaDeCompras();

@@ -27,44 +27,44 @@ public class LoginScreen extends TelaAbstrata {
 	public LoginScreen() {
 		super(400,300);
 		setTitle("Mercado Azulão");
-		getContentPane().setBackground(new Color(0, 83, 196));
+		getContentPane().setBackground(backgroundC);
 		getContentPane().setLayout(null);
 		
 		campo_nome = new JTextField();
-		campo_nome.setBackground(new Color(0, 0, 128));
-		campo_nome.setForeground(new Color(255, 255, 255));
+		campo_nome.setBackground(highlightC);
+		campo_nome.setForeground(textC);
 		campo_nome.setBounds(124, 80, 141, 28);
 		getContentPane().add(campo_nome);
 		campo_nome.setColumns(10);
 		
 		JLabel lblNewLabel = new JLabel("Nome");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel.setForeground(new Color(255, 255, 255));
+		lblNewLabel.setForeground(textC);
 		lblNewLabel.setBounds(124, 56, 46, 14);
 		getContentPane().add(lblNewLabel);
 		
 		campo_cpf = new JTextField();
-		campo_cpf.setBackground(new Color(0, 0, 128));
-		campo_cpf.setForeground(new Color(255, 255, 255));
+		campo_cpf.setBackground(highlightC);
+		campo_cpf.setForeground(textC);
 		campo_cpf.setBounds(124, 139, 141, 28);
 		getContentPane().add(campo_cpf);
 		campo_cpf.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("CPF");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1.setForeground(new Color(255, 255, 255));
+		lblNewLabel_1.setForeground(textC);
 		lblNewLabel_1.setBounds(124, 119, 46, 14);
 		getContentPane().add(lblNewLabel_1);
 		
 		JLabel lblNewLabel_2 = new JLabel("Login");
-		lblNewLabel_2.setForeground(new Color(255, 255, 255));
+		lblNewLabel_2.setForeground(textC);
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 26));
 		lblNewLabel_2.setBounds(161, 11, 62, 32);
 		getContentPane().add(lblNewLabel_2);
 		
 		JButton btnNewButton = new JButton("Entrar");
-		btnNewButton.setBackground(new Color(0, 0, 128));
-		btnNewButton.setForeground(new Color(255, 255, 255));
+		btnNewButton.setBackground(highlightC);
+		btnNewButton.setForeground(textC);
 		btnNewButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				if(us.logar(campo_cpf.getText(), campo_nome.getText())) {
@@ -81,8 +81,8 @@ public class LoginScreen extends TelaAbstrata {
 		getContentPane().add(btnNewButton);
 		
 		JButton btnNewButton_1 = new JButton("Cadastrar-se");
-		btnNewButton_1.setBackground(new Color(0, 0, 128));
-		btnNewButton_1.setForeground(new Color(255, 255, 255));
+		btnNewButton_1.setBackground(highlightC);
+		btnNewButton_1.setForeground(textC);
 		btnNewButton_1.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				TelaDeCadastro tc = new TelaDeCadastro();

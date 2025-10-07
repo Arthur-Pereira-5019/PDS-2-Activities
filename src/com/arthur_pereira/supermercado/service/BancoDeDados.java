@@ -14,8 +14,8 @@ public class BancoDeDados {
 
 	private static final String URL = "jdbc:mysql://localhost:3306/supermercado";
 	private static final String USER = "root";
-	private static final String PASSWORD = "Art.DB25";
-	public static final String DBMODE = "keep";
+	private static final String PASSWORD = "admin";
+	public static final String DBMODE = "recreate";
 
 	private static boolean created = false;
 	

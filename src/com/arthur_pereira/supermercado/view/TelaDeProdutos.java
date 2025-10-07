@@ -18,14 +18,18 @@ public class TelaDeProdutos extends TelaAbstrata {
 	public TelaDeProdutos() {
 		super(360,360);
 		getContentPane().setLayout(null);
+		getContentPane().setBackground(backgroundC);
 		
 		JLabel lblNewLabel = new JLabel("Produtos");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
 		lblNewLabel.setBounds(105, 11, 129, 23);
+		lblNewLabel.setForeground(textC);
 		getContentPane().add(lblNewLabel);
 		
 		JButton botaoEncontrar = new JButton("Encontrar");
 		botaoEncontrar.setForeground(new Color(0, 0, 255));
+		botaoEncontrar.setBackground(highlightC);
+		botaoEncontrar.setForeground(textC);
 		botaoEncontrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				encontrarProduto();
@@ -40,39 +44,52 @@ public class TelaDeProdutos extends TelaAbstrata {
 				deletarProduto();
 			}
 		});
-		botaoRemover.setForeground(new Color(128, 0, 0));
+		botaoRemover.setForeground(textC);
+		botaoRemover.setBackground(highlightC);
 		botaoRemover.setBounds(216, 108, 89, 23);
 		getContentPane().add(botaoRemover);
 		
 		campoId = new JTextField();
 		campoId.setBounds(44, 77, 244, 20);
+		campoId.setBackground(highlightC);
+		campoId.setForeground(textC);
 		getContentPane().add(campoId);
 		campoId.setColumns(10);
 		
 		JLabel lblNewLabel_1 = new JLabel("Id do Produto");
 		lblNewLabel_1.setBounds(124, 60, 110, 14);
+		lblNewLabel_1.setForeground(textC);
 		getContentPane().add(lblNewLabel_1);
 		
 		campoNome = new JTextField();
 		campoNome.setBounds(10, 176, 86, 20);
+		campoNome.setBackground(backgroundC);	
+		campoNome.setForeground(textC);	
 		getContentPane().add(campoNome);
 		campoNome.setColumns(10);
 		
 		JLabel lblNewLabel_2 = new JLabel("Nome");
 		lblNewLabel_2.setBounds(33, 157, 46, 14);
+		lblNewLabel_1.setForeground(textC);
 		getContentPane().add(lblNewLabel_2);
 		
 		campoPreco = new JTextField();
 		campoPreco.setBounds(219, 176, 86, 20);
+		campoPreco.setForeground(textC);	
+		campoPreco.setBackground(highlightC);	
 		getContentPane().add(campoPreco);
 		campoPreco.setColumns(10);
 		
 		JLabel lblNewLabel_3 = new JLabel("Preço");
 		lblNewLabel_3.setBounds(246, 157, 42, 14);
+		lblNewLabel_3.setBackground(highlightC);
+		lblNewLabel_3.setForeground(textC);	
 		getContentPane().add(lblNewLabel_3);
 		
 		JButton botaoAtualizar = new JButton("Atualizar");
-		botaoAtualizar.setForeground(new Color(255, 128, 64));
+		botaoAtualizar.setBackground(highlightC);
+		botaoAtualizar.setForeground(textC);		
+		
 		botaoAtualizar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				atualizarProduto();
@@ -87,7 +104,8 @@ public class TelaDeProdutos extends TelaAbstrata {
 				criarProduto();
 			}
 		});
-		botaoCriar.setForeground(new Color(0, 255, 0));
+		botaoCriar.setBackground(highlightC);
+		botaoCriar.setForeground(textC);		
 		botaoCriar.setBounds(10, 224, 89, 23);
 		getContentPane().add(botaoCriar);
 		
@@ -98,17 +116,22 @@ public class TelaDeProdutos extends TelaAbstrata {
 				ldr.abrirTela();
 			}
 		});
-		botaoET.setForeground(new Color(64, 0, 128));
+		
+		botaoET.setBackground(highlightC);
+		botaoET.setForeground(textC);
+		
 		botaoET.setBounds(105, 272, 117, 23);
 		getContentPane().add(botaoET);
 		
 		campoQuantidade = new JTextField();
 		campoQuantidade.setBounds(112, 176, 86, 20);
+		campoQuantidade.setBackground(highlightC);
+		campoQuantidade.setForeground(textC);
 		getContentPane().add(campoQuantidade);
 		campoQuantidade.setColumns(10);
 		
 		JLabel lblNewLabel_4 = new JLabel("Quantidade");
-		lblNewLabel_4.setBounds(123, 157, 75, 14);
+		lblNewLabel_4.setForeground(textC);
 		getContentPane().add(lblNewLabel_4);
 	}
 
