@@ -15,6 +15,7 @@ import com.arthur_pereira.supermercado.model.Compras;
 import com.arthur_pereira.supermercado.model.Produto;
 import com.arthur_pereira.supermercado.repository.ProdutoRepository;
 import com.arthur_pereira.supermercado.service.CommonData;
+import com.arthur_pereira.supermercado.service.Popups;
 
 public class TableButtonLogic extends DefaultCellEditor{
 
@@ -61,10 +62,14 @@ public class TableButtonLogic extends DefaultCellEditor{
 	    public Object getCellEditorValue() {
 	        if (isPushed) {
 	        	Long id = Long.valueOf((String) table.getValueAt(row, 0));
-	        	Integer quantidade = Integer.valueOf((String) table.getValueAt(row, 3));
+	        	Integer quantidade = Integer.valueOf((String.valueOf(table.getValueAt(row, 4))));
 	        	
 	        	Produto p = pr.find(id);
-	            CommonData.getCarrinho().add(new Compras(p, quantidade));
+	        	if(quantidade > p.getQuantidade()) {
+	        		Popups.showError("Estoque insuficiente!");
+	        	} else {
+		            CommonData.getCarrinho().add(new Compras(p, quantidade));
+	        	}
 	        }
 	        isPushed = false;
 	        return new String(label);

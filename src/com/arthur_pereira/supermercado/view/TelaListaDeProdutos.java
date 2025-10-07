@@ -52,7 +52,7 @@ public class TelaListaDeProdutos extends TelaAbstrata {
 			for(Produto p: produtos) {
 				d.add(String.valueOf(p.getId()));
 				d.add(p.getNome());
-				d.add(String.valueOf(p.getPreço()));
+				d.add(String.valueOf(p.getPreco()));
 			}
 			
 			int a = 0;

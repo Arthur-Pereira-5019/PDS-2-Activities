@@ -26,7 +26,7 @@ public class ProdutoRepository {
 		try {
 			PreparedStatement ps = bd.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
 			ps.setString(1, p.getNome());
-			ps.setFloat(2, p.getPreço());
+			ps.setFloat(2, p.getPreco());
 			ps.setFloat(3, p.getQuantidade());
 			ps.execute();
 			Popups.showSucess("Produto adicionado com sucesso!");
@@ -101,7 +101,7 @@ public class ProdutoRepository {
 		try {
 			PreparedStatement ps = bd.prepareStatement(sql);
 			ps.setString(1, p.getNome());
-			ps.setFloat(2, p.getPreço());
+			ps.setFloat(2, p.getPreco());
 			ps.setFloat(3, p.getQuantidade());
 			ps.setFloat(4, p.getId());
 			ps.execute();

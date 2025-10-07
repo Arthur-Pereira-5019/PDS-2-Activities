@@ -63,15 +63,15 @@ public class TelaDeProdutos extends TelaAbstrata {
 		
 		campoNome = new JTextField();
 		campoNome.setBounds(10, 176, 86, 20);
-		campoNome.setBackground(backgroundC);	
+		campoNome.setBackground(highlightC);	
 		campoNome.setForeground(textC);	
 		getContentPane().add(campoNome);
 		campoNome.setColumns(10);
 		
-		JLabel lblNewLabel_2 = new JLabel("Nome");
-		lblNewLabel_2.setBounds(33, 157, 46, 14);
-		lblNewLabel_1.setForeground(textC);
-		getContentPane().add(lblNewLabel_2);
+		JLabel labelNome = new JLabel("Nome");
+		labelNome.setBounds(33, 157, 46, 14);
+		labelNome.setForeground(textC);
+		getContentPane().add(labelNome);
 		
 		campoPreco = new JTextField();
 		campoPreco.setBounds(219, 176, 86, 20);
@@ -120,7 +120,7 @@ public class TelaDeProdutos extends TelaAbstrata {
 		botaoET.setBackground(highlightC);
 		botaoET.setForeground(textC);
 		
-		botaoET.setBounds(105, 272, 117, 23);
+		botaoET.setBounds(89, 272, 145, 23);
 		getContentPane().add(botaoET);
 		
 		campoQuantidade = new JTextField();
@@ -131,6 +131,8 @@ public class TelaDeProdutos extends TelaAbstrata {
 		campoQuantidade.setColumns(10);
 		
 		JLabel lblNewLabel_4 = new JLabel("Quantidade");
+		lblNewLabel_4.setLocation(124, 157);
+		lblNewLabel_4.setSize(74, 14);
 		lblNewLabel_4.setForeground(textC);
 		getContentPane().add(lblNewLabel_4);
 	}
@@ -149,7 +151,7 @@ public class TelaDeProdutos extends TelaAbstrata {
 		try {
 			Produto p = pr.find(Long.valueOf(campoId.getText()));
 			campoNome.setText(p.getNome());
-			campoPreco.setText(p.getPreço().toString());
+			campoPreco.setText(p.getPreco().toString());
 		} catch(Exception e) {
 			e.printStackTrace();
 		}
@@ -162,7 +164,7 @@ public class TelaDeProdutos extends TelaAbstrata {
 			Produto p = new Produto();
 			p.setId(pr.contar().longValue());
 			p.setNome(campoNome.getText());
-			p.setPreço(Float.valueOf(campoPreco.getText()));
+			p.setPreco(Float.valueOf(campoPreco.getText()));
 			p.setQuantidade(Integer.valueOf(campoQuantidade.getText()));
 			campoId.setText(pr.add(p));
 		} catch (Exception e) {
@@ -174,7 +176,7 @@ public class TelaDeProdutos extends TelaAbstrata {
 		try {
 			Produto p = new Produto();
 			p.setNome(campoNome.getText());
-			p.setPreço(Float.valueOf(campoPreco.getText()));
+			p.setPreco(Float.valueOf(campoPreco.getText()));
 			p.setQuantidade(Integer.valueOf(campoQuantidade.getText()));
 			p.setId(Long.valueOf(campoId.getText()));
 			pr.update(p);

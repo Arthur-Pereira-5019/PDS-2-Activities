@@ -5,21 +5,21 @@ public class Produto {
 
 
 	String nome;
-	Float preço;
+	Float preco;
 	Long id;
 	int quantidade;
 	
 	public Produto(String nome, Float preço, Long id) {
 		super();
 		this.nome = nome;
-		this.preço = preço;
+		this.preco = preço;
 		this.id = id;
 	}
 	
 	public Produto(String nome, Float preço, Long id, int quantidade) {
 		super();
 		this.nome = nome;
-		this.preço = preço;
+		this.preco = preço;
 		this.id = id;
 		this.quantidade = quantidade;
 	}
@@ -36,12 +36,12 @@ public class Produto {
 		this.nome = nome;
 	}
 
-	public Float getPreço() {
-		return preço;
+	public Float getPreco() {
+		return preco;
 	}
 
-	public void setPreço(Float preço) {
-		this.preço = preço;
+	public void setPreco(Float preço) {
+		this.preco = preço;
 	}
 
 	public Long getId() {
