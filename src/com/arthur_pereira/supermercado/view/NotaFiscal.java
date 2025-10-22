@@ -7,6 +7,7 @@ import com.arthur_pereira.supermercado.service.CommonData;
 
 import java.awt.Font;
 import java.util.ArrayList;
+import java.awt.Color;
 
 public class NotaFiscal extends TelaAbstrata {
 
@@ -25,6 +26,8 @@ public class NotaFiscal extends TelaAbstrata {
 		getContentPane().add(lblNewLabel);
 		
 		JTextArea textArea = new JTextArea();
+		textArea.setBackground(highlightC);
+		textArea.setForeground(textC);
 		textArea.setLineWrap(true);
 		textArea.setEnabled(false);
 		textArea.setEditable(false);
@@ -33,19 +36,19 @@ public class NotaFiscal extends TelaAbstrata {
 
 		getContentPane().add(textArea);
 		
-		JLabel lblNewLabel_1 = new JLabel("Pagador: "+CommonData.getLogado().getNome()+"  CPF:"+CommonData.getLogado().getCpf());
-		lblNewLabel_1.setBounds(20, 240, 174, 13);
+		JLabel lblNewLabel_1 = new JLabel("Pagador: "+CommonData.getLogado().getNome()+" - CPF: "+CommonData.getLogado().getCpf());
+		lblNewLabel_1.setBounds(20, 240, 299, 13);
 		lblNewLabel_1.setForeground(textC);
 		
 		getContentPane().add(lblNewLabel_1);
 		
-		JLabel lblNewLabel_2 = new JLabel("Total Pago: "+totalPago+"R$");
+		JLabel lblNewLabel_2 = new JLabel("Total Pago: "+String.format("%.2f", totalPago)+"R$");
 		lblNewLabel_2.setBounds(20, 263, 157, 13);
 		lblNewLabel_2.setForeground(textC);
 
 		getContentPane().add(lblNewLabel_2);
 		
-		carrinho.forEach(c -> {textArea.setText(textArea.getText()+c.getProduto().getNome()+"   "+"Preço total:"+c.getProduto().getPreco()*c.getQuantidade()+"R$\n");});
+		carrinho.forEach(c -> {textArea.setText(textArea.getText()+c.getProduto().getNome()+"   "+"Preço total:"+String.format("%.2f", c.getProduto().getPreco()*c.getQuantidade())+"R$\n");});
 		
 	}
 }

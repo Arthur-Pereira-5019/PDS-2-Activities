@@ -26,7 +26,7 @@ import javax.swing.JTextArea;
 public class CarrinhoDeCompras extends TelaAbstrata {
 		private JTable table;
 		
-		String[] colunas = {"Nome","Qtd.", "Preço", "Preço Total", "Adicionar"};
+		String[] colunas = {"Nome","Qtd.", "Preço", "Preço Total", "Remover"};
 		ProdutoRepository pr = new ProdutoRepository();
 		ArrayList<Compras> carrinho = CommonData.getCarrinho(); 
 		Object[][] dados;
@@ -46,8 +46,8 @@ public class CarrinhoDeCompras extends TelaAbstrata {
 				table.setForeground(textC);
 				getContentPane().add(table);
 				
-				table.getColumn("Adicionar").setCellEditor(new TableButtonLogic(new JCheckBox(), table));
-				table.getColumn("Adicionar").setCellRenderer(new TableButtonRenderer());			
+				table.getColumn("Remover").setCellEditor(new TableButtonLogic(new JCheckBox(), table));
+				table.getColumn("Remover").setCellRenderer(new TableButtonRenderer());			
 				
 				JLabel lblNewLabel = new JLabel("Carrinho de Compras");
 				lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -99,13 +99,6 @@ public class CarrinhoDeCompras extends TelaAbstrata {
 				lblNewLabel_1.setForeground(textC);
 				getContentPane().add(lblNewLabel_1);
 			}
-			
-			// Nome produto -> Informações do produto; Campo número de produtos; Campo adicionar ao carrinho;
-			// Botão carrinho;
-			// Remover elementos do carrinho;
-			// Finalizar Compra;
-			// Emitir NF;
-			// Transição
 			
 			public void popularTabela() {
 				dados = new Object[carrinho.size()][5];
