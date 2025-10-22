@@ -26,7 +26,7 @@ import javax.swing.JTextArea;
 public class CarrinhoDeCompras extends TelaAbstrata {
 		private JTable table;
 		
-		String[] colunas = {"Nome","Qtd.", "Preço", "Preço Total", "Remover"};
+		String[] colunas = {"Id", "Nome","Qtd.", "Preço", "Preço Total", "Remover"};
 		ProdutoRepository pr = new ProdutoRepository();
 		ArrayList<Compras> carrinho = CommonData.getCarrinho(); 
 		Object[][] dados;
@@ -46,8 +46,8 @@ public class CarrinhoDeCompras extends TelaAbstrata {
 				table.setForeground(textC);
 				getContentPane().add(table);
 				
-				table.getColumn("Remover").setCellEditor(new TableButtonLogic(new JCheckBox(), table));
-				table.getColumn("Remover").setCellRenderer(new TableButtonRenderer());			
+				table.getColumn("Remover").setCellEditor(new RemoverButtonLogic(new JCheckBox(), table));
+				table.getColumn("Remover").setCellRenderer(new RemoverButtonRenderer());			
 				
 				JLabel lblNewLabel = new JLabel("Carrinho de Compras");
 				lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 20));
@@ -101,7 +101,7 @@ public class CarrinhoDeCompras extends TelaAbstrata {
 			}
 			
 			public void popularTabela() {
-				dados = new Object[carrinho.size()][5];
+				dados = new Object[carrinho.size()][6];
 				ArrayList<Object> d = new ArrayList<>();
 				
 				JButton botao_adicionar = new JButton("Adicionar!");
@@ -110,6 +110,7 @@ public class CarrinhoDeCompras extends TelaAbstrata {
 				if(!carrinho.isEmpty()) {
 					for(Compras c: carrinho) {
 						Produto p = c.getProduto();
+						d.add(String.valueOf(p.getId()));
 						d.add(String.valueOf(p.getNome()));
 						d.add(Integer.valueOf(c.getQuantidade()));
 						d.add(String.valueOf(p.getPreco()));
@@ -124,7 +125,7 @@ public class CarrinhoDeCompras extends TelaAbstrata {
 					
 					int a = 0;
 					for(int i = 0; i < carrinho.size();i++) {
-						for(int j = 0; j < 5;j++) {
+						for(int j = 0; j < 6;j++) {
 							dados[i][j] = d.get(a);
 							a++;
 						}

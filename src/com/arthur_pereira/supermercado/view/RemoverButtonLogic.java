@@ -59,15 +59,11 @@ public class RemoverButtonLogic extends DefaultCellEditor{
 
     public Object getCellEditorValue() {
         if (isPushed) {
-        	Long id = Long.valueOf((String) table.getValueAt(row, 0));
-        	Integer quantidade = Integer.valueOf((String.valueOf(table.getValueAt(row, 4))));
-        	
+        	Long id = Long.valueOf((String) table.getValueAt(row, 0));        	
         	Produto p = pr.find(id);
-        	if(quantidade > p.getQuantidade()) {
-        		Popups.showError("Estoque insuficiente!");
-        	} else {
-	            CommonData.getCarrinho().add(new Compras(p, quantidade));
-        	}
+        	CommonData.getCarrinho().remove(p);
+        	Popups.showError("Produto removido com sucesso!");
+        
         }
         isPushed = false;
         return new String(label);
