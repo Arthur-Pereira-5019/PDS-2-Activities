@@ -118,6 +118,7 @@ public class CarrinhoDeCompras extends TelaAbstrata {
 						d.add(String.valueOf(precoTotal));
 						
 						d.add(botao_adicionar);
+						System.out.println(d.size());
 						System.out.println(p.getNome());
 					}
 					

@@ -115,7 +115,7 @@ public class TelaDeCompras extends TelaAbstrata {
 				}
 				
 				int a = 0;
-				for(int i = 0; i < pr.contar()-1;i++) {
+				for(int i = 0; i < pr.contar();i++) {
 					for(int j = 0; j < 6;j++) {
 						dados[i][j] = d.get(a);
 						a++;
