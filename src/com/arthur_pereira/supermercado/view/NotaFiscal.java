@@ -2,7 +2,7 @@ package com.arthur_pereira.supermercado.view;
 import javax.swing.JLabel;
 import javax.swing.JTextArea;
 
-import com.arthur_pereira.supermercado.model.Compras;
+import com.arthur_pereira.supermercado.model.Compra;
 import com.arthur_pereira.supermercado.service.CommonData;
 
 import java.awt.Font;
@@ -11,7 +11,7 @@ import java.awt.Color;
 
 public class NotaFiscal extends TelaAbstrata {
 
-	ArrayList<Compras> carrinho = CommonData.getLastCarrinho();
+	ArrayList<Compra> carrinho = CommonData.getLastCarrinho();
 	
 	public NotaFiscal(float totalPago) {
 		super(370, 325);

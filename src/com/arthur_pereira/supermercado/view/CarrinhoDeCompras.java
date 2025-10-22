@@ -16,7 +16,7 @@ import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
 
-import com.arthur_pereira.supermercado.model.Compras;
+import com.arthur_pereira.supermercado.model.Compra;
 import com.arthur_pereira.supermercado.model.Produto;
 import com.arthur_pereira.supermercado.repository.ProdutoRepository;
 import com.arthur_pereira.supermercado.service.CommonData;
@@ -28,7 +28,7 @@ public class CarrinhoDeCompras extends TelaAbstrata {
 		
 		String[] colunas = {"Id", "Nome","Qtd.", "Preço", "Preço Total", "Remover"};
 		ProdutoRepository pr = new ProdutoRepository();
-		ArrayList<Compras> carrinho = CommonData.getCarrinho(); 
+		ArrayList<Compra> carrinho = CommonData.getCarrinho(); 
 		Object[][] dados;
 		float precoFinal;
 		
@@ -108,7 +108,7 @@ public class CarrinhoDeCompras extends TelaAbstrata {
 				
 				
 				if(!carrinho.isEmpty()) {
-					for(Compras c: carrinho) {
+					for(Compra c: carrinho) {
 						Produto p = c.getProduto();
 						d.add(String.valueOf(p.getId()));
 						d.add(String.valueOf(p.getNome()));

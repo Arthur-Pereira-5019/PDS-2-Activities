@@ -1,6 +1,6 @@
 package com.arthur_pereira.supermercado.model;
 
-public class Compras {
+public class Compra {
 	Produto produto;
 	Integer quantidade;
 	
@@ -16,12 +16,12 @@ public class Compras {
 	public void setQuantidade(Integer quantidade) {
 		this.quantidade = quantidade;
 	}
-	public Compras(Produto produto, Integer quantidade) {
+	public Compra(Produto produto, Integer quantidade) {
 		super();
 		this.produto = produto;
 		this.quantidade = quantidade;
 	}
-	public Compras() {
+	public Compra() {
 		super();
 	}
 	

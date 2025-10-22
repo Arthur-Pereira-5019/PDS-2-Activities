@@ -3,11 +3,11 @@ package com.arthur_pereira.supermercado.service;
 import java.util.ArrayList;
 
 import com.arthur_pereira.supermercado.model.*;
+import com.arthur_pereira.supermercado.repository.CarrinhoComprasRepository;
 
 public class CommonData {
 	private static Usuario logado;
-	private static ArrayList<Compras> carrinho;
-	private static ArrayList<Compras> lastCarrinho;
+	private static CarrinhoDeComprasService cps;
 	
 	public static Usuario getLogado() {
 		if(logado == null) {
@@ -20,20 +20,14 @@ public class CommonData {
 		logado = u;
 	}
 	
-	public static ArrayList<Compras> getCarrinho() {
-		if(carrinho == null) {
-			carrinho = new ArrayList<Compras>();
+	public static CarrinhoDeComprasService getCarrinhoService() {
+		if(cps == null) {
+			cps = new CarrinhoDeComprasService();
 		}
-		return carrinho;
+		return cps;
 	}
 	
 	
-	public static ArrayList<Compras> getLastCarrinho() {
-		if(lastCarrinho == null) {
-			lastCarrinho = new ArrayList<Compras>();
-		}
-		return lastCarrinho;
-	}
 
 
 }

@@ -11,7 +11,7 @@ import javax.swing.JOptionPane;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 
-import com.arthur_pereira.supermercado.model.Compras;
+import com.arthur_pereira.supermercado.model.Compra;
 import com.arthur_pereira.supermercado.model.Produto;
 import com.arthur_pereira.supermercado.repository.ProdutoRepository;
 import com.arthur_pereira.supermercado.service.CommonData;
@@ -68,7 +68,7 @@ public class TableButtonLogic extends DefaultCellEditor{
 	        	if(quantidade > p.getQuantidade()) {
 	        		Popups.showError("Estoque insuficiente!");
 	        	} else {
-		            CommonData.getCarrinho().add(new Compras(p, quantidade));
+		            CommonData.getCarrinho().add(new Compra(p, quantidade));
 	        	}
 	        }
 	        isPushed = false;

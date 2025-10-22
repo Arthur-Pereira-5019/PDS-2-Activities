@@ -10,7 +10,7 @@ import javax.swing.JCheckBox;
 import javax.swing.JTable;
 import javax.swing.UIManager;
 
-import com.arthur_pereira.supermercado.model.Compras;
+import com.arthur_pereira.supermercado.model.Compra;
 import com.arthur_pereira.supermercado.model.Produto;
 import com.arthur_pereira.supermercado.repository.ProdutoRepository;
 import com.arthur_pereira.supermercado.service.CommonData;
