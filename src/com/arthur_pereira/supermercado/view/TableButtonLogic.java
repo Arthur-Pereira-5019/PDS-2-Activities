@@ -3,6 +3,7 @@ package com.arthur_pereira.supermercado.view;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
@@ -14,6 +15,7 @@ import javax.swing.UIManager;
 import com.arthur_pereira.supermercado.model.Compra;
 import com.arthur_pereira.supermercado.model.Produto;
 import com.arthur_pereira.supermercado.repository.ProdutoRepository;
+import com.arthur_pereira.supermercado.service.CarrinhoDeComprasService;
 import com.arthur_pereira.supermercado.service.CommonData;
 import com.arthur_pereira.supermercado.service.Popups;
 
@@ -23,6 +25,8 @@ public class TableButtonLogic extends DefaultCellEditor{
 	    private String label;
 	    private boolean isPushed;
 	    private final ProdutoRepository pr = new ProdutoRepository();
+CarrinhoDeComprasService ccs = CommonData.getCarrinhoService();
+		ArrayList<Compra> carrinho = (ArrayList<Compra>) ccs.listarCompras();
 	    Long id;
 	    Integer quantidade;
 	    Integer row;
@@ -68,7 +72,7 @@ public class TableButtonLogic extends DefaultCellEditor{
 	        	if(quantidade > p.getQuantidade()) {
 	        		Popups.showError("Estoque insuficiente!");
 	        	} else {
-		            CommonData.getCarrinho().add(new Compra(p, quantidade));
+		            ccs.adicionarCompra(new Compra(p, quantidade));
 	        	}
 	        }
 	        isPushed = false;

@@ -3,6 +3,7 @@ package com.arthur_pereira.supermercado.view;
 import java.awt.Component;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
@@ -13,6 +14,7 @@ import javax.swing.UIManager;
 import com.arthur_pereira.supermercado.model.Compra;
 import com.arthur_pereira.supermercado.model.Produto;
 import com.arthur_pereira.supermercado.repository.ProdutoRepository;
+import com.arthur_pereira.supermercado.service.CarrinhoDeComprasService;
 import com.arthur_pereira.supermercado.service.CommonData;
 import com.arthur_pereira.supermercado.service.Popups;
 
@@ -21,6 +23,8 @@ public class RemoverButtonLogic extends DefaultCellEditor{
     private String label;
     private boolean isPushed;
     private final ProdutoRepository pr = new ProdutoRepository();
+    CarrinhoDeComprasService ccs = CommonData.getCarrinhoService();
+	ArrayList<Compra> carrinho = (ArrayList<Compra>) ccs.listarCompras();
     Long id;
     Integer quantidade;
     Integer row;
@@ -61,7 +65,7 @@ public class RemoverButtonLogic extends DefaultCellEditor{
         if (isPushed) {
         	Long id = Long.valueOf((String) table.getValueAt(row, 0));        	
         	Produto p = pr.find(id);
-        	CommonData.getCarrinho().remove(p);
+        	ccs.removerCompra(ccs.procurarCompraPeloProduto(p));
         	Popups.showError("Produto removido com sucesso!");
         
         }
