@@ -56,8 +56,9 @@ CarrinhoDeComprasService ccs = CommonData.getCarrinhoService();
 	        }
 	        this.row = row;
 	        this.column = column;
-	        
-	        label = (value == null) ? "" : value.toString();
+			button.setText("Adicionar");
+
+	        label = "Adicionar";
 	        button.setText(label);
 	        isPushed = true;
 	        return button;

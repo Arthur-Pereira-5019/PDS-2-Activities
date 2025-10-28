@@ -55,7 +55,7 @@ public class RemoverButtonLogic extends DefaultCellEditor{
         this.row = row;
         this.column = column;
         
-        label = (value == null) ? "" : value.toString();
+        label = "Remover";
         button.setText(label);
         isPushed = true;
         return button;
@@ -66,8 +66,7 @@ public class RemoverButtonLogic extends DefaultCellEditor{
         	Long id = Long.valueOf((String) table.getValueAt(row, 0));        	
         	Produto p = pr.find(id);
         	ccs.removerCompra(ccs.procurarCompraPeloProduto(p));
-        	Popups.showError("Produto removido com sucesso!");
-        
+        	Popups.showSucess("Produto removido com sucesso!");
         }
         isPushed = false;
         return new String(label);

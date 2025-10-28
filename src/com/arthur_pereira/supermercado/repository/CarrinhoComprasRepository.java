@@ -35,14 +35,12 @@ public class CarrinhoComprasRepository {
 	}
 	
 	public Compra encontrarCompraPeloProduto(Produto p) {
-		Compra retorno = new Compra();
-		compras.forEach(c -> {
-			if(c.getProduto() == p ) {
-			retorno.setProduto(c.getProduto());
-			retorno.setQuantidade(c.getQuantidade());
+		for(Compra c: compras) {
+			if(c.getProduto().getId() == p.getId()) {
+				return c;
 			}
-		});
-		return retorno;
+		}
+		return null;
 	}
 
 }

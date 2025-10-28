@@ -21,9 +21,10 @@ public class TableButtonRenderer extends JButton implements TableCellRenderer{
 	@Override
 	public Component getTableCellRendererComponent(JTable table, Object value, boolean isSelected, boolean hasFocus,
 			int row, int column) {
-		setText("Adicionar");
 		setBackground(new Color(0, 170, 255));
 		setForeground(new Color(255, 255, 255));
+		
+		setText("Adicionar");
         return this;
 	}
 
