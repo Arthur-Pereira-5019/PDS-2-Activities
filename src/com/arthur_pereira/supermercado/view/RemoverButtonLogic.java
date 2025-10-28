@@ -1,6 +1,7 @@
 package com.arthur_pereira.supermercado.view;
 
 import java.awt.Component;
+import java.awt.Window;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import javax.swing.DefaultCellEditor;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import javax.swing.JTable;
+import javax.swing.SwingUtilities;
 import javax.swing.UIManager;
 
 import com.arthur_pereira.supermercado.model.Compra;
@@ -67,6 +69,11 @@ public class RemoverButtonLogic extends DefaultCellEditor{
         	Produto p = pr.find(id);
         	ccs.removerCompra(ccs.procurarCompraPeloProduto(p));
         	Popups.showSucess("Produto removido com sucesso!");
+        		Window topLevelParent = SwingUtilities.getWindowAncestor(button);
+        		if(topLevelParent instanceof CarrinhoDeCompras) {
+        			((CarrinhoDeCompras) topLevelParent).limparTabela();
+        			System.out.println("oieee");
+        		}
         }
         isPushed = false;
         return new String(label);

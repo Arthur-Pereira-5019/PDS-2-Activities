@@ -21,7 +21,7 @@ public class TelaListaDeProdutos extends TelaAbstrata {
 	String[][] dados;
 	
 	public TelaListaDeProdutos() {
-		super(400, 800);
+		super(600, 800);
 		getContentPane().setBackground(backgroundC);
 		
 		popularTabela();
@@ -65,7 +65,6 @@ public class TelaListaDeProdutos extends TelaAbstrata {
 				for(int j = 0; j < 3;j++) {
 					dados[i][j] = d.get(a);
 					a++;
-					System.out.println("Adicionado dado");
 				}
 			}
 		}

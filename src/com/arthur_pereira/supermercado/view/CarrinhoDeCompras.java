@@ -38,6 +38,11 @@ public class CarrinhoDeCompras extends TelaAbstrata {
 			public CarrinhoDeCompras() {
 				super(700, 620);
 				
+				carregarTabela();
+			}
+			
+			public void carregarTabela() {
+				precoFinal = 0;
 				popularTabela();
 				getContentPane().setLayout(null);
 				getContentPane().setBackground(backgroundC);
@@ -104,10 +109,12 @@ public class CarrinhoDeCompras extends TelaAbstrata {
 			}
 			
 			public void popularTabela() {
+				carrinho = (ArrayList<Compra>) ccs.listarCompras();
+				
 				dados = new Object[carrinho.size()][6];
 				ArrayList<Object> d = new ArrayList<>();
 				
-				JButton botao_adicionar = new JButton("Adicionar!");
+				JButton botao_adicionar = new JButton("Remover!");
 				
 				
 				if(!carrinho.isEmpty()) {
@@ -122,8 +129,6 @@ public class CarrinhoDeCompras extends TelaAbstrata {
 						d.add(String.valueOf(precoTotal));
 						
 						d.add(botao_adicionar);
-						System.out.println(d.size());
-						System.out.println(p.getNome());
 					}
 					
 					int a = 0;
@@ -151,4 +156,14 @@ public class CarrinhoDeCompras extends TelaAbstrata {
 		        }
 		    }
 			
+			public void limparTabela() {
+				for(int i = 0; i < carrinho.size();i++) {
+					for(int j = 0; j < 5;j++) {
+						getContentPane().removeAll();
+						revalidate();
+				        repaint(); 
+						carregarTabela();
+					}
+				}
+			}
 }
