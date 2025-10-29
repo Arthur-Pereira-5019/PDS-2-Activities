@@ -32,7 +32,7 @@ public class UsuarioServices {
 		}
 		
 		criarUsuario(u);
-		logar(u.getCpf(), u.getNome());
+		return logar(u.getCpf(), u.getNome());
 		
 	}
 

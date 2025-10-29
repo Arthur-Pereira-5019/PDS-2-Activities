@@ -73,9 +73,6 @@ public class TelaDeCadastro extends TelaAbstrata {
 				TelaAbstrata ta = new TelaDeCompras();
 				Usuario u = new Usuario();
 				
-				String nome = campoNome.getText();
-				String cpf = campoCPF.getText();
-				
 				
 				u.setCpf(campoCPF.getText());
 				u.setNome(campoNome.getText());
