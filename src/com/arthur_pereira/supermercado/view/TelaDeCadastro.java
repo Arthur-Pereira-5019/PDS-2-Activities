@@ -75,14 +75,7 @@ public class TelaDeCadastro extends TelaAbstrata {
 				
 				String nome = campoNome.getText();
 				String cpf = campoCPF.getText();
-				if(campoNome == null || campoCPF.getText() == null) {
-					Popups.showError("Por favor preencha todos os campos corretamente!");
-					return;
-				}
-				if(cpf.length() > 13) {
-					Popups.showError("Por favor informe um CPF correto e sem pontuação!");
-					return;
-				}
+				
 				
 				u.setCpf(campoCPF.getText());
 				u.setNome(campoNome.getText());
@@ -90,12 +83,13 @@ public class TelaDeCadastro extends TelaAbstrata {
 				
 				if(admnistradorCheckbox.isSelected()) {
 					ta = new TelaDeProdutos();
-					ta.abrirTela();
-					fecharTela();
 					u.setAdministrador(true);
 				}
-				us.criarUsuario(u);
-				ta.abrirTela();
+				if(us.cadastrar(u)) {
+					fecharTela();
+					ta.abrirTela();
+				}
+				
 			}
 		});
 		btnNewButton.setBounds(147, 214, 112, 23);

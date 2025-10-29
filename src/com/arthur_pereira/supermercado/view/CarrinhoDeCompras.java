@@ -87,8 +87,8 @@ public class CarrinhoDeCompras extends TelaAbstrata {
 				JButton btnNewButton = new JButton("Finalizar Compras");
 				btnNewButton.addActionListener(new ActionListener() {
 					public void actionPerformed(ActionEvent e) {
-						ccs.limpar();
 						ccs.atualizarUltimoCarrinho();
+						ccs.limpar();
 						carrinho.forEach(c -> {
 							Produto p = c.getProduto(); p.setQuantidade(c.getProduto().getQuantidade()-c.getQuantidade());
 							pr.update(c.getProduto(), true);
@@ -151,6 +151,7 @@ public class CarrinhoDeCompras extends TelaAbstrata {
 		        );
 
 		        if (result == JOptionPane.YES_OPTION) {
+		        	System.out.println(precoFinal);
 		            NotaFiscal nf = new NotaFiscal(precoFinal);
 		            nf.abrirTela();
 		        }

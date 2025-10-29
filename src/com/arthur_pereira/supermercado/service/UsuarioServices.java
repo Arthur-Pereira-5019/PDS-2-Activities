@@ -17,8 +17,23 @@ public class UsuarioServices {
 		return false;
 	}
 	
-	public String criarUsuario(Usuario u) {
+	private String criarUsuario(Usuario u) {
 		return ur.add(u);
+	}
+	
+	public boolean cadastrar(Usuario u) {
+		if(u.getNome() == null || u.getCpf() == null) {
+			Popups.showError("Por favor preencha todos os campos corretamente!");
+			return false;
+		}
+		if(u.getCpf().length() > 13) {
+			Popups.showError("Por favor informe um CPF correto e sem pontuação!");
+			return false;
+		}
+		
+		criarUsuario(u);
+		logar(u.getCpf(), u.getNome());
+		
 	}
 
 }

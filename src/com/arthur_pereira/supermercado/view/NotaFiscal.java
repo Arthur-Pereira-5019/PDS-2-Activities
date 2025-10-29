@@ -51,7 +51,7 @@ public class NotaFiscal extends TelaAbstrata {
 
 		getContentPane().add(lblNewLabel_2);
 		
-		carrinho.forEach(c -> {textArea.setText(textArea.getText()+c.getProduto().getNome()+"   "+"Preço total:"+String.format("%.2f", c.getProduto().getPreco()*c.getQuantidade())+"R$\n");});
+		carrinho.forEach(c -> {textArea.setText(textArea.getText()+c.getProduto().getNome()+" x" + c.getQuantidade() +  "  "+"Preço total: "+String.format("%.2f", c.getProduto().getPreco()*c.getQuantidade())+"R$\n");});
 		
 	}
 }

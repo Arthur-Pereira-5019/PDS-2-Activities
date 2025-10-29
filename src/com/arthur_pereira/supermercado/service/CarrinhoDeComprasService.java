@@ -61,6 +61,7 @@ public class CarrinhoDeComprasService {
 	}
 	
 	public void atualizarUltimoCarrinho() {
+		ArrayList<Compra> compras = (ArrayList<Compra>) listarCompras();
 		carrinhoSecundario = listarCompras();
 	}
 	
