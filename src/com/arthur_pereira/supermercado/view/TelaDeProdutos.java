@@ -15,195 +15,76 @@ import com.arthur_pereira.supermercado.service.CommonData;
 import com.arthur_pereira.supermercado.service.Popups;
 
 import java.awt.Color;
+import net.miginfocom.swing.MigLayout;
 
 public class TelaDeProdutos extends TelaAbstrata {
 	Popups popups = new Popups();
 	public TelaDeProdutos() {
 		super(360,360);
-		getContentPane().setLayout(null);
-		getContentPane().setBackground(backgroundC);
+		getContentPane().setLayout(new MigLayout("", "[grow][111,grow][grow][111,grow][grow][grow][111,grow][grow]", "[grow][grow][grow][grow][grow][grow][grow][grow]"));
 		
 		JLabel lblNewLabel = new JLabel("Produtos");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 24));
-		lblNewLabel.setBounds(105, 11, 129, 23);
-		lblNewLabel.setForeground(textC);
-		getContentPane().add(lblNewLabel);
-		
-		JButton botaoEncontrar = new JButton("Encontrar");
-		botaoEncontrar.setForeground(new Color(0, 0, 255));
-		botaoEncontrar.setBackground(highlightC);
-		botaoEncontrar.setForeground(textC);
-		botaoEncontrar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				encontrarProduto();
-			}
-		});
-		botaoEncontrar.setBounds(10, 108, 117, 23);
-		getContentPane().add(botaoEncontrar);
-		
-		JButton botaoRemover = new JButton("Remover");
-		botaoRemover.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				deletarProduto();
-			}
-		});
-		botaoRemover.setForeground(textC);
-		botaoRemover.setBackground(highlightC);
-		botaoRemover.setBounds(216, 108, 89, 23);
-		getContentPane().add(botaoRemover);
-		
-		campoId = new JTextField();
-		campoId.setBounds(44, 77, 244, 20);
-		campoId.setBackground(highlightC);
-		campoId.setForeground(textC);
-		getContentPane().add(campoId);
-		campoId.setColumns(10);
+		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 28));
+		getContentPane().add(lblNewLabel, "cell 3 0,alignx center");
 		
 		JLabel lblNewLabel_1 = new JLabel("Id do Produto");
-		lblNewLabel_1.setBounds(124, 60, 110, 14);
-		lblNewLabel_1.setForeground(textC);
-		getContentPane().add(lblNewLabel_1);
+		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		getContentPane().add(lblNewLabel_1, "cell 1 1,alignx center");
 		
-		campoNome = new JTextField();
-		campoNome.setBounds(10, 176, 86, 20);
-		campoNome.setBackground(highlightC);	
-		campoNome.setForeground(textC);	
-		getContentPane().add(campoNome);
-		campoNome.setColumns(10);
+		textField = new JTextField();
+		getContentPane().add(textField, "cell 1 2 7 1,growx");
+		textField.setColumns(10);
 		
-		JLabel labelNome = new JLabel("Nome");
-		labelNome.setBounds(33, 157, 46, 14);
-		labelNome.setForeground(textC);
-		getContentPane().add(labelNome);
+		JButton btnNewButton = new JButton("Encontrar");
+		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		getContentPane().add(btnNewButton, "cell 2 3");
 		
-		campoPreco = new JTextField();
-		campoPreco.setBounds(219, 176, 86, 20);
-		campoPreco.setForeground(textC);	
-		campoPreco.setBackground(highlightC);	
-		getContentPane().add(campoPreco);
-		campoPreco.setColumns(10);
+		JButton btnNewButton_1 = new JButton("Excluir");
+		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		getContentPane().add(btnNewButton_1, "cell 6 3,growx");
 		
-		JLabel lblNewLabel_3 = new JLabel("Preço");
-		lblNewLabel_3.setBounds(246, 157, 42, 14);
-		lblNewLabel_3.setBackground(highlightC);
-		lblNewLabel_3.setForeground(textC);	
-		getContentPane().add(lblNewLabel_3);
+		JLabel lblNewLabel_2 = new JLabel("Nome");
+		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		getContentPane().add(lblNewLabel_2, "cell 1 4,alignx center");
 		
-		JLabel labelLogOut = new JLabel("Log Out");
-		labelLogOut.addMouseListener(new MouseAdapter() {
-			@Override
-			public void mouseClicked(MouseEvent e) {
-				CommonData.setLogado(null);
-				LoginScreen ls = new LoginScreen();
-				ls.abrirTela();
-				fecharTela();
-			}
-		});
-		labelLogOut.setForeground(new Color(255, 0, 0));
-		labelLogOut.setBounds(233, 22, 72, 13);
-		getContentPane().add(labelLogOut);
+		JLabel lblNewLabel_3 = new JLabel("Quantidade");
+		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		getContentPane().add(lblNewLabel_3, "cell 3 4,alignx center");
 		
-		JButton botaoAtualizar = new JButton("Atualizar");
-		botaoAtualizar.setBackground(highlightC);
-		botaoAtualizar.setForeground(textC);		
+		JLabel lblNewLabel_4 = new JLabel("Preço");
+		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		getContentPane().add(lblNewLabel_4, "cell 6 4,alignx center");
 		
-		botaoAtualizar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				atualizarProduto();
-			}
-		});
-		botaoAtualizar.setBounds(216, 224, 89, 23);
-		getContentPane().add(botaoAtualizar);
+		textField_1 = new JTextField();
+		getContentPane().add(textField_1, "cell 1 5,alignx center");
+		textField_1.setColumns(10);
 		
-		JButton botaoCriar = new JButton("Criar");
-		botaoCriar.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				criarProduto();
-			}
-		});
-		botaoCriar.setBackground(highlightC);
-		botaoCriar.setForeground(textC);		
-		botaoCriar.setBounds(10, 224, 89, 23);
-		getContentPane().add(botaoCriar);
+		textField_2 = new JTextField();
+		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		getContentPane().add(textField_2, "cell 3 5,growx");
+		textField_2.setColumns(10);
 		
-		JButton botaoET = new JButton("Encontrar Todos");
-		botaoET.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				TelaListaDeProdutos ldr = new TelaListaDeProdutos();
-				ldr.abrirTela();
-			}
-		});
+		textField_3 = new JTextField();
+		getContentPane().add(textField_3, "cell 6 5,growx");
+		textField_3.setColumns(10);
 		
-		botaoET.setBackground(highlightC);
-		botaoET.setForeground(textC);
+		JButton btnNewButton_2 = new JButton("Criar");
+		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		getContentPane().add(btnNewButton_2, "cell 2 6,growx");
 		
-		botaoET.setBounds(89, 272, 145, 23);
-		getContentPane().add(botaoET);
-		
-		campoQuantidade = new JTextField();
-		campoQuantidade.setBounds(112, 176, 86, 20);
-		campoQuantidade.setBackground(highlightC);
-		campoQuantidade.setForeground(textC);
-		getContentPane().add(campoQuantidade);
-		campoQuantidade.setColumns(10);
-		
-		JLabel lblNewLabel_4 = new JLabel("Quantidade");
-		lblNewLabel_4.setLocation(124, 157);
-		lblNewLabel_4.setSize(74, 14);
-		lblNewLabel_4.setForeground(textC);
-		getContentPane().add(lblNewLabel_4);
+		JButton btnNewButton_3 = new JButton("Atualizar");
+		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		getContentPane().add(btnNewButton_3, "cell 6 6,alignx center");
 	}
 
 	ProdutoRepository pr = new ProdutoRepository();
-	private JTextField campoId;
-	private JTextField campoNome;
-	private JTextField campoPreco;
-	private JTextField campoQuantidade;
+	private JTextField textField;
+	private JTextField textField_1;
+	private JTextField textField_2;
+	private JTextField textField_3;
 
 	public void buscarProdutos() {
 		pr.findAll();
-	}
-	
-	public void encontrarProduto() {
-		try {
-			Produto p = pr.find(Long.valueOf(campoId.getText()));
-			campoNome.setText(p.getNome());
-			campoPreco.setText(p.getPreco().toString());
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
-	public void criarProduto() {
-		//TODO: Verificar se há produto de nome igual
-		try {
-			Produto p = new Produto();
-			p.setId(pr.contar().longValue());
-			p.setNome(campoNome.getText());
-			p.setPreco(Float.valueOf(campoPreco.getText()));
-			p.setQuantidade(Integer.valueOf(campoQuantidade.getText()));
-			campoId.setText(pr.add(p));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void atualizarProduto() {
-		try {
-			Produto p = new Produto();
-			p.setNome(campoNome.getText());
-			p.setPreco(Float.valueOf(campoPreco.getText()));
-			p.setQuantidade(Integer.valueOf(campoQuantidade.getText()));
-			p.setId(Long.valueOf(campoId.getText()));
-			pr.update(p, false);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void deletarProduto() {
-		pr.removeById(Long.valueOf(campoId.getText()));
 	}
 	
 	public void abrirTela(int Width, int Height) {
