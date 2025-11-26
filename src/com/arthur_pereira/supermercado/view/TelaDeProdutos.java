@@ -21,70 +21,139 @@ public class TelaDeProdutos extends TelaAbstrata {
 	Popups popups = new Popups();
 	public TelaDeProdutos() {
 		super(360,360);
-		getContentPane().setLayout(new MigLayout("", "[grow][111,grow][grow][111,grow][grow][grow][111,grow][grow]", "[grow][grow][grow][grow][grow][grow][grow][grow]"));
+		getContentPane().setLayout(new MigLayout("", "[grow][111,grow][grow][111,grow][grow][111,grow][grow]", "[grow][grow][grow][grow][grow][grow][grow][grow]"));
+		getContentPane().setBackground(backgroundC);
+
 		
 		JLabel lblNewLabel = new JLabel("Produtos");
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 28));
 		getContentPane().add(lblNewLabel, "cell 3 0,alignx center");
+		lblNewLabel.setForeground(textC);
 		
 		JLabel lblNewLabel_1 = new JLabel("Id do Produto");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		getContentPane().add(lblNewLabel_1, "cell 1 1,alignx center");
+		lblNewLabel_1.setForeground(textC);
+
 		
-		textField = new JTextField();
-		getContentPane().add(textField, "cell 1 2 7 1,growx");
-		textField.setColumns(10);
+		campoId = new JTextField();
+		getContentPane().add(campoId, "cell 1 2 6 1,growx");
+		campoId.setColumns(10);
+		campoId.setBackground(highlightC);
+		campoId.setForeground(textC);
+
 		
 		JButton btnNewButton = new JButton("Encontrar");
 		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		getContentPane().add(btnNewButton, "cell 2 3");
+		btnNewButton.setBackground(highlightC);
+		btnNewButton.setForeground(textC);
 		
 		JButton btnNewButton_1 = new JButton("Excluir");
 		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		getContentPane().add(btnNewButton_1, "cell 6 3,growx");
+		getContentPane().add(btnNewButton_1, "cell 5 3,growx");
+		btnNewButton_1.setBackground(highlightC);
+		btnNewButton_1.setForeground(textC);
 		
 		JLabel lblNewLabel_2 = new JLabel("Nome");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		getContentPane().add(lblNewLabel_2, "cell 1 4,alignx center");
+		lblNewLabel_2.setForeground(textC);
 		
 		JLabel lblNewLabel_3 = new JLabel("Quantidade");
 		lblNewLabel_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		getContentPane().add(lblNewLabel_3, "cell 3 4,alignx center");
+		lblNewLabel_3.setForeground(textC);
 		
 		JLabel lblNewLabel_4 = new JLabel("Preço");
 		lblNewLabel_4.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		getContentPane().add(lblNewLabel_4, "cell 6 4,alignx center");
+		getContentPane().add(lblNewLabel_4, "cell 5 4,alignx center");
+		lblNewLabel_4.setForeground(textC);
+
 		
-		textField_1 = new JTextField();
-		getContentPane().add(textField_1, "cell 1 5,alignx center");
-		textField_1.setColumns(10);
+		campoNome = new JTextField();
+		getContentPane().add(campoNome, "cell 1 5,alignx center");
+		campoNome.setColumns(10);
+		campoNome.setBackground(highlightC);
+		campoNome.setForeground(textC);
+
 		
-		textField_2 = new JTextField();
-		textField_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		getContentPane().add(textField_2, "cell 3 5,growx");
-		textField_2.setColumns(10);
+		campoPreco = new JTextField();
+		campoPreco.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		getContentPane().add(campoPreco, "cell 3 5,growx");
+		campoPreco.setColumns(10);
+		campoPreco.setBackground(highlightC);
+		campoPreco.setForeground(textC);
 		
-		textField_3 = new JTextField();
-		getContentPane().add(textField_3, "cell 6 5,growx");
-		textField_3.setColumns(10);
+		campoQuantidade = new JTextField();
+		getContentPane().add(campoQuantidade, "cell 5 5,growx");
+		campoQuantidade.setColumns(10);
+		campoQuantidade.setBackground(highlightC);
+		campoQuantidade.setForeground(textC);
 		
 		JButton btnNewButton_2 = new JButton("Criar");
 		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		getContentPane().add(btnNewButton_2, "cell 2 6,growx");
+		btnNewButton_2.setBackground(highlightC);
+		btnNewButton_2.setForeground(textC);
 		
 		JButton btnNewButton_3 = new JButton("Atualizar");
 		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		getContentPane().add(btnNewButton_3, "cell 6 6,alignx center");
+		getContentPane().add(btnNewButton_3, "cell 5 6,alignx center");
+		btnNewButton_3.setBackground(highlightC);
+		btnNewButton_3.setForeground(textC);
 	}
 
 	ProdutoRepository pr = new ProdutoRepository();
-	private JTextField textField;
-	private JTextField textField_1;
-	private JTextField textField_2;
-	private JTextField textField_3;
+	private JTextField campoId;
+	private JTextField campoNome;
+	private JTextField campoPreco;
+	private JTextField campoQuantidade;
 
 	public void buscarProdutos() {
 		pr.findAll();
+	}
+	
+	public void encontrarProduto() {
+		try {
+			Produto p = pr.find(Long.valueOf(campoId.getText()));
+			campoNome.setText(p.getNome());
+			campoPreco.setText(p.getPreco().toString());
+		} catch(Exception e) {
+			e.printStackTrace();
+		}
+		
+	}
+	
+	public void criarProduto() {
+		//TODO: Verificar se há produto de nome igual
+		try {
+			Produto p = new Produto();
+			p.setId(pr.contar().longValue());
+			p.setNome(campoNome.getText());
+			p.setPreco(Float.valueOf(campoPreco.getText()));
+			p.setQuantidade(Integer.valueOf(campoQuantidade.getText()));
+			campoId.setText(pr.add(p));
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void atualizarProduto() {
+		try {
+			Produto p = new Produto();
+			p.setNome(campoNome.getText());
+			p.setPreco(Float.valueOf(campoPreco.getText()));
+			p.setQuantidade(Integer.valueOf(campoQuantidade.getText()));
+			p.setId(Long.valueOf(campoId.getText()));
+			pr.update(p, false);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public void deletarProduto() {
+		pr.removeById(Long.valueOf(campoId.getText()));
 	}
 	
 	public void abrirTela(int Width, int Height) {
@@ -99,4 +168,5 @@ public class TelaDeProdutos extends TelaAbstrata {
 	public void fecharTela() {
 		
 	}
+
 }
