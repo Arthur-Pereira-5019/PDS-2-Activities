@@ -125,14 +125,13 @@ public class TelaDeProdutos extends TelaAbstrata {
 		
 	}
 	
-	public void criarProduto() {
-		//TODO: Verificar se há produto de nome igual
+	public void criarProduto(Produto p) {
+		if(p.getNome().isBlank()) {
+			throw new InvalidDataException();
+		}
+		
 		try {
-			Produto p = new Produto();
-			p.setId(pr.contar().longValue());
-			p.setNome(campoNome.getText());
-			p.setPreco(Float.valueOf(campoPreco.getText()));
-			p.setQuantidade(Integer.valueOf(campoQuantidade.getText()));
+			pr.add(p);
 			campoId.setText(pr.add(p));
 		} catch (Exception e) {
 			e.printStackTrace();

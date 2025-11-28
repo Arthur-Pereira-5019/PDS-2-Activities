@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.arthur_pereira.supermercado.exceptions.UnknownDatabaseError;
 import com.arthur_pereira.supermercado.model.Produto;
 import com.arthur_pereira.supermercado.service.BancoDeDados;
 import com.arthur_pereira.supermercado.service.Popups;
@@ -21,7 +22,7 @@ public class ProdutoRepository {
 		bd = BancoDeDados.getConnection();
 	}
 	
-	public String add(Produto p) {
+	public Produto add(Produto p) {
 		String sql = "insert into produtos values (?, ?, 0, ?)";
 		try {
 			PreparedStatement ps = bd.prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
@@ -29,18 +30,19 @@ public class ProdutoRepository {
 			ps.setFloat(2, p.getPreco());
 			ps.setFloat(3, p.getQuantidade());
 			ps.execute();
-			Popups.showSucess("Produto adicionado com sucesso!");
 		    try (ResultSet generatedKeys = ps.getGeneratedKeys()) {
 		        if (generatedKeys.next()) {
-		            return String.valueOf(generatedKeys.getLong(1));
+		        	Produto np = p;
+		        	np.setId(generatedKeys.getLong(1));
+		            return np;
+		        } else {
+					throw new UnknownDatabaseError("Erro desconhecido ao salvar produto!");
 		        }
 		    }
 		    
 		} catch (SQLException e) {
-			Popups.showError("Erro ao criar produto!");
-			e.printStackTrace();
+			throw new UnknownDatabaseError("Erro desconhecido ao salvar produto!");
 		}
-		return "";
 	}
 	
 	public void removeById(Long id) {
