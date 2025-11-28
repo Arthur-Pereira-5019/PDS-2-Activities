@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.arthur_pereira.supermercado.exceptions.NotFoundException;
 import com.arthur_pereira.supermercado.exceptions.UnknownDatabaseError;
 import com.arthur_pereira.supermercado.model.Produto;
 import com.arthur_pereira.supermercado.service.BancoDeDados;
@@ -46,16 +47,14 @@ public class ProdutoRepository {
 	}
 	
 	public void removeById(Long id) {
+		find(id);
 		String sql = "delete from produtos where id=?";
 		try {
 			PreparedStatement ps = bd.prepareStatement(sql);
 			ps.setString(0, id.toString());
 			ps.execute();
-			Popups.showSucess("Produto removido com sucesso!");
-
 		} catch(Exception e) {
-			e.printStackTrace();
-			Popups.showError("Erro ao remover o produto");
+			throw new UnknownDatabaseError("Erro desconhecido ao excluir produto!");
 		}
 	}
 	
@@ -66,15 +65,16 @@ public class ProdutoRepository {
 			PreparedStatement ps = bd.prepareStatement(sql);
 			ps.setLong(1, id);
 			ResultSet rs = ps.executeQuery();
-			rs.next();
+			if(rs.next()) {
+				throw new NotFoundException("Produto não encontrado!");
+			}
 			String nome = rs.getString(1);
 			Float preco = rs.getFloat(2);
 			Long foundId = rs.getLong(3);
 			int quantidade = rs.getInt(4);
 			retorno = new Produto(nome, preco, foundId, quantidade);
-			Popups.showSucess("Produto encontrado com sucesso!");
 		} catch (SQLException e) {
-			Popups.showError("Produto não encontrado!");
+			throw new NotFoundException("Produto não encontrado!");
 		}
 		return retorno;
 	}
@@ -93,12 +93,12 @@ public class ProdutoRepository {
 				retorno.add(new Produto(nome, preco, foundId, quantidade));
 			}
 		} catch (SQLException e) {
-			Popups.showError("Erro ao procurar produtos!");
+			throw new NotFoundException("Erro ao buscar produtos!");
 		}
 		return retorno;
 	}
 	
-	public void update(Produto p, boolean finalizacao) {
+	public Produto update(Produto p) {
 		String sql = "update produtos set nome = ?, preco = ?, quantidade = ? where id = ?";
 		try {
 			PreparedStatement ps = bd.prepareStatement(sql);
@@ -107,12 +107,10 @@ public class ProdutoRepository {
 			ps.setFloat(3, p.getQuantidade());
 			ps.setFloat(4, p.getId());
 			ps.execute();
-			if(!finalizacao) {
-				Popups.showSucess("Produto atualizado com sucesso!");
-			}
+			return p;
 		} catch (SQLException e) {
-			Popups.showError("Erro ao atualizar produto!");
-		}
+			throw new UnknownDatabaseError("Erro desconhecido ao atualizar produto!");		
+			}
 	}
 	
 	public Integer contar() {

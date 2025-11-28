@@ -2,22 +2,31 @@ package com.arthur_pereira.supermercado.service;
 
 import com.arthur_pereira.supermercado.model.Produto;
 import com.arthur_pereira.supermercado.repository.ProdutoRepository;
+
+import java.util.List;
+
 import com.arthur_pereira.supermercado.exceptions.*;
 
 public class ProdutoServices {
 	ProdutoRepository pr = new ProdutoRepository();
 	
-	public Produto encontrarProduto(Long id) {
-		try {
-			Produto p = pr.find(Long.valueOf(id));
-			return p;
-		} catch(Exception e) {
-			throw new NotFoundException("");
-		}
-		
+	public Produto findProduct(Long id) {
+		Produto p = pr.find(Long.valueOf(id));
+		return p;
 	}
 	
-	public Produto criarProduto(Produto p) {
+	public Produto createProduct(Produto p) {
+		validateProduct(p);
+		return pr.add(p);
+	}
+	
+	public Produto updateProduct(Produto p) {
+		validateProduct(p);
+		return pr.update(p);
+	}
+	
+	public void validateProduct(Produto p) {
+		validateId(p.getId());
 		if(p.getNome().isBlank()) {
 			throw new InvalidDataException("Dê um nome ao seu produto!");
 		}
@@ -31,27 +40,22 @@ public class ProdutoServices {
 		if(p.getPreco().toString().split(".")[1].length() > 2) {
 			throw new InvalidDataException("Preço mal-formatado!");
 		}
-		try {
-			return pr.add(p);
-		} catch (Exception e) {
-			throw new UnknownDatabaseError();
+	}
+	
+	public void validateId(Long id) {
+		if(id != null) {
+			if(id < 0L) {
+				throw new InvalidDataException("Id de produto inválido!");
+			}
 		}
 	}
 	
-	public void atualizarProduto() {
-		try {
-			Produto p = new Produto();
-			p.setNome(campoNome.getText());
-			p.setPreco(Float.valueOf(campoPreco.getText()));
-			p.setQuantidade(Integer.valueOf(campoQuantidade.getText()));
-			p.setId(Long.valueOf(campoId.getText()));
-			pr.update(p, false);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
+	public void deleteProducts(Long id) {
+		validateId(id);
+		pr.removeById(id);
 	}
 	
-	public void deletarProduto() {
-		pr.removeById(Long.valueOf(campoId.getText()));
+	public List<Produto> listAllProducts() {
+		return pr.findAll();
 	}
 }

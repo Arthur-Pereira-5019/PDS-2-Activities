@@ -13,12 +13,19 @@ import com.arthur_pereira.supermercado.repository.ProdutoRepository;
 import com.arthur_pereira.supermercado.service.BancoDeDados;
 import com.arthur_pereira.supermercado.service.CommonData;
 import com.arthur_pereira.supermercado.service.Popups;
+import com.arthur_pereira.supermercado.service.ProdutoServices;
 
 import java.awt.Color;
 import net.miginfocom.swing.MigLayout;
 
 public class TelaDeProdutos extends TelaAbstrata {
 	Popups popups = new Popups();
+	private ProdutoServices ps = new ProdutoServices();
+	private JTextField campoId;
+	private JTextField campoNome;
+	private JTextField campoPreco;
+	private JTextField campoQuantidade;
+	
 	public TelaDeProdutos() {
 		super(360,360);
 		getContentPane().setLayout(new MigLayout("", "[grow 15][111,grow][grow][111,grow][grow][111,grow][grow 15]", "[grow 15][][grow 15][][][][grow 35][][][][][][grow 15]"));
@@ -103,60 +110,9 @@ public class TelaDeProdutos extends TelaAbstrata {
 		btnNewButton_3.setBackground(highlightC);
 		btnNewButton_3.setForeground(textC);
 	}
-
-	ProdutoRepository pr = new ProdutoRepository();
-	private JTextField campoId;
-	private JTextField campoNome;
-	private JTextField campoPreco;
-	private JTextField campoQuantidade;
-
-	public void buscarProdutos() {
-		pr.findAll();
-	}
-	
-	public void encontrarProduto() {
-		try {
-			Produto p = pr.find(Long.valueOf(campoId.getText()));
-			campoNome.setText(p.getNome());
-			campoPreco.setText(p.getPreco().toString());
-		} catch(Exception e) {
-			e.printStackTrace();
-		}
-		
-	}
-	
-	public void criarProduto(Produto p) {
-		if(p.getNome().isBlank()) {
-			throw new InvalidDataException();
-		}
-		
-		try {
-			pr.add(p);
-			campoId.setText(pr.add(p));
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void atualizarProduto() {
-		try {
-			Produto p = new Produto();
-			p.setNome(campoNome.getText());
-			p.setPreco(Float.valueOf(campoPreco.getText()));
-			p.setQuantidade(Integer.valueOf(campoQuantidade.getText()));
-			p.setId(Long.valueOf(campoId.getText()));
-			pr.update(p, false);
-		} catch (Exception e) {
-			e.printStackTrace();
-		}
-	}
-	
-	public void deletarProduto() {
-		pr.removeById(Long.valueOf(campoId.getText()));
-	}
 	
 	public void abrirTela(int Width, int Height) {
-		this.setSize(400,400);
+		this.setSize(400,600);
 		this.setVisible(true);
 	}
 	

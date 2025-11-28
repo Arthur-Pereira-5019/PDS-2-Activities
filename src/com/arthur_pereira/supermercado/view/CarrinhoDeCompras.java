@@ -21,6 +21,7 @@ import com.arthur_pereira.supermercado.model.Produto;
 import com.arthur_pereira.supermercado.repository.ProdutoRepository;
 import com.arthur_pereira.supermercado.service.CarrinhoDeComprasService;
 import com.arthur_pereira.supermercado.service.CommonData;
+import com.arthur_pereira.supermercado.service.ProdutoServices;
 
 import javax.swing.JTextArea;
 
@@ -28,7 +29,7 @@ public class CarrinhoDeCompras extends TelaAbstrata {
 		private JTable table;
 		
 		String[] colunas = {"Id", "Nome","Qtd.", "Preço", "Preço Total", "Remover"};
-		ProdutoRepository pr = new ProdutoRepository();
+		ProdutoServices ps = new ProdutoServices();
 		CarrinhoDeComprasService ccs = CommonData.getCarrinhoService();
 		
 		ArrayList<Compra> carrinho = (ArrayList<Compra>) ccs.listarCompras();
@@ -91,7 +92,7 @@ public class CarrinhoDeCompras extends TelaAbstrata {
 						ccs.limpar();
 						carrinho.forEach(c -> {
 							Produto p = c.getProduto(); p.setQuantidade(c.getProduto().getQuantidade()-c.getQuantidade());
-							pr.update(c.getProduto(), true);
+							ps.updateProduct(c.getProduto());
 							});
 						carrinho.clear();
 						popupNotinha();
