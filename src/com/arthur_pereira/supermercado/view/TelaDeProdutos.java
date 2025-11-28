@@ -17,6 +17,7 @@ import com.arthur_pereira.supermercado.service.ProdutoServices;
 
 import java.awt.Color;
 import net.miginfocom.swing.MigLayout;
+import javax.swing.SwingConstants;
 
 public class TelaDeProdutos extends TelaAbstrata {
 	Popups popups = new Popups();
@@ -25,10 +26,12 @@ public class TelaDeProdutos extends TelaAbstrata {
 	private JTextField campoNome;
 	private JTextField campoPreco;
 	private JTextField campoQuantidade;
+	private final int HEIGTH = 360;
+	private final int WIDTH = 500;
 	
 	public TelaDeProdutos() {
-		super(360,360);
-		getContentPane().setLayout(new MigLayout("", "[grow 15][111,grow][grow][111,grow][grow][111,grow][grow 15]", "[grow 15][][grow 15][][][][grow 35][][][][][][grow 15]"));
+		super(500,360);
+		getContentPane().setLayout(new MigLayout("", "[grow 15][111,grow][grow][111,grow][grow][111,grow][grow 15]", "[grow 15][][grow 15][][][][grow 35][][][][][][][grow 15]"));
 		getContentPane().setBackground(backgroundC);
 
 		
@@ -36,6 +39,21 @@ public class TelaDeProdutos extends TelaAbstrata {
 		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 28));
 		getContentPane().add(lblNewLabel, "cell 3 1,alignx center");
 		lblNewLabel.setForeground(textC);
+		
+		JLabel lblNewLabel_5 = new JLabel("New label");
+		lblNewLabel_5.setForeground(new Color(255, 0, 0));
+		lblNewLabel_5.setHorizontalAlignment(SwingConstants.CENTER);
+		lblNewLabel_5.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		lblNewLabel_5.addMouseListener(new MouseAdapter() {
+			@Override
+			public void mouseClicked(MouseEvent e) {
+				CommonData.setLogado(null);
+				LoginScreen ls = new LoginScreen();
+				ls.abrirTela();
+				fecharTela();
+			}
+		});
+		getContentPane().add(lblNewLabel_5, "cell 5 1");
 		
 		JLabel lblNewLabel_1 = new JLabel("Id do Produto");
 		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -50,17 +68,22 @@ public class TelaDeProdutos extends TelaAbstrata {
 		campoId.setForeground(textC);
 
 		
-		JButton btnNewButton = new JButton("Encontrar");
-		btnNewButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		getContentPane().add(btnNewButton, "cell 2 7");
-		btnNewButton.setBackground(highlightC);
-		btnNewButton.setForeground(textC);
+		JButton findButton = new JButton("Encontrar");
+		findButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				ps.findProduct(Long.valueOf(campoId.getText()));
+			}
+		});
+		findButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		getContentPane().add(findButton, "cell 2 7");
+		findButton.setBackground(highlightC);
+		findButton.setForeground(textC);
 		
-		JButton btnNewButton_1 = new JButton("Excluir");
-		btnNewButton_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		getContentPane().add(btnNewButton_1, "cell 5 7,growx");
-		btnNewButton_1.setBackground(highlightC);
-		btnNewButton_1.setForeground(textC);
+		JButton deleteButton = new JButton("Excluir");
+		deleteButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		getContentPane().add(deleteButton, "cell 5 7,growx");
+		deleteButton.setBackground(highlightC);
+		deleteButton.setForeground(textC);
 		
 		JLabel lblNewLabel_2 = new JLabel("Nome");
 		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -98,21 +121,41 @@ public class TelaDeProdutos extends TelaAbstrata {
 		campoQuantidade.setBackground(highlightC);
 		campoQuantidade.setForeground(textC);
 		
-		JButton btnNewButton_2 = new JButton("Criar");
-		btnNewButton_2.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		getContentPane().add(btnNewButton_2, "cell 2 11,growx");
-		btnNewButton_2.setBackground(highlightC);
-		btnNewButton_2.setForeground(textC);
+		JButton createButton = new JButton("Criar");
+		createButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		getContentPane().add(createButton, "cell 2 11,growx");
+		createButton.setBackground(highlightC);
+		createButton.setForeground(textC);
 		
-		JButton btnNewButton_3 = new JButton("Atualizar");
-		btnNewButton_3.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		getContentPane().add(btnNewButton_3, "cell 4 11,growx");
-		btnNewButton_3.setBackground(highlightC);
-		btnNewButton_3.setForeground(textC);
+		JButton updateButton = new JButton("Atualizar");
+		updateButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		getContentPane().add(updateButton, "cell 4 11,growx");
+		updateButton.setBackground(highlightC);
+		updateButton.setForeground(textC);
+		
+		JButton btnEncontrarTodos = new JButton("Encontrar Todos");
+		btnEncontrarTodos.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				TelaListaDeProdutos ldr = new TelaListaDeProdutos();
+				ldr.abrirTela();
+			}
+		});
+		getContentPane().add(btnEncontrarTodos, "cell 5 12");
+		btnEncontrarTodos.setBackground(highlightC);
+		btnEncontrarTodos.setForeground(textC);
+	}
+	
+	public Produto gerarProduto() {
+		Produto p = new Produto();
+		p.setId(Long.valueOf(campoId.getText()));
+		p.setNome(campoNome.getText());
+		p.setPreco(Float.valueOf(campoPreco.getText()));
+		p.setQuantidade(Integer.valueOf(campoQuantidade.getText()));
+		return p;
 	}
 	
 	public void abrirTela(int Width, int Height) {
-		this.setSize(400,600);
+		this.setSize(WIDTH,HEIGTH);
 		this.setVisible(true);
 	}
 	
