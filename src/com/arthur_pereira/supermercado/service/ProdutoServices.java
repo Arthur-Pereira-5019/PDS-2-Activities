@@ -11,7 +11,7 @@ public class ProdutoServices {
 	ProdutoRepository pr = new ProdutoRepository();
 	
 	public Produto findProduct(Long id) {
-		Produto p = pr.find(Long.valueOf(id));
+		Produto p = pr.find(id);
 		return p;
 	}
 	

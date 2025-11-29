@@ -10,20 +10,18 @@ public class UsuarioServices {
 	
 	public boolean logar(Usuario u) {
 		validarDados(u);
-		Usuario u2 = null;
-		try {
-			u2 = ur.findByCpf(u.getCpf());
-		} catch (Exception ex) {
-			throw new BadLoginException("Credenciais inválidas!");
-		}
+		Usuario u2 = ur.findByCpf(u.getCpf());
 		if(u2 != null && u2.getNome().equals(u.getNome())) {
-			CommonData.setLogado(u);
+			CommonData.setLogado(ur.findByCpf(u.getCpf()));
 			return true;
 		}
 		throw new BadLoginException("Credenciais inválidas!");
 	}
 	
-	private String criarUsuario(Usuario u) {
+	private Usuario criarUsuario(Usuario u) {
+		if(ur.findByCpf(u.getCpf()) != null) {
+			throw new DuplicatedResourceException("Usuário já existente! Faça login ou corrija seus dados de cadastro!");
+		}
 		return ur.add(u);
 	}
 	
@@ -48,6 +46,9 @@ public class UsuarioServices {
 		}
 		if(!u.getNome().matches("[aA-zZ]*")) {
 			throw new InvalidNameException("O nome deve ser composto somente por letras");
+		}
+		if(u.getNome().length() > 120) {
+			throw new InvalidNameException("Reduza o seu nome para menos de 120 caracteres!");
 		}
 	}
 	

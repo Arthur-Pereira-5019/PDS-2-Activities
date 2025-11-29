@@ -65,7 +65,7 @@ public class ProdutoRepository {
 			PreparedStatement ps = bd.prepareStatement(sql);
 			ps.setLong(1, id);
 			ResultSet rs = ps.executeQuery();
-			if(rs.next()) {
+			if(!rs.next()) {
 				throw new NotFoundException("Produto não encontrado!");
 			}
 			String nome = rs.getString(1);

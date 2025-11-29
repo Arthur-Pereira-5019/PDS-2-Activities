@@ -8,6 +8,7 @@ import java.sql.Statement;
 import java.util.ArrayList;
 
 import com.arthur_pereira.supermercado.exceptions.NotFoundException;
+import com.arthur_pereira.supermercado.exceptions.UnknownDatabaseError;
 import com.arthur_pereira.supermercado.model.Produto;
 import com.arthur_pereira.supermercado.model.Usuario;
 import com.arthur_pereira.supermercado.service.BancoDeDados;
@@ -41,13 +42,12 @@ private Connection bd;
 			Long id = rs.getLong(3);
 			boolean administrador = reverseCastBoolean(rs.getInt(4));
 			retorno = new Usuario(id, nome, cpf, administrador);
-		} catch (SQLException e) {
-			throw new NotFoundException("Usuário não encontrado!");
+		} finally {
+			return retorno;
 		}
-		return retorno;
 	}
 	
-	public String add(Usuario u) {
+	public Usuario add(Usuario u) {
 		String sql = "insert into usuarios values (?,?,0,?)";
 		try {
 			PreparedStatement ps = bd.prepareStatement(sql);
@@ -57,9 +57,9 @@ private Connection bd;
 			ps.execute();
 			Popups.showSucess("Usuário salvo com sucesso!");
 		} catch (SQLException e) {
-
+			throw new UnknownDatabaseError("Falha ao persistir usuário. Contate o administrador do sistema!");
 		}
-		return "";
+		return findByCpf(u.getCpf());
 	}
 	
 	public void removeById(Long id) {
@@ -87,12 +87,10 @@ private Connection bd;
 			String nome = rs.getString(1);
 			String cpf = rs.getString(2);
 			boolean administrador = reverseCastBoolean(rs.getInt(4));
-			retorno = new Usuario(id, nome, cpf, administrador);
-			Popups.showSucess("Usuário encontrado com sucesso!");
-		} catch (SQLException e) {
-			Popups.showError("Usuário não encontrado!");
+			retorno = new Usuario(id, nome, cpf, administrador);;
+		} finally {
+			return retorno;
 		}
-		return retorno;
 	}
 	
 	

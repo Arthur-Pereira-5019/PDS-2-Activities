@@ -88,10 +88,10 @@ public class LoginScreen extends TelaAbstrata {
 			public void actionPerformed(ActionEvent e) {
 				try {
 					if(us.logar(new Usuario(inputNome.getText(), inputCPF.getText())) == true) {
+						Popups.showSucess("Bem vindo "+inputNome.getText()+"!" );
 						esconderTela();
 						TelaAbstrata ta = CommonData.getLogado().isAdministrador() ? (new TelaDeProdutos()) : (new TelaDeCompras());
 						ta.abrirTela();
-						Popups.showSucess("Bem vindo "+inputNome.getText()+"!" );
 					}
 				} catch(InvalidNameException ex) {
 					inputNome.requestFocus();

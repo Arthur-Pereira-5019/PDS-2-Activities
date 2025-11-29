@@ -97,10 +97,11 @@ public class TelaDeCadastro extends TelaAbstrata {
 				} catch(InvalidNameException ex) {
 					inputNome.requestFocus();
 					Popups.showError(ex.getMessage());
-				} catch(InvalidCPFException | BadLoginException ex) {
+				} catch(InvalidCPFException | BadLoginException | DuplicatedResourceException ex) {
 					inputCPF.requestFocus();
 					Popups.showError(ex.getMessage());
-				} catch (Exception ex) {
+				} 
+				catch (Exception ex) {
 					Popups.showError(ex.getMessage());
 				}
 				
