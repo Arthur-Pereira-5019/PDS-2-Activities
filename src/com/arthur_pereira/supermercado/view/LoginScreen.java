@@ -14,91 +14,84 @@ import java.awt.Image;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.ActionEvent;
 import java.awt.Color;
 import javax.swing.ImageIcon;
+import net.miginfocom.swing.MigLayout;
 
 public class LoginScreen extends TelaAbstrata {
-	private JTextField campo_nome;
-	private JTextField campo_cpf;
 	
 	UsuarioServices us = new UsuarioServices();
+	private JTextField inputCPF;
+	private JTextField inputSenha;
 	
 	public LoginScreen() {
 		super(400,300);
 		setTitle("Mercado Azulão");
 		getContentPane().setBackground(backgroundC);
-		getContentPane().setLayout(null);
+		getContentPane().setLayout(new MigLayout("", "[113px][18px][129px,grow][][]", "[32px][][14px][][][][][][10px][][]"));
 		
-		campo_nome = new JTextField();
-		campo_nome.setBackground(highlightC);
-		campo_nome.setForeground(textC);
-		campo_nome.setBounds(124, 80, 141, 28);
-		getContentPane().add(campo_nome);
-		campo_nome.setColumns(10);
+		JLabel lblTitulo = new JLabel("Supermercado Azulão");
+		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 22));
+		getContentPane().add(lblTitulo, "cell 2 0");
+		lblTitulo.setForeground(textC);
 		
-		JLabel lblNewLabel = new JLabel("Nome");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel.setForeground(textC);
-		lblNewLabel.setBounds(124, 56, 46, 14);
-		getContentPane().add(lblNewLabel);
+		JButton btnCadastrar = new JButton("Cadastrar");
+		getContentPane().add(btnCadastrar, "cell 4 1");
+		btnCadastrar.setBackground(highlightC);
+		btnCadastrar.setForeground(textC);
 		
-		campo_cpf = new JTextField();
-		campo_cpf.setBackground(highlightC);
-		campo_cpf.setForeground(textC);
-		campo_cpf.setBounds(124, 139, 141, 28);
-		getContentPane().add(campo_cpf);
-		campo_cpf.setColumns(10);
 		
-		JLabel lblNewLabel_1 = new JLabel("CPF");
-		lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 14));
-		lblNewLabel_1.setForeground(textC);
-		lblNewLabel_1.setBounds(124, 119, 46, 14);
-		getContentPane().add(lblNewLabel_1);
+		JLabel lblCpf = new JLabel("CPF");
+		lblCpf.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		getContentPane().add(lblCpf, "cell 2 3,growx");
+		lblCpf.setForeground(textC);
 		
-		JLabel lblNewLabel_2 = new JLabel("Login");
-		lblNewLabel_2.setForeground(textC);
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		lblNewLabel_2.setBounds(161, 11, 62, 32);
-		getContentPane().add(lblNewLabel_2);
 		
-		JButton btnNewButton = new JButton("Entrar");
-		btnNewButton.setBackground(highlightC);
-		btnNewButton.setForeground(textC);
-		btnNewButton.addActionListener(new ActionListener() {
+		inputCPF = new JTextField();
+		getContentPane().add(inputCPF, "cell 2 4,growx");
+		inputCPF.setColumns(10);
+		inputCPF.setBackground(highlightC);
+		inputCPF.setForeground(textC);
+		
+		JLabel lblSenha = new JLabel("Senha:");
+		lblSenha.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		getContentPane().add(lblSenha, "cell 2 6");
+		lblSenha.setForeground(textC);
+
+		
+		inputSenha = new JTextField();
+		getContentPane().add(inputSenha, "cell 2 7,growx");
+		inputSenha.setColumns(10);
+		inputSenha.setBackground(highlightC);
+		inputSenha.setForeground(textC);
+		
+		JButton btnEntrar = new JButton("Entrar");
+		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(us.logar(campo_cpf.getText(), campo_nome.getText())) {
-					TelaAbstrata ta = new TelaDeCompras();
-					if(CommonData.getLogado().isAdministrador()) {
-						ta = new TelaDeProdutos();
-					}
-					fecharTela();
-					ta.abrirTela();
-				}
 			}
 		});
-		btnNewButton.setBounds(148, 194, 89, 23);
-		getContentPane().add(btnNewButton);
 		
-		JButton btnNewButton_1 = new JButton("Cadastrar-se");
-		btnNewButton_1.setBackground(highlightC);
-		btnNewButton_1.setForeground(textC);
-		btnNewButton_1.addActionListener(new ActionListener() {
-			public void actionPerformed(ActionEvent e) {
-				TelaDeCadastro tc = new TelaDeCadastro();
-				tc.abrirTela();
-				fecharTela();
-			}
-		});
-		btnNewButton_1.setBounds(255, 11, 129, 23);
-		getContentPane().add(btnNewButton_1);
+		JLabel iconSmurf = new JLabel("New label");
+		getContentPane().add(iconSmurf, "cell 4 6 1 4");
+		btnEntrar.setBackground(highlightC);
+		btnEntrar.setForeground(textC);
 		
-		JLabel logo = new JLabel("New label");
+		getContentPane().add(btnEntrar, "cell 2 10,alignx center");
 		ImageIcon icon = new ImageIcon(LoginScreen.class.getResource("/smurf.png"));
-		logo.setBounds(263, 56, 121, 152);
-		Image image = icon.getImage().getScaledInstance(logo.getWidth(), logo.getHeight(), java.awt.Image.SCALE_SMOOTH);
-		logo.setIcon(new ImageIcon(image));
-		getContentPane().add(logo);
-		
+		this.addComponentListener(new ComponentAdapter() {
+		    @Override
+		    public void componentResized(ComponentEvent e) {
+		        int w = iconSmurf.getWidth();
+		        int h = iconSmurf.getHeight();
+		        if (w > 0 && h > 0) {
+		            Image img = icon.getImage().getScaledInstance(w, h, java.awt.Image.SCALE_SMOOTH);
+		            iconSmurf.setIcon(new ImageIcon(img));
+		        }
+		    }
+		});
+
 	}
 }
