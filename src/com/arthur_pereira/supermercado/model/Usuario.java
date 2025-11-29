@@ -15,6 +15,11 @@ public class Usuario {
 		this.administrador = administrador;
 	}
 	
+	public Usuario(String nome, String cpf) {
+		this.nome = nome;
+		this.cpf = cpf;
+	}
+	
 	public Long getId() {
 		return id;
 	}

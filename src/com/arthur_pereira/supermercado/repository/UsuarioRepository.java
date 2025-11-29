@@ -7,6 +7,7 @@ import java.sql.SQLException;
 import java.sql.Statement;
 import java.util.ArrayList;
 
+import com.arthur_pereira.supermercado.exceptions.NotFoundException;
 import com.arthur_pereira.supermercado.model.Produto;
 import com.arthur_pereira.supermercado.model.Usuario;
 import com.arthur_pereira.supermercado.service.BancoDeDados;
@@ -41,7 +42,7 @@ private Connection bd;
 			boolean administrador = reverseCastBoolean(rs.getInt(4));
 			retorno = new Usuario(id, nome, cpf, administrador);
 		} catch (SQLException e) {
-			System.err.println("Erro ao encontrar usuário!");
+			throw new NotFoundException("Usuário não encontrado!");
 		}
 		return retorno;
 	}

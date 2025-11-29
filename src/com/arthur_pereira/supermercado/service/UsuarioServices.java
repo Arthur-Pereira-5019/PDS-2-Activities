@@ -1,5 +1,6 @@
 package com.arthur_pereira.supermercado.service;
 
+import com.arthur_pereira.supermercado.exceptions.*;
 import com.arthur_pereira.supermercado.model.Usuario;
 import com.arthur_pereira.supermercado.repository.UsuarioRepository;
 
@@ -7,14 +8,19 @@ public class UsuarioServices {
 	UsuarioRepository ur = new UsuarioRepository();
 	
 	
-	public boolean logar(String cpf, String nome) {
-		Usuario u = ur.findByCpf(cpf);
-		if(u != null && u.getNome().equals(nome)) {
+	public boolean logar(Usuario u) {
+		validarDados(u);
+		Usuario u2 = null;
+		try {
+			u2 = ur.findByCpf(u.getCpf());
+		} catch (Exception ex) {
+			throw new BadLoginException("Credenciais inválidas!");
+		}
+		if(u2 != null && u2.getNome().equals(u.getNome())) {
 			CommonData.setLogado(u);
 			return true;
 		}
-		Popups.showError("Usuário não encontrado, favor cadastrar-se");
-		return false;
+		throw new BadLoginException("Credenciais inválidas!");
 	}
 	
 	private String criarUsuario(Usuario u) {
@@ -22,18 +28,29 @@ public class UsuarioServices {
 	}
 	
 	public boolean cadastrar(Usuario u) {
-		if(u.getNome() == null || u.getCpf() == null) {
-			Popups.showError("Por favor preencha todos os campos corretamente!");
-			return false;
-		}
-		if(u.getCpf().length() > 13) {
-			Popups.showError("Por favor informe um CPF correto e sem pontuação!");
-			return false;
-		}
-		
+		validarDados(u);
 		criarUsuario(u);
-		return logar(u.getCpf(), u.getNome());
-		
+		return logar(u);
 	}
+	
+	public void validarDados(Usuario u) {
+		if(u.getCpf() == null) {
+			throw new InvalidCPFException("Preencha o CPF corretamente!");
+		}
+		if(u.getCpf().length() != 11) {
+			throw new InvalidCPFException("O CPF deve ter 11 caracteres");
+		}
+		if(!u.getCpf().matches("[0-9]{11}")) {
+			throw new InvalidCPFException("O CPF deve conter somente números");
+		}
+		if(u.getNome() == null || u.getNome().isBlank()) {
+			throw new InvalidNameException("Preencha o nome corretamente!");
+		}
+		if(!u.getNome().matches("[aA-zZ]*")) {
+			throw new InvalidNameException("O nome deve ser composto somente por letras");
+		}
+	}
+	
+	
 
 }
