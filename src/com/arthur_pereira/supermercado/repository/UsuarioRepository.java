@@ -57,7 +57,7 @@ private Connection bd;
 			ps.execute();
 			Popups.showSucess("Usuário salvo com sucesso!");
 		} catch (SQLException e) {
-			Popups.showError("Erro ao salvar usuário!");
+
 		}
 		return "";
 	}

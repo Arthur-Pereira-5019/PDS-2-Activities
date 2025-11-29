@@ -20,6 +20,12 @@ public class Usuario {
 		this.cpf = cpf;
 	}
 	
+	public Usuario(String nome, String cpf, boolean administrador) {
+		this.nome = nome;
+		this.cpf = cpf;
+		this.administrador = administrador;
+	}
+	
 	public Long getId() {
 		return id;
 	}

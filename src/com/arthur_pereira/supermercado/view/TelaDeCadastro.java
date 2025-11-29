@@ -4,93 +4,119 @@ import javax.swing.JTextField;
 import javax.swing.JLabel;
 import javax.swing.JToggleButton;
 
+import com.arthur_pereira.supermercado.exceptions.*;
 import com.arthur_pereira.supermercado.model.Usuario;
 import com.arthur_pereira.supermercado.repository.UsuarioRepository;
+import com.arthur_pereira.supermercado.service.CommonData;
 import com.arthur_pereira.supermercado.service.Popups;
 import com.arthur_pereira.supermercado.service.UsuarioServices;
 
 import java.awt.Font;
+import java.awt.Image;
+
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
 import java.awt.event.ActionListener;
+import java.awt.event.ComponentAdapter;
+import java.awt.event.ComponentEvent;
 import java.awt.event.ActionEvent;
+import java.awt.Color;
+import javax.swing.ImageIcon;
+import net.miginfocom.swing.MigLayout;
+import javax.swing.SwingConstants;
 
 public class TelaDeCadastro extends TelaAbstrata {
-	private JTextField campoNome;
-	private JTextField campoCPF;
-	private UsuarioRepository ur = new UsuarioRepository();
-	private UsuarioServices us = new UsuarioServices();
+	
+	UsuarioServices us = new UsuarioServices();
+	private JTextField inputNome;
+	private JTextField inputCPF;
+	private JCheckBox checkAdm;
 	
 	public TelaDeCadastro() {
-		super(400,300);
-		getContentPane().setLayout(null);
+		super(400,320);
+		setTitle("Mercado Azulão");
 		getContentPane().setBackground(backgroundC);
+		getContentPane().setLayout(new MigLayout("", "[18px,grow 8][80px,grow][][grow 15][18px,grow 15]", "[grow 15][32px][grow 15][14px,grow 5][grow][14px][14px,grow 5][grow][14px][14px,grow 5][10px][14px,grow 5][grow 25][14px,grow 5]"));
 		
-		campoNome = new JTextField();
-		campoNome.setBounds(124, 80, 141, 28);
-		campoNome.setBackground(highlightC);
-		campoNome.setForeground(textC);
-		getContentPane().add(campoNome);
-		campoNome.setColumns(10);
+		JLabel lblTitulo = new JLabel("Cadastro");
+		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
+		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 27));
+		getContentPane().add(lblTitulo, "cell 1 1,grow");
+		lblTitulo.setForeground(textC);
 		
-		JLabel lblNewLabel = new JLabel("Nome");
-		lblNewLabel.setBounds(124, 56, 46, 14);
-		lblNewLabel.setForeground(textC);
-		getContentPane().add(lblNewLabel);
-		
-		campoCPF = new JTextField();
-		campoCPF.setBounds(124, 139, 141, 28);
-		campoCPF.setBackground(highlightC);
-		campoCPF.setForeground(textC);
-		getContentPane().add(campoCPF);
-		campoCPF.setColumns(10);
-		
-		JLabel lblNewLabel_1 = new JLabel("CPF");
-		lblNewLabel_1.setBounds(124, 119, 46, 14);
-		lblNewLabel_1.setForeground(textC);
-		getContentPane().add(lblNewLabel_1);
-		
-		JLabel lblNewLabel_2 = new JLabel("Cadastro");
-		lblNewLabel_2.setFont(new Font("Tahoma", Font.PLAIN, 26));
-		lblNewLabel_2.setBounds(150, 11, 150, 32);
-		lblNewLabel_2.setForeground(textC);
-		getContentPane().add(lblNewLabel_2);
-
-		JCheckBox admnistradorCheckbox = new JCheckBox("Admnistrador");
-		admnistradorCheckbox.setBounds(147, 184, 118, 23);
-		admnistradorCheckbox.setBackground(backgroundC);
-		admnistradorCheckbox.setForeground(textC);
-
-		
-		getContentPane().add(admnistradorCheckbox);
-		
-		
-		JButton btnNewButton = new JButton("Cadastrar-se");
-		btnNewButton.setBackground(highlightC);
-		btnNewButton.setForeground(textC);
-		btnNewButton.addActionListener(new ActionListener() {
+		JButton btnVoltar = new JButton("Voltar");
+		btnVoltar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaAbstrata ta = new TelaDeCompras();
-				Usuario u = new Usuario();
-				
-				
-				u.setCpf(campoCPF.getText());
-				u.setNome(campoNome.getText());
-				u.setAdministrador(false);
-				
-				if(admnistradorCheckbox.isSelected()) {
-					ta = new TelaDeProdutos();
-					u.setAdministrador(true);
-				}
-				if(us.cadastrar(u)) {
-					fecharTela();
-					ta.abrirTela();
+				fecharTela();
+				LoginScreen ls = new LoginScreen();
+				ls.abrirTela();
+			}
+		});
+		btnVoltar.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		getContentPane().add(btnVoltar, "cell 3 3,grow");
+		btnVoltar.setBackground(highlightC);
+		btnVoltar.setForeground(textC);
+		
+		
+		JLabel lblNome = new JLabel("Nome:");
+		lblNome.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		getContentPane().add(lblNome, "cell 1 5,growx");
+		lblNome.setForeground(textC);
+		
+		
+		inputNome = new JTextField();
+		getContentPane().add(inputNome, "cell 1 6,grow");
+		inputNome.setColumns(10);
+		inputNome.setBackground(highlightC);
+		inputNome.setForeground(textC);
+		inputNome.requestFocus();
+		
+		JLabel lblCPF = new JLabel("CPF:");
+		lblCPF.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		getContentPane().add(lblCPF, "cell 1 8");
+		lblCPF.setForeground(textC);
+
+		
+		inputCPF = new JTextField();
+		getContentPane().add(inputCPF, "cell 1 9,grow");
+		inputCPF.setColumns(10);
+		inputCPF.setBackground(highlightC);
+		inputCPF.setForeground(textC);
+		
+		JButton btnCadastrar = new JButton("Cadastrar-se");
+		btnCadastrar.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		btnCadastrar.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					if(us.cadastrar(new Usuario(inputNome.getText(), inputCPF.getText(), checkAdm.isSelected())) == true) {
+						esconderTela();
+						TelaAbstrata ta = CommonData.getLogado().isAdministrador() ? (new TelaDeProdutos()) : (new TelaDeCompras());
+						ta.abrirTela();
+						Popups.showSucess("Bem vindo "+inputNome.getText()+"!" );
+					}
+				} catch(InvalidNameException ex) {
+					inputNome.requestFocus();
+					Popups.showError(ex.getMessage());
+				} catch(InvalidCPFException | BadLoginException ex) {
+					inputCPF.requestFocus();
+					Popups.showError(ex.getMessage());
+				} catch (Exception ex) {
+					Popups.showError(ex.getMessage());
 				}
 				
 			}
 		});
-		btnNewButton.setBounds(147, 214, 112, 23);
-		getContentPane().add(btnNewButton);
+		btnCadastrar.setBackground(highlightC);
+		btnCadastrar.setForeground(textC);
 		
+		checkAdm = new JCheckBox("Administrador");
+		checkAdm.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		checkAdm.setBackground(backgroundC);
+		checkAdm.setForeground(textC);
+		getContentPane().add(checkAdm, "cell 1 11,alignx center");
+
+		
+		getContentPane().add(btnCadastrar, "cell 1 13,alignx center,growy");
+
 	}
 }

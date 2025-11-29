@@ -43,7 +43,7 @@ public class LoginScreen extends TelaAbstrata {
 		getContentPane().add(lblTitulo, "cell 1 1,grow");
 		lblTitulo.setForeground(textC);
 		
-		JButton btnCadastrar = new JButton("Cadastrar");
+		JButton btnCadastrar = new JButton("Cadastrar-se");
 		btnCadastrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 				esconderTela();
@@ -68,6 +68,7 @@ public class LoginScreen extends TelaAbstrata {
 		inputNome.setColumns(10);
 		inputNome.setBackground(highlightC);
 		inputNome.setForeground(textC);
+		inputNome.requestFocus();
 		
 		JLabel lblCPF = new JLabel("CPF");
 		lblCPF.setFont(new Font("Tahoma", Font.PLAIN, 12));
@@ -88,8 +89,8 @@ public class LoginScreen extends TelaAbstrata {
 				try {
 					if(us.logar(new Usuario(inputNome.getText(), inputCPF.getText())) == true) {
 						esconderTela();
-						TelaDeCompras tdc = new TelaDeCompras();
-						tdc.abrirTela();
+						TelaAbstrata ta = CommonData.getLogado().isAdministrador() ? (new TelaDeProdutos()) : (new TelaDeCompras());
+						ta.abrirTela();
 						Popups.showSucess("Bem vindo "+inputNome.getText()+"!" );
 					}
 				} catch(InvalidNameException ex) {
