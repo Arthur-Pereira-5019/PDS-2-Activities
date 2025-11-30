@@ -90,13 +90,6 @@ public class TelaDeCompras extends TelaAbstrata {
 			
 		}
 		
-		// Nome produto -> Informações do produto; Campo número de produtos; Campo adicionar ao carrinho;
-		// Botão carrinho;
-		// Remover elementos do carrinho;
-		// Finalizar Compra;
-		// Emitir NF;
-		// Transição
-		
 		public void popularTabela() {
 			dados = new Object[pr.contar()][6];
 			ArrayList<Object> d = new ArrayList<>();

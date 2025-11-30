@@ -33,6 +33,7 @@ public class LoginScreen extends TelaAbstrata {
 	
 	public LoginScreen() {
 		super(400,300);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("Mercado Azulão");
 		getContentPane().setBackground(backgroundC);
 		getContentPane().setLayout(new MigLayout("", "[18px,grow 8][129px,grow][][grow 15][18px,grow 15]", "[grow 15][32px][grow 15][14px,grow 5][grow][14px][14px,grow 5][grow][14px][14px,grow 5][10px][grow 25][14px,grow 5]"));

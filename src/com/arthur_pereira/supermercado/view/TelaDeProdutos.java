@@ -195,7 +195,7 @@ public class TelaDeProdutos extends TelaAbstrata {
 		btnEncontrarTodos.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnEncontrarTodos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaListaDeProdutos ldr = new TelaListaDeProdutos();
+				TelaListaDeProdutos2 ldr = new TelaListaDeProdutos2();
 				ldr.abrirTela();
 			}
 		});
