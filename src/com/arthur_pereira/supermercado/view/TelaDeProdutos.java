@@ -24,6 +24,9 @@ import com.arthur_pereira.supermercado.service.ProdutoServices;
 import java.awt.Color;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.SwingConstants;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+import javax.swing.JFrame;
 
 public class TelaDeProdutos extends TelaAbstrata {
 	Popups popups = new Popups();
@@ -37,6 +40,13 @@ public class TelaDeProdutos extends TelaAbstrata {
 	
 	public TelaDeProdutos() {
 		super(560,360);
+		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+		addWindowListener(new WindowAdapter() {
+			@Override
+			public void windowClosing(WindowEvent e) {
+				logout();
+			}
+		});
 		getContentPane().setLayout(new MigLayout("", "[grow 15][111,grow][grow][111,grow][grow][111,grow][grow 15]", "[grow 35][][grow 35][14px,grow 5][14px,grow 5][14px,grow 5][50px,grow 35][14px,grow 5][14px,grow 5][14px,grow 5][14px,grow 5][grow 35]"));
 		getContentPane().setBackground(backgroundC);
 
@@ -53,10 +63,7 @@ public class TelaDeProdutos extends TelaAbstrata {
 		lblLogout.addMouseListener(new MouseAdapter() {
 			@Override
 			public void mouseClicked(MouseEvent e) {
-				CommonData.setLogado(null);
-				LoginScreen ls = new LoginScreen();
-				ls.abrirTela();
-				fecharTela();
+				logout();
 			}
 		});
 		getContentPane().add(lblLogout, "cell 5 1,grow");
@@ -195,13 +202,20 @@ public class TelaDeProdutos extends TelaAbstrata {
 		btnEncontrarTodos.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnEncontrarTodos.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				TelaListaDeProdutos2 ldr = new TelaListaDeProdutos2();
+				TelaListaDeProdutos ldr = new TelaListaDeProdutos();
 				ldr.abrirTela();
 			}
 		});
 		getContentPane().add(btnEncontrarTodos, "cell 5 10,grow");
 		btnEncontrarTodos.setBackground(highlightC);
 		btnEncontrarTodos.setForeground(textC);
+	}
+	
+	public void logout() {
+		CommonData.setLogado(null);
+		LoginScreen ls = new LoginScreen();
+		ls.abrirTela();
+		fecharTela();
 	}
 	
 	public Produto serializarProduto(boolean a) {

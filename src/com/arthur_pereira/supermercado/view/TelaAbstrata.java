@@ -37,6 +37,13 @@ public abstract class TelaAbstrata extends JFrame {
 		this.dispose();
 	}
 	
+	public void logout() {
+		CommonData.setLogado(null);
+		LoginScreen ls = new LoginScreen();
+		ls.abrirTela();
+		fecharTela();
+	}
+	
 	
 
 }

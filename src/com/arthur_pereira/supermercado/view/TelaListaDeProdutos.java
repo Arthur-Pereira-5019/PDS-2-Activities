@@ -1,74 +1,89 @@
 package com.arthur_pereira.supermercado.view;
-import java.awt.GridLayout;
+
+import java.awt.Image;
 import java.util.ArrayList;
 
+import javax.swing.ImageIcon;
+import javax.swing.JButton;
+import javax.swing.JCheckBox;
+import javax.swing.JLabel;
+import javax.swing.JScrollPane;
 import javax.swing.JTable;
-import javax.swing.table.TableModel;
+import javax.swing.JTextField;
 
 import com.arthur_pereira.supermercado.model.Produto;
 import com.arthur_pereira.supermercado.repository.ProdutoRepository;
-import com.arthur_pereira.supermercado.service.BancoDeDados;
-import javax.swing.JLabel;
-import javax.swing.JScrollPane;
+import com.arthur_pereira.supermercado.service.CommonData;
+
+import java.awt.event.ActionListener;
+import java.awt.event.ActionEvent;
 import java.awt.Color;
 import java.awt.Font;
+import java.awt.event.MouseAdapter;
+import java.awt.event.MouseEvent;
+import net.miginfocom.swing.MigLayout;
 
 public class TelaListaDeProdutos extends TelaAbstrata {
 	private JTable table;
 	
-	String[] colunas = {"Id","Nome", "Preço"};
+	String[] colunas = {"Id","Nome","Preço"};
 	ProdutoRepository pr = new ProdutoRepository();
-	String[][] dados;
+	Object[][] dados;
 	
-	public TelaListaDeProdutos() {
-		super(600, 800);
-		getContentPane().setBackground(backgroundC);
-		
-		popularTabela();
-		getContentPane().setLayout(null);
-		table = new JTable(dados,colunas);
-		table.setFillsViewportHeight(true);
-		table.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		table.setEnabled(false);
-		table.setBackground(highlightC);
-		table.setForeground(textC);
-		table.setBounds(122, 35, 177, 295);
-		getContentPane().add(table);
-		
-		JLabel lblNewLabel = new JLabel("Produtos");
-		lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
-		lblNewLabel.setBounds(147, 10, 114, 27);
-		lblNewLabel.setBackground(textC);
-		getContentPane().add(lblNewLabel);
-		
-		JScrollPane scrollPane = new JScrollPane(table);
-		scrollPane.setLocation(24, 58);
-		scrollPane.setSize(400, 304);
-		scrollPane.setBackground(highlightC);
-		getContentPane().add(scrollPane);
-	}
 	
-	public void popularTabela() {
-		dados = new String[pr.contar()][3];
-		ArrayList<String> d = new ArrayList<>();
-		ArrayList<Produto> produtos = pr.findAll();
-		System.out.println(produtos.size());
-		if(!produtos.isEmpty()) {
-			for(Produto p: produtos) {
-				d.add(String.valueOf(p.getId()));
-				d.add(p.getNome());
-				d.add(String.valueOf(p.getPreco()));
-			}
+		public TelaListaDeProdutos() {
+			super(700, 700);
 			
-			int a = 0;
-			for(int i = 0; i < pr.contar();i++) {
-				for(int j = 0; j < 3;j++) {
-					dados[i][j] = d.get(a);
-					a++;
-				}
-			}
+			popularTabela();
+			getContentPane().setBackground(backgroundC);
+
+			JScrollPane scrollPane = new JScrollPane();
+			
+			
+			table = new JTable(dados,colunas);
+			table.setFillsViewportHeight(true);
+			table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
+			table.setBackground(highlightC);
+			table.setForeground(textC);
+			scrollPane.setViewportView(table);
+			getContentPane().setLayout(new MigLayout("", "[grow 5][6px,grow 2][120px,grow 80][10px,grow 5][grow 5]", "[27px,grow 7][3px,grow 1][200px,grow]"));			
+			
+			getContentPane().add(scrollPane, "cell 1 2 3 1,grow");
+
+			
+			JLabel lblNewLabel = new JLabel("Produtos");
+			lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 26));
+			lblNewLabel.setForeground(textC);
+			getContentPane().add(lblNewLabel, "cell 2 0,alignx center,aligny center");
+			
 		}
 		
-		
-	}
+		public void popularTabela() {
+			dados = new Object[pr.contar()][6];
+			ArrayList<Object> d = new ArrayList<>();
+			ArrayList<Produto> produtos = pr.findAll();
+			
+			JButton botao_adicionar = new JButton("Adicionar!");
+			
+			
+			if(!produtos.isEmpty()) {
+				for(Produto p: produtos) {
+					d.add(String.valueOf(p.getId()));
+					d.add(String.valueOf(p.getNome()));
+					d.add(String.valueOf(p.getPreco()));
+					d.add(Integer.valueOf(p.getQuantidade()));
+					d.add("");
+					d.add(botao_adicionar);
+				}
+				
+				int a = 0;
+				for(int i = 0; i < pr.contar();i++) {
+					for(int j = 0; j < 6;j++) {
+						dados[i][j] = d.get(a);
+						a++;
+					}
+				}
+			}
+			
+		}
 }

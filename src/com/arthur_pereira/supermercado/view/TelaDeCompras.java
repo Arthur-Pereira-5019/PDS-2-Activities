@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import javax.swing.ImageIcon;
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
+import javax.swing.JFrame;
 import javax.swing.JLabel;
 import javax.swing.JScrollPane;
 import javax.swing.JTable;
@@ -21,6 +22,9 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import java.awt.event.WindowAdapter;
+import java.awt.event.WindowEvent;
+
 import net.miginfocom.swing.MigLayout;
 
 public class TelaDeCompras extends TelaAbstrata {
@@ -33,6 +37,13 @@ public class TelaDeCompras extends TelaAbstrata {
 	
 		public TelaDeCompras() {
 			super(700, 700);
+			setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
+			addWindowListener(new WindowAdapter() {
+				@Override
+				public void windowClosing(WindowEvent e) {
+					logout();
+				}
+			});
 			
 			popularTabela();
 			getContentPane().setBackground(backgroundC);
@@ -78,10 +89,7 @@ public class TelaDeCompras extends TelaAbstrata {
 			lblNewLabel_1.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
-					CommonData.setLogado(null);
-					LoginScreen ls = new LoginScreen();
-					ls.abrirTela();
-					fecharTela();
+					logout();
 				}
 			});
 			lblNewLabel_1.setForeground(new Color(255, 0, 0));
@@ -89,6 +97,8 @@ public class TelaDeCompras extends TelaAbstrata {
 			
 			
 		}
+		
+
 		
 		public void popularTabela() {
 			dados = new Object[pr.contar()][6];
