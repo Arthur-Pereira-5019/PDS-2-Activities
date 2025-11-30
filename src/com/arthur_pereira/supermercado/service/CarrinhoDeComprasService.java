@@ -11,12 +11,14 @@ public class CarrinhoDeComprasService {
 	private CarrinhoComprasRepository cpr = new CarrinhoComprasRepository();
 	private List<Compra> carrinhoSecundario;
 	
-	public Compra adicionarCompra(Compra c) {
+	public boolean adicionarCompra(Compra c) {
 		Compra e = procurarCompraPeloProduto(c.getProduto());
 		if(e != null) {
-			return atualizarCompra(new Compra(c.getProduto(), c.getQuantidade() + e.getQuantidade()));
+			atualizarCompra(new Compra(c.getProduto(), c.getQuantidade() + e.getQuantidade()));
+			return true;
 		}
-		return salvarCompra(c);
+		salvarCompra(c);
+		return false;
 	}
 	
 	public Compra procurarCompraPeloProduto(Produto p) {

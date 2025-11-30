@@ -21,6 +21,7 @@ import java.awt.Color;
 import java.awt.Font;
 import java.awt.event.MouseAdapter;
 import java.awt.event.MouseEvent;
+import net.miginfocom.swing.MigLayout;
 
 public class TelaDeCompras extends TelaAbstrata {
 	private JTable table;
@@ -34,31 +35,35 @@ public class TelaDeCompras extends TelaAbstrata {
 			super(700, 700);
 			
 			popularTabela();
-			getContentPane().setLayout(null);
 			getContentPane().setBackground(backgroundC);
 
+			JScrollPane scrollPane = new JScrollPane();
+			
+			
 			table = new JTable(dados,colunas);
 			table.setFillsViewportHeight(true);
-			table.setBounds(60, 37, 600, 295);
+			table.setAutoResizeMode(JTable.AUTO_RESIZE_ALL_COLUMNS);
 			table.setBackground(highlightC);
 			table.setForeground(textC);
-			getContentPane().add(table);
+			scrollPane.setViewportView(table);
+			getContentPane().setLayout(new MigLayout("", "[grow 5][6px,grow 2][120px,grow 80][10px,grow 5][grow 5]", "[27px,grow 7][3px,grow 1][200px,grow]"));
 			
 			table.getColumn("Adicionar").setCellEditor(new TableButtonLogic(new JCheckBox(), table));
 			table.getColumn("Adicionar").setCellRenderer(new TableButtonRenderer());			
 			
-			JLabel lblNewLabel = new JLabel("Produtos");
-			lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 22));
-			lblNewLabel.setBounds(323, 0, 101, 27);
-			lblNewLabel.setForeground(textC);
-			getContentPane().add(lblNewLabel);
+			getContentPane().add(scrollPane, "cell 1 2 3 1,grow");
+
 			
-			JScrollPane scrollPane = new JScrollPane(table);
-			scrollPane.setLocation(60, 37);
-			scrollPane.setSize(600, 295);
-			scrollPane.setBackground(backgroundC);
-			getContentPane().add(scrollPane);
-			JButton buttonCarrinho = new JButton("");
+			JLabel lblNewLabel = new JLabel("Produtos");
+			lblNewLabel.setFont(new Font("Tahoma", Font.PLAIN, 26));
+			lblNewLabel.setForeground(textC);
+			getContentPane().add(lblNewLabel, "cell 2 0,alignx center,aligny center");
+			
+			
+			JButton buttonCarrinho = new JButton("Carrinho");
+			buttonCarrinho.setFont(new Font("Tahoma", Font.PLAIN, 12));
+			buttonCarrinho.setBackground(highlightC);
+			buttonCarrinho.setForeground(textC);
 			buttonCarrinho.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					esconderTela();
@@ -66,15 +71,10 @@ public class TelaDeCompras extends TelaAbstrata {
 					cdc.abrirTela();
 				}
 			});
-			
-			
-			ImageIcon icon = new ImageIcon(LoginScreen.class.getResource("/cart.png"));
-			buttonCarrinho.setBounds(10, 82, 40, 40);
-			Image image = icon.getImage().getScaledInstance(buttonCarrinho.getWidth(), buttonCarrinho.getHeight(), java.awt.Image.SCALE_SMOOTH);			
-			buttonCarrinho.setIcon(new ImageIcon(image));
-			getContentPane().add(buttonCarrinho);
+			getContentPane().add(buttonCarrinho, "cell 1 1,grow");
 			
 			JLabel lblNewLabel_1 = new JLabel("Log Out");
+			lblNewLabel_1.setFont(new Font("Tahoma", Font.PLAIN, 12));
 			lblNewLabel_1.addMouseListener(new MouseAdapter() {
 				@Override
 				public void mouseClicked(MouseEvent e) {
@@ -85,8 +85,9 @@ public class TelaDeCompras extends TelaAbstrata {
 				}
 			});
 			lblNewLabel_1.setForeground(new Color(255, 0, 0));
-			lblNewLabel_1.setBounds(581, 12, 72, 13);
-			getContentPane().add(lblNewLabel_1);
+			getContentPane().add(lblNewLabel_1, "cell 3 1,alignx center,aligny center");
+			
+			
 		}
 		
 		// Nome produto -> Informações do produto; Campo número de produtos; Campo adicionar ao carrinho;

@@ -70,10 +70,16 @@ CarrinhoDeComprasService ccs = CommonData.getCarrinhoService();
 	        	Integer quantidade = Integer.valueOf((String.valueOf(table.getValueAt(row, 4))));
 	        	
 	        	Produto p = pr.find(id);
-	        	if(quantidade > p.getQuantidade()) {
+	        	if(quantidade <= 0) {
+	        		Popups.showError("Forneça um valor válido!");
+	        	} else if(quantidade > p.getQuantidade()) {
 	        		Popups.showError("Estoque insuficiente!");
 	        	} else {
-		            ccs.adicionarCompra(new Compra(p, quantidade));
+		            if(ccs.adicionarCompra(new Compra(p, quantidade))) {
+		        		Popups.showSucess("Produto adicionado ao carrinho!");
+		            } else {
+		        		Popups.showSucess("Alterada quantidade comprada no carrinho!");
+		            }
 	        	}
 	        }
 	        isPushed = false;
