@@ -11,6 +11,7 @@ public class ProdutoServices {
 	ProdutoRepository pr = new ProdutoRepository();
 	
 	public Produto findProduct(Long id) {
+		validateId(id);
 		Produto p = pr.find(id);
 		return p;
 	}
@@ -22,30 +23,38 @@ public class ProdutoServices {
 	
 	public Produto updateProduct(Produto p) {
 		validateProduct(p);
+		findProduct(p.getId());
 		return pr.update(p);
 	}
 	
 	public void validateProduct(Produto p) {
 		validateId(p.getId());
 		if(p.getNome().isBlank()) {
-			throw new InvalidDataException("Dê um nome ao seu produto!");
+			throw new InvalidNameException("Dê um nome ao seu produto!");
 		}
 		if(p.getNome().length() > 120) {
-			throw new InvalidDataException("Reduza o nome do seu produto!");
+			throw new InvalidNameException("Reduza o nome do seu produto!");
 		}
+		System.out.println(p.getPreco().toString());
 
-		if(p.getPreco().toString().length() > 8) {
-			throw new InvalidDataException("Preço demasiadamente longo!");
+		if(String.valueOf(p.getPreco()).length() > 8) {
+			throw new InvalidPriceException("Preço demasiadamente longo!");
 		}
-		if(p.getPreco().toString().split(".")[1].length() > 2) {
-			throw new InvalidDataException("Preço mal-formatado!");
+		if(String.valueOf(p.getPreco()).split("\\.")[1].length() > 2) {
+			throw new InvalidPriceException("Preço mal-formatado!");
+		}
+		if(p.getQuantidade() < 0) {
+			throw new InvalidStockException("Quantidade negativa informada, informe um estoque positivo!");
+		}
+		if(p.getQuantidade() >= 2147483647) {
+			throw new InvalidStockException("Valor infinito cadastrado!");
 		}
 	}
 	
 	public void validateId(Long id) {
 		if(id != null) {
 			if(id < 0L) {
-				throw new InvalidDataException("Id de produto inválido!");
+				throw new InvalidIDException("Id de produto inválido!");
 			}
 		}
 	}

@@ -8,6 +8,11 @@ import java.awt.event.MouseEvent;
 import java.awt.event.ActionEvent;
 import javax.swing.JTextField;
 
+import com.arthur_pereira.supermercado.exceptions.GenericProductException;
+import com.arthur_pereira.supermercado.exceptions.InvalidIDException;
+import com.arthur_pereira.supermercado.exceptions.InvalidNameException;
+import com.arthur_pereira.supermercado.exceptions.InvalidPriceException;
+import com.arthur_pereira.supermercado.exceptions.InvalidStockException;
 import com.arthur_pereira.supermercado.exceptions.NotFoundException;
 import com.arthur_pereira.supermercado.model.Produto;
 import com.arthur_pereira.supermercado.repository.ProdutoRepository;
@@ -25,8 +30,8 @@ public class TelaDeProdutos extends TelaAbstrata {
 	private ProdutoServices ps = new ProdutoServices();
 	private JTextField campoId;
 	private JTextField campoNome;
-	private JTextField campoPreco;
 	private JTextField campoQuantidade;
+	private JTextField campoPreco;
 	private final int HEIGTH = 360;
 	private final int WIDTH = 560;
 	
@@ -72,16 +77,12 @@ public class TelaDeProdutos extends TelaAbstrata {
 		JButton findButton = new JButton("Encontrar");
 		findButton.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				if(campoId.getText().isBlank() || !campoId.getText().matches("[0-9]*")) {
-					Popups.showError("Insira um Id numérico!");
-				} try {
-					Produto p = ps.findProduct(Long.valueOf(campoId.getText()));
-					campoNome.setText(p.getNome());
-					campoQuantidade.setText(String.valueOf(p.getQuantidade()));
-					campoPreco.setText(p.getPreco().toString());
+				try {
+					desserializarProduto(ps.findProduct(buscarId()));
 					Popups.showSucess("Produto encontrado!");
-				} catch(NotFoundException ex) {
-					Popups.showError("Produto não encontrado!");
+				}
+				catch(NotFoundException | InvalidIDException ex)  {
+					Popups.showError(ex.getMessage());
 					campoId.requestFocus();
 				}
 			}
@@ -92,6 +93,23 @@ public class TelaDeProdutos extends TelaAbstrata {
 		findButton.setForeground(textC);
 		
 		JButton deleteButton = new JButton("Excluir");
+		deleteButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					ps.deleteProducts(buscarId());
+					campoNome.setText("");
+					campoPreco.setText("");
+					campoQuantidade.setText("");
+					Popups.showSucess("Produto excluído com sucesso!");
+				} catch(NotFoundException ex) {
+					Popups.showError("Produto não encontrado!");
+					campoId.requestFocus();
+				} catch(NumberFormatException ex) {
+					Popups.showError("Insira um Id numérico!");
+					campoId.requestFocus();
+				}
+			}
+		});
 		deleteButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		getContentPane().add(deleteButton, "cell 4 5,grow");
 		deleteButton.setBackground(highlightC);
@@ -120,26 +138,54 @@ public class TelaDeProdutos extends TelaAbstrata {
 		campoNome.setForeground(textC);
 
 		
-		campoPreco = new JTextField();
-		campoPreco.setFont(new Font("Tahoma", Font.PLAIN, 12));
-		getContentPane().add(campoPreco, "cell 3 8,grow");
-		campoPreco.setColumns(10);
-		campoPreco.setBackground(highlightC);
-		campoPreco.setForeground(textC);
-		
 		campoQuantidade = new JTextField();
-		getContentPane().add(campoQuantidade, "cell 5 8,grow");
+		campoQuantidade.setFont(new Font("Tahoma", Font.PLAIN, 12));
+		getContentPane().add(campoQuantidade, "cell 3 8,grow");
 		campoQuantidade.setColumns(10);
 		campoQuantidade.setBackground(highlightC);
 		campoQuantidade.setForeground(textC);
 		
+		campoPreco = new JTextField();
+		getContentPane().add(campoPreco, "cell 5 8,grow");
+		campoPreco.setColumns(10);
+		campoPreco.setBackground(highlightC);
+		campoPreco.setForeground(textC);
+		
 		JButton createButton = new JButton("Criar");
+		createButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					desserializarProduto(ps.createProduct(serializarProduto(false)));
+					Popups.showSucess("Produto cadastrado com sucesso!");
+				} catch (GenericProductException ex) {
+					exceptionHandler(ex);
+				} catch (Exception ex) {
+					Popups.showError("Exceção desconhecida: " + ex.getMessage());
+				}
+			}
+		});
 		createButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		getContentPane().add(createButton, "cell 2 9,grow");
 		createButton.setBackground(highlightC);
 		createButton.setForeground(textC);
 		
 		JButton updateButton = new JButton("Atualizar");
+		updateButton.addActionListener(new ActionListener() {
+			public void actionPerformed(ActionEvent e) {
+				try {
+					desserializarProduto(ps.updateProduct(serializarProduto(true)));
+					Popups.showSucess("Produto atualizado com sucesso!");
+
+				} catch(NotFoundException ex) {
+					Popups.showError(ex.getMessage());
+					campoId.requestFocus();
+				} catch (GenericProductException ex) {
+					exceptionHandler(ex);
+				} catch (Exception ex) {
+					Popups.showError("Exceção desconhecida: " + ex.getMessage());
+				}
+			}
+		});
 		updateButton.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		getContentPane().add(updateButton, "cell 4 9,grow");
 		updateButton.setBackground(highlightC);
@@ -158,13 +204,35 @@ public class TelaDeProdutos extends TelaAbstrata {
 		btnEncontrarTodos.setForeground(textC);
 	}
 	
-	public Produto gerarProduto() {
+	public Produto serializarProduto(boolean a) {
 		Produto p = new Produto();
-		p.setId(Long.valueOf(campoId.getText()));
-		p.setNome(campoNome.getText());
-		p.setPreco(Float.valueOf(campoPreco.getText()));
-		p.setQuantidade(Integer.valueOf(campoQuantidade.getText()));
+		if(a) {
+			p.setId(buscarId());
+		}
+		p.setNome(buscarNome());
+		p.setPreco(buscarPreco());
+		p.setQuantidade(buscarQuantidade());
 		return p;
+	}
+	
+	public void desserializarProduto(Produto p) {
+		campoId.setText(String.valueOf(p.getId()));
+		campoNome.setText(p.getNome());
+		campoQuantidade.setText(String.valueOf(p.getQuantidade()));
+		campoPreco.setText(String.valueOf(p.getPreco()));
+	}
+	
+	public void exceptionHandler(Exception e) {
+		Popups.showError(e.getMessage());
+		if (e instanceof InvalidPriceException) {
+			campoPreco.requestFocus();
+		} else if ( e instanceof InvalidNameException) {
+			campoNome.requestFocus();
+		} else if (e instanceof InvalidStockException) {
+			campoQuantidade.requestFocus();
+		} else {
+			campoId.requestFocus();
+		}
 	}
 	
 	public void abrirTela(int Width, int Height) {
@@ -172,12 +240,38 @@ public class TelaDeProdutos extends TelaAbstrata {
 		this.setVisible(true);
 	}
 	
-	public void esconderTela() {
-		this.setVisible(false);
+	
+	
+	public Float buscarPreco() {
+		try {
+			return Float.valueOf(campoPreco.getText());
+		} catch(Exception ex) {
+			throw new InvalidPriceException("Insira um preço válido!");
+		}
 	}
 	
-	public void fecharTela() {
-		
+	public String buscarNome() {
+		try {
+			return campoNome.getText();
+		} catch(Exception ex) {
+			throw new InvalidNameException("Insira um nome válido para o produto!");
+		}
+	}
+	
+	public Integer buscarQuantidade() {
+		try {
+			return Integer.valueOf(campoQuantidade.getText());
+		} catch(Exception ex) {
+			throw new InvalidStockException("Insira um estoque válido para o produto!");
+		}
+	}
+	
+	public Long buscarId() {
+		try {
+			return Long.valueOf(campoId.getText());
+		} catch(Exception ex) {
+			throw new InvalidIDException("Insira um id válido para o produto!");
+		}
 	}
 
 }
