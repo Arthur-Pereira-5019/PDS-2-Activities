@@ -37,6 +37,7 @@ public class TelaDeCompras extends TelaAbstrata {
 	
 		public TelaDeCompras() {
 			super(700, 700);
+			setTitle("Supermercado Azulão");
 			setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 			addWindowListener(new WindowAdapter() {
 				@Override
@@ -78,7 +79,7 @@ public class TelaDeCompras extends TelaAbstrata {
 			buttonCarrinho.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					esconderTela();
-					CarrinhoDeCompras2 cdc = new CarrinhoDeCompras2();
+					CarrinhoDeCompras cdc = new CarrinhoDeCompras();
 					cdc.abrirTela();
 				}
 			});

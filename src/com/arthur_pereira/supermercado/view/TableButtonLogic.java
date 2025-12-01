@@ -66,21 +66,26 @@ CarrinhoDeComprasService ccs = CommonData.getCarrinhoService();
 
 	    public Object getCellEditorValue() {
 	        if (isPushed) {
-	        	Long id = Long.valueOf((String) table.getValueAt(row, 0));
-	        	Integer quantidade = Integer.valueOf((String.valueOf(table.getValueAt(row, 4))));
-	        	
-	        	Produto p = pr.find(id);
-	        	if(quantidade <= 0) {
-	        		Popups.showError("Forneça um valor válido!");
-	        	} else if(quantidade > p.getQuantidade()) {
-	        		Popups.showError("Estoque insuficiente!");
-	        	} else {
-		            if(ccs.adicionarCompra(new Compra(p, quantidade))) {
-		        		Popups.showSucess("Produto adicionado ao carrinho!");
-		            } else {
-		        		Popups.showSucess("Alterada quantidade comprada no carrinho!");
-		            }
+	        	try {
+	        		Long id = Long.valueOf((String) table.getValueAt(row, 0));
+		        	Integer quantidade = Integer.valueOf((String.valueOf(table.getValueAt(row, 4))));
+		        	
+		        	Produto p = pr.find(id);
+		        	if(quantidade <= 0) {
+		        		Popups.showError("Forneça um valor válido!");
+		        	} else if(quantidade > p.getQuantidade()) {
+		        		Popups.showError("Estoque insuficiente!");
+		        	} else {
+			            if(ccs.adicionarCompra(new Compra(p, quantidade))) {
+			        		Popups.showSucess("Produto adicionado ao carrinho!");
+			            } else {
+			        		Popups.showSucess("Alterada quantidade comprada no carrinho!");
+			            }
+		        	}
+	        	} catch(NumberFormatException e) {
+	        		Popups.showError("Digite o valor desejado antes de adicionar ao carrinho!");
 	        	}
+	        	
 	        }
 	        isPushed = false;
 	        return new String(label);

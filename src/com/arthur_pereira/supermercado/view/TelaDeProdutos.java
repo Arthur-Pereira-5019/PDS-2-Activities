@@ -14,6 +14,7 @@ import com.arthur_pereira.supermercado.exceptions.InvalidNameException;
 import com.arthur_pereira.supermercado.exceptions.InvalidPriceException;
 import com.arthur_pereira.supermercado.exceptions.InvalidStockException;
 import com.arthur_pereira.supermercado.exceptions.NotFoundException;
+import com.arthur_pereira.supermercado.exceptions.UnknownDatabaseError;
 import com.arthur_pereira.supermercado.model.Produto;
 import com.arthur_pereira.supermercado.repository.ProdutoRepository;
 import com.arthur_pereira.supermercado.service.BancoDeDados;
@@ -40,6 +41,7 @@ public class TelaDeProdutos extends TelaAbstrata {
 	
 	public TelaDeProdutos() {
 		super(560,360);
+		setTitle("Supermercado Azulão");
 		setDefaultCloseOperation(JFrame.DO_NOTHING_ON_CLOSE);
 		addWindowListener(new WindowAdapter() {
 			@Override
@@ -56,7 +58,7 @@ public class TelaDeProdutos extends TelaAbstrata {
 		getContentPane().add(lblNewLabel, "cell 3 1,alignx center,growy");
 		lblNewLabel.setForeground(textC);
 		
-		JLabel lblLogout = new JLabel("Sair");
+		JLabel lblLogout = new JLabel("Log Out");
 		lblLogout.setForeground(new Color(255, 0, 0));
 		lblLogout.setHorizontalAlignment(SwingConstants.CENTER);
 		lblLogout.setFont(new Font("Tahoma", Font.PLAIN, 14));
@@ -79,6 +81,7 @@ public class TelaDeProdutos extends TelaAbstrata {
 		campoId.setColumns(10);
 		campoId.setBackground(highlightC);
 		campoId.setForeground(textC);
+		campoId.setCaretColor(textC);
 
 		
 		JButton findButton = new JButton("Encontrar");
@@ -111,9 +114,11 @@ public class TelaDeProdutos extends TelaAbstrata {
 				} catch(NotFoundException ex) {
 					Popups.showError("Produto não encontrado!");
 					campoId.requestFocus();
-				} catch(NumberFormatException ex) {
+				} catch(NumberFormatException | InvalidIDException ex ) {
 					Popups.showError("Insira um Id numérico!");
 					campoId.requestFocus();
+				} catch(UnknownDatabaseError ex) {
+					Popups.showError("Um erro desconhecido ocorreu no sistema, contate o administrador do sistema!");
 				}
 			}
 		});
@@ -143,6 +148,7 @@ public class TelaDeProdutos extends TelaAbstrata {
 		campoNome.setColumns(10);
 		campoNome.setBackground(highlightC);
 		campoNome.setForeground(textC);
+		campoNome.setCaretColor(textC);
 
 		
 		campoQuantidade = new JTextField();
@@ -151,12 +157,14 @@ public class TelaDeProdutos extends TelaAbstrata {
 		campoQuantidade.setColumns(10);
 		campoQuantidade.setBackground(highlightC);
 		campoQuantidade.setForeground(textC);
+		campoQuantidade.setCaretColor(textC);
 		
 		campoPreco = new JTextField();
 		getContentPane().add(campoPreco, "cell 5 8,grow");
 		campoPreco.setColumns(10);
 		campoPreco.setBackground(highlightC);
 		campoPreco.setForeground(textC);
+		campoPreco.setCaretColor(textC);
 		
 		JButton createButton = new JButton("Criar");
 		createButton.addActionListener(new ActionListener() {
@@ -166,6 +174,8 @@ public class TelaDeProdutos extends TelaAbstrata {
 					Popups.showSucess("Produto cadastrado com sucesso!");
 				} catch (GenericProductException ex) {
 					exceptionHandler(ex);
+				} catch(UnknownDatabaseError ex) {
+					Popups.showError("Um erro desconhecido ocorreu no sistema, contate o administrador do sistema!");
 				} catch (Exception ex) {
 					Popups.showError("Exceção desconhecida: " + ex.getMessage());
 				}
@@ -188,6 +198,8 @@ public class TelaDeProdutos extends TelaAbstrata {
 					campoId.requestFocus();
 				} catch (GenericProductException ex) {
 					exceptionHandler(ex);
+				} catch(UnknownDatabaseError ex) {
+					Popups.showError("Um erro desconhecido ocorreu no sistema, contate o administrador do sistema!");
 				} catch (Exception ex) {
 					Popups.showError("Exceção desconhecida: " + ex.getMessage());
 				}

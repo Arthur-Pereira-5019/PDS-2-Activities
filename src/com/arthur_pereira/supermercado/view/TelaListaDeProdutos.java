@@ -36,9 +36,9 @@ public class TelaListaDeProdutos extends TelaAbstrata {
 			
 			popularTabela();
 			getContentPane().setBackground(backgroundC);
+			setTitle("Supermercado Azulão");
 
 			JScrollPane scrollPane = new JScrollPane();
-			
 			
 			table = new JTable(dados,colunas);
 			table.setFillsViewportHeight(true);

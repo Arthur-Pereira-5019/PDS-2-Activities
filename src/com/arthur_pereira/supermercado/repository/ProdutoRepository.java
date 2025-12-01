@@ -51,7 +51,7 @@ public class ProdutoRepository {
 		String sql = "delete from produtos where id=?";
 		try {
 			PreparedStatement ps = bd.prepareStatement(sql);
-			ps.setString(0, id.toString());
+			ps.setLong(1, id);;
 			ps.execute();
 		} catch(Exception e) {
 			throw new UnknownDatabaseError("Erro desconhecido ao excluir produto!");

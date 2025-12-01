@@ -35,8 +35,6 @@ public class ProdutoServices {
 		if(p.getNome().length() > 120) {
 			throw new InvalidNameException("Reduza o nome do seu produto!");
 		}
-		System.out.println(p.getPreco().toString());
-
 		if(String.valueOf(p.getPreco()).length() > 8) {
 			throw new InvalidPriceException("Preço demasiadamente longo!");
 		}

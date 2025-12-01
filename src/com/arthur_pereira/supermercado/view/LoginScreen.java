@@ -80,6 +80,7 @@ public class LoginScreen extends TelaAbstrata {
 		inputNome.setColumns(10);
 		inputNome.setBackground(highlightC);
 		inputNome.setForeground(textC);
+		inputNome.setCaretColor(textC);
 		inputNome.requestFocus();
 		
 		JLabel lblCPF = new JLabel("CPF");
@@ -89,6 +90,7 @@ public class LoginScreen extends TelaAbstrata {
 
 		
 		inputCPF = new JTextField();
+		inputCPF.setCaretColor(textC);
 		inputCPF.addKeyListener(new KeyAdapter() {
 			@Override
 			public void keyPressed(KeyEvent e) {
@@ -113,7 +115,6 @@ public class LoginScreen extends TelaAbstrata {
 		btnEntrar.setForeground(textC);
 		
 		getContentPane().add(btnEntrar, "cell 1 11,alignx center,growy");
-		
 	}
 	
 	public void entrar() {

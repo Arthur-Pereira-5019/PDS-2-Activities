@@ -15,10 +15,10 @@ public class CarrinhoDeComprasService {
 		Compra e = procurarCompraPeloProduto(c.getProduto());
 		if(e != null) {
 			atualizarCompra(new Compra(c.getProduto(), c.getQuantidade() + e.getQuantidade()));
-			return true;
+			return false;
 		}
 		salvarCompra(c);
-		return false;
+		return true;
 	}
 	
 	public Compra procurarCompraPeloProduto(Produto p) {
@@ -69,5 +69,12 @@ public class CarrinhoDeComprasService {
 	
 	public List<Compra> listarCarrinhoSecundario() {
 		return new ArrayList<>(carrinhoSecundario);
+	}
+	
+	public boolean isVazio() {
+		if(cpr.tamanho() > 0) {
+			return false;
+		}
+		return true;
 	}
 }

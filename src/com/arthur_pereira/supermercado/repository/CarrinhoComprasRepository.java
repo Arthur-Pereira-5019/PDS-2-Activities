@@ -34,6 +34,10 @@ public class CarrinhoComprasRepository {
 		return new ArrayList<>(compras);
 	}
 	
+	public int tamanho() {
+		return compras.size(); 
+	}
+	
 	public Compra encontrarCompraPeloProduto(Produto p) {
 		for(Compra c: compras) {
 			if(c.getProduto().getId() == p.getId()) {
