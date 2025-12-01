@@ -78,7 +78,7 @@ public class TelaDeCompras extends TelaAbstrata {
 			buttonCarrinho.addActionListener(new ActionListener() {
 				public void actionPerformed(ActionEvent e) {
 					esconderTela();
-					CarrinhoDeCompras cdc = new CarrinhoDeCompras();
+					CarrinhoDeCompras2 cdc = new CarrinhoDeCompras2();
 					cdc.abrirTela();
 				}
 			});

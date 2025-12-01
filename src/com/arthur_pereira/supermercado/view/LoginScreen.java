@@ -13,6 +13,7 @@ import com.arthur_pereira.supermercado.service.UsuarioServices;
 
 import java.awt.Font;
 import java.awt.Image;
+import java.awt.RenderingHints.Key;
 
 import javax.swing.JButton;
 import javax.swing.JCheckBox;
@@ -24,6 +25,8 @@ import java.awt.Color;
 import javax.swing.ImageIcon;
 import net.miginfocom.swing.MigLayout;
 import javax.swing.SwingConstants;
+import java.awt.event.KeyAdapter;
+import java.awt.event.KeyEvent;
 
 public class LoginScreen extends TelaAbstrata {
 	
@@ -36,11 +39,11 @@ public class LoginScreen extends TelaAbstrata {
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setTitle("Mercado Azulão");
 		getContentPane().setBackground(backgroundC);
-		getContentPane().setLayout(new MigLayout("", "[18px,grow 8][129px,grow][][grow 15][18px,grow 15]", "[grow 15][32px][grow 15][14px,grow 5][grow][14px][14px,grow 5][grow][14px][14px,grow 5][10px][grow 25][14px,grow 5]"));
+		getContentPane().setLayout(new MigLayout("", "[18px,grow 4][80px,grow 80][22,grow 16][8,grow 6][18px,grow 4]", "[5,grow 22][32px][grow 5][14px,grow 5][grow 20][14px][14px,grow 3][grow 5][14px][14px,grow 3][grow 25][14px,grow 3][20,grow 26]"));
 		
 		JLabel lblTitulo = new JLabel("Supermercado Azulão");
 		lblTitulo.setHorizontalAlignment(SwingConstants.CENTER);
-		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 27));
+		lblTitulo.setFont(new Font("Tahoma", Font.PLAIN, 25));
 		getContentPane().add(lblTitulo, "cell 1 1,grow");
 		lblTitulo.setForeground(textC);
 		
@@ -65,6 +68,14 @@ public class LoginScreen extends TelaAbstrata {
 		
 		
 		inputNome = new JTextField();
+		inputNome.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					inputCPF.requestFocus();
+				}
+			}
+		});
 		getContentPane().add(inputNome, "cell 1 6,grow");
 		inputNome.setColumns(10);
 		inputNome.setBackground(highlightC);
@@ -78,6 +89,14 @@ public class LoginScreen extends TelaAbstrata {
 
 		
 		inputCPF = new JTextField();
+		inputCPF.addKeyListener(new KeyAdapter() {
+			@Override
+			public void keyPressed(KeyEvent e) {
+				if(e.getKeyCode() == KeyEvent.VK_ENTER) {
+					entrar();
+				}
+			}
+		});
 		getContentPane().add(inputCPF, "cell 1 9,grow");
 		inputCPF.setColumns(10);
 		inputCPF.setBackground(highlightC);
@@ -87,29 +106,32 @@ public class LoginScreen extends TelaAbstrata {
 		btnEntrar.setFont(new Font("Tahoma", Font.PLAIN, 12));
 		btnEntrar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				try {
-					if(us.logar(new Usuario(inputNome.getText(), inputCPF.getText())) == true) {
-						Popups.showSucess("Bem vindo "+inputNome.getText()+"!" );
-						esconderTela();
-						TelaAbstrata ta = CommonData.getLogado().isAdministrador() ? (new TelaDeProdutos()) : (new TelaDeCompras());
-						ta.abrirTela();
-					}
-				} catch(InvalidNameException ex) {
-					inputNome.requestFocus();
-					Popups.showError(ex.getMessage());
-				} catch(InvalidCPFException | BadLoginException ex) {
-					inputCPF.requestFocus();
-					Popups.showError(ex.getMessage());
-				} catch (Exception ex) {
-					Popups.showError(ex.getMessage());
-				}
-				
+				entrar();
 			}
 		});
 		btnEntrar.setBackground(highlightC);
 		btnEntrar.setForeground(textC);
 		
-		getContentPane().add(btnEntrar, "cell 1 12,alignx center,growy");
-
+		getContentPane().add(btnEntrar, "cell 1 11,alignx center,growy");
+		
+	}
+	
+	public void entrar() {
+		try {
+			if(us.logar(new Usuario(inputNome.getText(), inputCPF.getText())) == true) {
+				Popups.showSucess("Bem vindo "+inputNome.getText()+"!" );
+				esconderTela();
+				TelaAbstrata ta = CommonData.getLogado().isAdministrador() ? (new TelaDeProdutos()) : (new TelaDeCompras());
+				ta.abrirTela();
+			}
+		} catch(InvalidNameException ex) {
+			inputNome.requestFocus();
+			Popups.showError(ex.getMessage());
+		} catch(InvalidCPFException | BadLoginException ex) {
+			inputCPF.requestFocus();
+			Popups.showError(ex.getMessage());
+		} catch (Exception ex) {
+			Popups.showError(ex.getMessage());
+		}
 	}
 }
