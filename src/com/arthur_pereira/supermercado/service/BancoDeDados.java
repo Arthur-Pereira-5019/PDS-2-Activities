@@ -25,9 +25,7 @@ public class BancoDeDados {
 			try {
 				c =  DriverManager.getConnection(URL, USER, PASSWORD);
 				if(created == false && !DBMODE.equals("keep")) {
-					if(DBMODE.equals("create")) {
-						createDatabase();
-					} else if(DBMODE.equals("recreate")){
+					if(DBMODE.equals("recreate")){
 						createTables();
 					}
 					created = true;

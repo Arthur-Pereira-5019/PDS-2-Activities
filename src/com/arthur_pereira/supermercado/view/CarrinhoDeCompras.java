@@ -157,8 +157,10 @@ public class CarrinhoDeCompras extends TelaAbstrata {
 		            JOptionPane.YES_NO_OPTION
 		        );
 
+		        TelaDeCompras tdc = new TelaDeCompras();
+	        	tdc.abrirTela();
+	        	fecharTela();
 		        if (result == JOptionPane.YES_OPTION) {
-		        	System.out.println(precoFinal);
 		            NotaFiscal nf = new NotaFiscal(precoFinal);
 		            nf.abrirTela();
 		        }
