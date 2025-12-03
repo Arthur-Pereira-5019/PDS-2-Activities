@@ -15,6 +15,7 @@ import java.awt.event.ActionListener;
 import java.util.ArrayList;
 import java.awt.event.ActionEvent;
 import javax.swing.SwingConstants;
+import javax.swing.table.DefaultTableModel;
 
 import com.arthur_pereira.supermercado.model.Compra;
 import com.arthur_pereira.supermercado.model.Produto;
@@ -53,9 +54,10 @@ public class CarrinhoDeCompras extends TelaAbstrata {
 				JScrollPane scrollPane = new JScrollPane(table);
 				scrollPane.setBackground(backgroundC);
 				getContentPane().setLayout(new MigLayout("", "[5,grow 10][40px,grow 5][40,grow 15][4px,grow 25][40,grow 15][40,grow 5][5,grow 10]", "[5,grow 3][21px,grow 2][14px,grow 1][15,grow 40][40,grow 40][14,grow 1][grow 5,shrink 3]"));
-
+				DefaultTableModel model = new DefaultTableModel(dados, colunas);
 				
 				table = new JTable(dados,colunas);
+				table.setModel(model);
 				table.setFillsViewportHeight(true);
 				table.setBackground(highlightC);
 				table.setForeground(textC);
@@ -172,6 +174,20 @@ public class CarrinhoDeCompras extends TelaAbstrata {
 					}
 				}
 			}
+			
+			public void atualizarTabela() {
+			    popularTabela(); // atualiza o array dados
+			    DefaultTableModel model = new DefaultTableModel(dados, colunas);
+			    table.setModel(model);
+
+			    // reconfigurar a coluna Remover (necessário!)
+			    table.getColumn("Remover")
+			         .setCellEditor(new RemoverButtonLogic(new JCheckBox(), table));
+			    table.getColumn("Remover")
+			         .setCellRenderer(new RemoverButtonRenderer());
+
+			    revalidate();
+			    repaint();			}
 			
 
 }

@@ -14,7 +14,7 @@ public class BancoDeDados {
 
 	private static final String URL = "jdbc:mysql://localhost:3306/supermercado";
 	private static final String USER = "root";
-	private static final String PASSWORD = "Art.DB25";
+	private static final String PASSWORD = "admin";
 	public static final String DBMODE = "keep";
 
 	private static boolean created = false;
@@ -33,7 +33,8 @@ public class BancoDeDados {
 					created = true;
 				}
 			} catch (SQLException e) {
-				e.printStackTrace();
+				Popups.showError("Erro fatal no banco de dados, terminando execução! Contate o administrador do sistema!");
+				System.exit(0);
 			}
 		}
 		return c;

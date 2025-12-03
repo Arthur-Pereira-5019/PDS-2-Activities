@@ -37,11 +37,12 @@ private Connection bd;
 			PreparedStatement ps = bd.prepareStatement(sql);
 			ps.setString(1, cpf);
 			ResultSet rs = ps.executeQuery();
-			rs.next();
-			String nome = rs.getString(1);
-			Long id = rs.getLong(3);
-			boolean administrador = reverseCastBoolean(rs.getInt(4));
-			retorno = new Usuario(id, nome, cpf, administrador);
+			if(rs.next()) {
+				String nome = rs.getString(1);
+				Long id = rs.getLong(3);
+				boolean administrador = reverseCastBoolean(rs.getInt(4));
+				retorno = new Usuario(id, nome, cpf, administrador);
+			}			
 		} finally {
 			return retorno;
 		}
@@ -55,7 +56,6 @@ private Connection bd;
 			ps.setString(2, u.getCpf());
 			ps.setFloat(3, castBoolean(u.isAdministrador()));
 			ps.execute();
-			Popups.showSucess("Usuário salvo com sucesso!");
 		} catch (SQLException e) {
 			throw new UnknownDatabaseError("Falha ao persistir usuário. Contate o administrador do sistema!");
 		}
@@ -68,12 +68,9 @@ private Connection bd;
 			PreparedStatement ps = bd.prepareStatement(sql);
 			ps.setString(0, id.toString());
 			ps.execute();
-			Popups.showSucess("Usuário removido com sucesso!");
-
 		} catch(Exception e) {
 			e.printStackTrace();
-			Popups.showError("Usuário ao remover o produto");
-		}
+			}
 	}
 	
 	public Usuario find(Long id) {

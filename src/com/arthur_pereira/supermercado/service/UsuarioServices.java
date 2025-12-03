@@ -19,6 +19,7 @@ public class UsuarioServices {
 	}
 	
 	private Usuario criarUsuario(Usuario u) {
+		System.out.println(ur.findByCpf(u.getCpf()));
 		if(ur.findByCpf(u.getCpf()) != null) {
 			throw new DuplicatedResourceException("Usuário já existente! Faça login ou corrija seus dados de cadastro!");
 		}

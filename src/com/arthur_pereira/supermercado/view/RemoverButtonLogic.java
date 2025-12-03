@@ -71,8 +71,7 @@ public class RemoverButtonLogic extends DefaultCellEditor{
         	Popups.showSucess("Produto removido com sucesso!");
         		Window topLevelParent = SwingUtilities.getWindowAncestor(button);
         		if(topLevelParent instanceof CarrinhoDeCompras) {
-        			((CarrinhoDeCompras) topLevelParent).limparTabela();
-        			System.out.println("oieee");
+        			((CarrinhoDeCompras) topLevelParent).atualizarTabela();
         		}
         }
         isPushed = false;
@@ -85,6 +84,9 @@ public class RemoverButtonLogic extends DefaultCellEditor{
     }
 
     protected void fireEditingStopped() {
-        super.fireEditingStopped();
-    }
+   	 try {
+   	        super.fireEditingStopped();
+   	    } catch (Exception ignored) {
+   	    }
+   }
 }
